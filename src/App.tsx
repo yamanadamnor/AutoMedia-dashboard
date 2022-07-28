@@ -1,6 +1,6 @@
 import ServiceCard from './components/ServiceCard/ServiceCard';
 import reactLogo from './assets/react.svg'
-import './App.css'
+import Footer from './components/Footer/Footer';
 
 import servicesData from './data';
 import Service from './interfaces';
@@ -19,9 +19,8 @@ function App() {
           />
         ))}
       </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+
+      <Footer />
     </div>
   );
 }
