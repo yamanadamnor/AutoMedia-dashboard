@@ -1,5 +1,4 @@
 import acsLogoWhite from '../../assets/img/logo-white.svg';
-import ACSTag from '../ACSTag/ACSTag';
 
 const Copyright = () => {
   const year = new Date().getFullYear();
