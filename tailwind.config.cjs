@@ -19,7 +19,8 @@ module.exports = {
         service: '-8px -8px 30px #30304555, 8px 8px 30px #00000055, inset 0 0 0 4px #30304555;',
       },
       fontFamily: {
-        sans: ['inter', ...defaultTheme.fontFamily.sans],
+        'gt-walsheim-pro': ['GT Walsheim Pro'],
+        sans: ['GT Walsheim Pro', ...defaultTheme.fontFamily.sans],
       },
     },
   },
