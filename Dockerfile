@@ -1,12 +1,14 @@
-FROM node:18.7.0
+FROM node:lts-alpine
 WORKDIR /app
 
 COPY entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
 
-ADD . .
+COPY . .
 
-RUN npm install
+RUN npm ci
+
+EXPOSE 3344
 
 ENTRYPOINT ["/entrypoint.sh"]
 
