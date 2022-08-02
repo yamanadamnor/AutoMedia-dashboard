@@ -9,7 +9,7 @@ module.exports = {
         app: '5% 1fr 1fr 5%',
       },
       backgroundImage: {
-        'main-img': "url('src/assets/img/acs-background-2.png')",
+        'main-img': "url('assets/img/acs-background-2.png')",
       },
       backgroundSize: {
         blown: '200% 200%',
