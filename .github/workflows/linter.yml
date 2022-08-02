@@ -48,9 +48,10 @@ jobs:
       # Run Linter against code base #
       ################################
       - name: Lint Code Base
-        uses: github/super-linter@v4
+        uses: github/super-linter/slim@v4
         env:
-          # TYPESCRIPT_ES_CONFIG_FILE: .eslintrs.js
+          LINTER_RULES_PATH: /
+          TYPESCRIPT_ES_CONFIG_FILE: .eslintrc.js
           VALIDATE_ALL_CODEBASE: false
           DEFAULT_BRANCH: main
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
