@@ -14,7 +14,6 @@ module.exports = {
       backgroundSize: {
         blown: '200% 200%',
       },
-
       colors: {
         'service-card': '#393b4360',
         'light-shadow': '#30304555',
