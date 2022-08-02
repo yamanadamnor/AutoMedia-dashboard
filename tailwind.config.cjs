@@ -5,8 +5,14 @@ module.exports = {
   content: ['./index.html', './src/**/*.{vue,js,ts,jsx,tsx}'],
   theme: {
     extend: {
+      gridTemplateColumns: {
+        app: '5% 1fr 1fr 5%',
+      },
       backgroundImage: {
         'main-img': "url('src/assets/img/acs-background-2.png')",
+      },
+      backgroundSize: {
+        blown: '200% 200%',
       },
       colors: {
         'service-card': '#393b4360',
@@ -19,7 +25,20 @@ module.exports = {
         service: '-8px -8px 30px #30304555, 8px 8px 30px #00000055, inset 0 0 0 4px #30304555;',
       },
       fontFamily: {
-        sans: ['inter', ...defaultTheme.fontFamily.sans],
+        'gt-walsheim-pro': ['GT Walsheim Pro'],
+        sans: ['GT Walsheim Pro', ...defaultTheme.fontFamily.sans],
+      },
+      lineHeight: {
+        20: '5rem',
+      },
+      keyframes: {
+        move: {
+          '0%, 100%': { backgroundPosition: '0% 0%' },
+          '50%': { backgroundPosition: '100% 0%' },
+        },
+      },
+      animation: {
+        move: 'move 2s ease-in-out infinite',
       },
     },
   },
