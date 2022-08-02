@@ -1,4 +1,4 @@
-version: '3.8'
+version: '3.9'
 services:
   acs-dash:
     build:
@@ -8,4 +8,4 @@ services:
     volumes:
       - ./:/app
     ports:
-      - '3000:3000'
+      - '3344:3000'
