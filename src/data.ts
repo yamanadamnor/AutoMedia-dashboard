@@ -13,7 +13,6 @@ import delugeIcon from './assets/img/deluge.svg';
 import vscodeIcon from './assets/img/code.svg';
 import radarrIcon from './assets/img/radarr.svg';
 import sonarrIcon from './assets/img/sonarr.svg';
-import readarrIcon from './assets/img/readarr.svg';
 import bazarrIcon from './assets/img/bazarr.png';
 import prowlarrIcon from './assets/img/prowlarr.svg';
 
@@ -108,13 +107,6 @@ const servicesData: Service[] = [
     img: sonarrIcon,
     link: 'http://192.168.1.157:8989',
     desc: 'TV-shows management',
-  },
-  {
-    id: 'readarr',
-    name: 'Readarr',
-    img: readarrIcon,
-    link: 'http://192.168.1.157:8787',
-    desc: 'Books management',
   },
   {
     id: 'bazarr',
