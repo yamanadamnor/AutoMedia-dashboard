@@ -16,8 +16,6 @@ import sonarrIcon from '../public/img/sonarr.svg';
 import bazarrIcon from '../public/img/bazarr.png';
 import prowlarrIcon from '../public/img/prowlarr.svg';
 
-import dih from '/img/prowlarr.svg';
-
 const servicesData: Service[] = [
   {
     id: 'portainer',
