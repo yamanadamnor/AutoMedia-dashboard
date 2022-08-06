@@ -1,20 +1,22 @@
 import Service from './interfaces';
 
-import portainerIcon from './assets/img/portainer.png';
-import ldapIcon from './assets/img/ldap.svg';
-import unraidIcon from './assets/img/unraid-stacked-dark.svg';
-import haIcon from './assets/img/home-assistant.svg';
-import uptimeKumaIcon from './assets/img/uptime-kuma.svg';
-import netdataIcon from './assets/img/netdata.svg';
-import dozzleIcon from './assets/img/dozzle.svg';
-import jellyfinIcon from './assets/img/jellyfin.svg';
-import jellyseerrIcon from './assets/img/jellyseerr.svg';
-import delugeIcon from './assets/img/deluge.svg';
-import vscodeIcon from './assets/img/code.svg';
-import radarrIcon from './assets/img/radarr.svg';
-import sonarrIcon from './assets/img/sonarr.svg';
-import bazarrIcon from './assets/img/bazarr.png';
-import prowlarrIcon from './assets/img/prowlarr.svg';
+import portainerIcon from '../public/img/portainer.png';
+import ldapIcon from '../public/img/ldap.svg';
+import unraidIcon from '../public/img/unraid-stacked-dark.svg';
+import haIcon from '../public/img/home-assistant.svg';
+import uptimeKumaIcon from '../public/img/uptime-kuma.svg';
+import netdataIcon from '../public/img/netdata.svg';
+import dozzleIcon from '../public/img/dozzle.svg';
+import jellyfinIcon from '../public/img/jellyfin.svg';
+import jellyseerrIcon from '../public/img/jellyseerr.svg';
+import delugeIcon from '../public/img/deluge.svg';
+import vscodeIcon from '../public/img/code.svg';
+import radarrIcon from '../public/img/radarr.svg';
+import sonarrIcon from '../public/img/sonarr.svg';
+import bazarrIcon from '../public/img/bazarr.png';
+import prowlarrIcon from '../public/img/prowlarr.svg';
+
+import dih from '/img/prowlarr.svg';
 
 const servicesData: Service[] = [
   {

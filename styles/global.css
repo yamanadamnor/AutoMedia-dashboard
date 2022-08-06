@@ -27,28 +27,28 @@
 
 @font-face {
   font-family: 'GT Walsheim Pro';
-  src: url('./assets/fonts/GTWalsheimPro/GTWalsheimPro-Regular.woff2');
+  src: url('/fonts/GTWalsheimPro/GTWalsheimPro-Regular.woff2');
   font-weight: normal;
   font-style: normal;
 }
 
 @font-face {
   font-family: 'GT Walsheim Pro';
-  src: url('./assets/fonts/GTWalsheimPro/GTWalsheimPro-Medium.woff2');
+  src: url('/fonts/GTWalsheimPro/GTWalsheimPro-Medium.woff2');
   font-weight: 500;
   font-style: normal;
 }
 
 @font-face {
   font-family: 'GT Walsheim Pro';
-  src: url('./assets/fonts/GTWalsheimPro/GTWalsheimPro-Bold.woff2');
+  src: url('/fonts/GTWalsheimPro/GTWalsheimPro-Bold.woff2');
   font-weight: bold;
   font-style: normal;
 }
 
 @font-face {
   font-family: 'GT Walsheim Pro';
-  src: url('./assets/fonts/GTWalsheimPro/GTWalsheimPro-Black.woff2');
+  src: url('/fonts/GTWalsheimPro/GTWalsheimPro-Black.woff2');
   font-weight: 900;
   font-style: normal;
 }

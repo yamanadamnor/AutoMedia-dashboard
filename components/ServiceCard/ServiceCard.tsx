@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion';
+import Image from 'next/image';
 
-import Service from '../../interfaces';
+import Service from '../interfaces';
 
 const ServiceCard = ({ name, img, link, desc }: Service) => {
   const serviceElement = {
@@ -30,7 +31,7 @@ const ServiceCard = ({ name, img, link, desc }: Service) => {
     >
       <div className="flex items-center w-full">
         <div className="w-7 p-0 mr-4 grayscale transition ease-in-out duration-300 group-hover:grayscale-0">
-          <img className="object-contain" src={img} alt="" />
+          <Image className="object-contain" src={img} alt="" />
         </div>
         <h2 className="my-4 text-service-desc-light text-2xl font-bold">{name}</h2>
       </div>

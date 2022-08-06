@@ -50,7 +50,9 @@ jobs:
       - name: Lint Code Base
         uses: github/super-linter/slim@v4
         env:
+          FILTER_REGEX_INCLUDE: .*(pages|components)/.*
           LINTER_RULES_PATH: /
+          TYPESCRIPT_DEFAULT_STYLE: ts-standard/prettier
           TYPESCRIPT_ES_CONFIG_FILE: .eslintrc.js
           VALIDATE_ALL_CODEBASE: false
           DEFAULT_BRANCH: main

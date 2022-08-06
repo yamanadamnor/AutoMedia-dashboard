@@ -24,8 +24,8 @@ const Hero = () => {
           <ACSTag />
         </h1>
         <p className="mt-4 text-lg sm:text-2xl">
-          The leading media provider for friends and family ❤️. Request that trending series
-          your friends won't shut up about or enjoy our already expansive library.
+          The leading media provider for friends and family ❤️. Request that trending series your
+          friends won{"'"}t shut up about or enjoy our already expansive library.
         </p>
       </div>
     </motion.div>
