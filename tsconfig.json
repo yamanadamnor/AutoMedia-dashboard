@@ -18,10 +18,5 @@
     "incremental": true
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
-  "references": [
-    {
-      "path": "./tsconfig.node.json"
-    }
-  ],
   "exclude": ["node_modules"]
 }
