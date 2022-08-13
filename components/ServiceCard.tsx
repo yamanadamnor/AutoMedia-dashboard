@@ -1,7 +1,7 @@
 import { motion } from 'framer-motion';
 import Image from 'next/image';
 
-import Service from '../interfaces';
+import Service from './interfaces';
 
 const ServiceCard = ({ name, img, link, desc }: Service) => {
   const serviceElement = {

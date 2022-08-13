@@ -1,9 +1,9 @@
 import React from 'react';
 import { NextPage } from 'next';
 
-import ServiceCard from '../components/ServiceCard/ServiceCard';
-import Hero from '../components/Hero/Hero';
-import Footer from '../components/Footer/Footer';
+import ServiceCard from '../components/ServiceCard';
+import Hero from '../components/Hero';
+import Footer from '../components/Footer';
 import { motion } from 'framer-motion';
 
 import servicesData from '../components/data';

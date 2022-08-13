@@ -1,6 +1,6 @@
 import Image from 'next/image';
 
-import acsLogoWhite from '../../public/img/logo-white.svg';
+import acsLogoWhite from '../public/img/logo-white.svg';
 
 const Copyright = () => {
   const year = new Date().getFullYear();
