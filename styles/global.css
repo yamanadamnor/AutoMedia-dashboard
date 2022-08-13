@@ -2,18 +2,21 @@
  * This injects Tailwind's base styles and any base styles registered by
  * plugins.
  */
+/* stylelint-disable-next-line at-rule-no-unknown */
 @tailwind base;
 
 /**
  * This injects Tailwind's component classes and any component classes
  * registered by plugins.
  */
+/* stylelint-disable-next-line at-rule-no-unknown */
 @tailwind components;
 
 /**
  * This injects Tailwind's utility classes and any utility classes registered
  * by plugins.
  */
+/* stylelint-disable-next-line at-rule-no-unknown */
 @tailwind utilities;
 
 /**
@@ -23,32 +26,33 @@
  * If omitted, Tailwind will append these classes to the very end of
  * your stylesheet by default.
  */
+/* stylelint-disable-next-line at-rule-no-unknown */
 @tailwind variants;
 
 @font-face {
   font-family: 'GT Walsheim Pro';
-  src: url('./assets/fonts/GTWalsheimPro/GTWalsheimPro-Regular.woff2');
+  src: url('/fonts/GTWalsheimPro/GTWalsheimPro-Regular.woff2');
   font-weight: normal;
   font-style: normal;
 }
 
 @font-face {
   font-family: 'GT Walsheim Pro';
-  src: url('./assets/fonts/GTWalsheimPro/GTWalsheimPro-Medium.woff2');
+  src: url('/fonts/GTWalsheimPro/GTWalsheimPro-Medium.woff2');
   font-weight: 500;
   font-style: normal;
 }
 
 @font-face {
   font-family: 'GT Walsheim Pro';
-  src: url('./assets/fonts/GTWalsheimPro/GTWalsheimPro-Bold.woff2');
+  src: url('/fonts/GTWalsheimPro/GTWalsheimPro-Bold.woff2');
   font-weight: bold;
   font-style: normal;
 }
 
 @font-face {
   font-family: 'GT Walsheim Pro';
-  src: url('./assets/fonts/GTWalsheimPro/GTWalsheimPro-Black.woff2');
+  src: url('/fonts/GTWalsheimPro/GTWalsheimPro-Black.woff2');
   font-weight: 900;
   font-style: normal;
 }

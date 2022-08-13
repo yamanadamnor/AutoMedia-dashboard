@@ -1,12 +1,15 @@
-import ServiceCard from './components/ServiceCard/ServiceCard';
-import Hero from './components/Hero/Hero';
-import Footer from './components/Footer/Footer';
+import React from 'react';
+import { NextPage } from 'next';
+
+import ServiceCard from '../components/ServiceCard';
+import Hero from '../components/Hero';
+import Footer from '../components/Footer';
 import { motion } from 'framer-motion';
 
-import servicesData from './data';
-import Service from './interfaces';
+import servicesData from '../components/data';
+import Service from '../components/interfaces';
 
-function App() {
+const App: NextPage = () => {
   const serviceContainer = {
     hidden: { opacity: 0 },
     show: {
@@ -45,6 +48,6 @@ function App() {
       <Footer />
     </div>
   );
-}
+};
 
 export default App;
