@@ -3,7 +3,7 @@ name: Create and publish image
 
 on:
   push:
-    branches: ["main"]
+    branches: ["main", "add-oidc"]
 
 env:
   REGISTRY: ghcr.io

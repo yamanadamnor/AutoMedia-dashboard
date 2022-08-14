@@ -1,7 +1,7 @@
 import { motion } from 'framer-motion';
 import { useSession } from 'next-auth/react';
 
-import ACSTag from './ACSTag';
+import CompanyTag from './CompanyTag';
 
 const Hero = () => {
   const { data: session } = useSession();
@@ -24,10 +24,10 @@ const Hero = () => {
       className="col-start-2 col-span-2 max-w-7xl w-full my-24 "
     >
       <div className="w-full">
-        <h1 className="text-3xl  font-bold leading-relaxed sm:text-4xl sm:leading-20">
+        <h1 className="text-2xl font-bold leading-relaxed sm:text-4xl sm:leading-20">
           Welcome {welcome} to
           <br />
-          <ACSTag />
+          <CompanyTag />
         </h1>
         <p className="mt-4 text-lg sm:text-2xl">
           The leading media provider for friends and family ❤️. Request that trending series your

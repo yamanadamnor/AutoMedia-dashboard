@@ -1,4 +1,4 @@
-import Service from './interfaces';
+import { IService } from './interfaces';
 
 import portainerIcon from '../public/img/portainer.png';
 import ldapIcon from '../public/img/ldap.svg';
@@ -16,7 +16,7 @@ import sonarrIcon from '../public/img/sonarr.svg';
 import bazarrIcon from '../public/img/bazarr.png';
 import prowlarrIcon from '../public/img/prowlarr.svg';
 
-const servicesData: Service[] = [
+const servicesData: IService[] = [
   {
     id: 'portainer',
     name: 'Portainer',
