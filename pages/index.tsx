@@ -62,9 +62,9 @@ const App: NextPage = () => {
           {inEdit && (
             <ServiceCard
               id="edit"
-              name="edit"
+              name="title"
               link=""
-              desc=""
+              desc="description"
               inEdit={inEdit}
               data-modal-toggle="defaultModal"
               // onClick={() => clg}

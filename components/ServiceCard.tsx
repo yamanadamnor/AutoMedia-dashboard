@@ -3,13 +3,14 @@ import { motion } from 'framer-motion';
 import Image from 'next/image';
 import { MinusCircleIcon, PlusIcon } from '@heroicons/react/solid';
 import { PhotographIcon } from '@heroicons/react/outline';
+import ArchiveOutlineIcon from '../public/img/acs-background-2.png';
 
 import { IService } from './interfaces';
 
 const ServiceCard = ({
   id,
   name,
-  img,
+  img = ArchiveOutlineIcon,
   link,
   desc,
   inEdit,
@@ -65,7 +66,7 @@ const ServiceCard = ({
                 className={inputElementClass}
                 value={newService.title}
                 onChange={(e) => setNewService({ ...newService, title: e.target.value })}
-                placeholder="title"
+                placeholder={name}
                 type="text"
               />
             </div>
@@ -73,7 +74,7 @@ const ServiceCard = ({
               className={`${inputElementClass} bg-red-400`}
               value={newService.description}
               onChange={(e) => setNewService({ ...newService, description: e.target.value })}
-              placeholder="description"
+              placeholder={desc}
               type="text"
             />
           </div>
