@@ -36,16 +36,12 @@ jobs:
 
       - run: npm ci
 
-      - name: Make envfile
-        uses: SpicyPizza/create-envfile@v1.3
-        with:
-          envkey_AUTHELIA_OIDC_CLIENT_SECRET: ${{ secrets.AUTHELIA_OIDC_CLIENT_SECRET }}
-          envkey_AUTHELIA_OIDC_CLIENT_ID: ${{ secrets.AUTHELIA_OIDC_CLIENT_ID }}
-          env_key_SECRET: ${{ secrets.SECRET }}
-
-          directory: ./
-          file_name: .env
-          fail_on_empty: false
+      # Create and populate .env.local file
+      - run: |
+          touch .env.local
+          echo AUTHELIA_OIDC_CLIENT_SECRET=${{ secrets.AUTHELIA_OIDC_CLIENT_SECRET }} >> .env.local
+          echo AUTHELIA_OIDC_CLIENT_ID=${{ secrets.AUTHELIA_OIDC_CLIENT_ID }} >> .env.local
+          echo SECRET=${{ secrets.SECRET }} >> .env.local
 
       - run: npm run build
 
