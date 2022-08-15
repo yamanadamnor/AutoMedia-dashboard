@@ -35,13 +35,13 @@ jobs:
             ${{ runner.os }}-nextjs-${{ hashFiles('**/package-lock.json') }}-
 
       - run: npm ci
-      - run: ls -la
+      
       # Create and populate .env.local file
       - run: |
           touch .env.local
           echo AUTHELIA_OIDC_CLIENT_SECRET=${{ secrets.AUTHELIA_OIDC_CLIENT_SECRET }} >> .env.local
           echo AUTHELIA_OIDC_CLIENT_ID=${{ secrets.AUTHELIA_OIDC_CLIENT_ID }} >> .env.local
-          echo SECRET=${{ secrets.SECRET }} >> .env.local
+          echo NEXT_PUBLIC_SECRET=${{ secrets.SECRET }} >> .env.local
 
       - run: npm run build
 
