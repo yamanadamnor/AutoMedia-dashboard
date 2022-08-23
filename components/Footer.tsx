@@ -13,7 +13,7 @@ const Copyright = () => {
 };
 const Footer = () => {
   return (
-    <div className="w-full grid mx-8 mt-48 p-8 col-span-4 bg-service-card rounded-t-2xl">
+    <div className="w-full absolute bottom-0 grid mx-8 p-8 col-span-4 bg-service-card rounded-t-2xl">
       <div className="max-w-7xl w-full justify-self-center grid grid-cols-1">
         <div className="flex flex-col items-center justify-around justify-self-center">
           <div className="w-16 m-8">

@@ -2,18 +2,20 @@
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
 generator client {
-  provider = "prisma-client-js"
+  provider      = "prisma-client-js"
+  binaryTargets = ["native", "linux-musl"]
 }
 
 datasource db {
   provider = "sqlite"
-  url      = env("DATABASE_URL")
+  url      = "file:../dev.db"
 }
 
 model Service {
   id          Int      @id @default(autoincrement())
   title       String
   description String
+  image       String
+  href        String
   createdAt   DateTime @default(now())
-  published   Boolean  @default(false)
 }
