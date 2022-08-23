@@ -1,4 +1,4 @@
-const ACSTag = () => {
+const CompanyTag = () => {
   return (
     <div
       className="inline-block whitespace-nowrap select-none bg-blown bg-gradient-to-r from-indigo-800 
@@ -9,4 +9,4 @@ const ACSTag = () => {
   );
 };
 
-export default ACSTag;
+export default CompanyTag;
