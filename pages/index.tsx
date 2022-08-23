@@ -56,7 +56,7 @@ const App: NextPage = () => {
   if (!data) return <div>...loading</div>;
 
   return (
-    <div className="grid grid-cols-app justify-items-center place-content-center h-full text-white">
+    <div className="relative min-h-screen grid grid-cols-app justify-items-center place-content-center h-full text-white">
       <Toaster
         position="top-right"
         toastOptions={{
@@ -79,7 +79,7 @@ const App: NextPage = () => {
       <Header />
       <Hero />
 
-      <div className="max-w-7xl w-full col-start-2 col-span-2">
+      <div className="max-w-7xl pb-64 w-full col-start-2 col-span-2">
         <div className="flex">
           <EditBtn
             className={'w-12 hover:text-green-800 transition-all duration-150'}
