@@ -151,11 +151,9 @@ const DayComponent = ({ day, sonarrMedia, radarrMedia, selectedDay, onClick }: I
       className={classNames(
         'w-8 h-12 transition ease-in-out duration-300 flex flex-col justify-center align-center',
         'justify-self-center self-center text-center rounded select-none hover:bg-[#272731] hover:shadow-lg',
-        // FIXME: Argument of type 'string | boolean' is not assignable to parameter of type 'string'.
-        // Type 'boolean' is not assignable to type 'string'.ts(2345)
-        !isSameMonth(day, selectedDay) && 'text-gray-600',
-        isEqual(startOfDay(day), startOfDay(selectedDay)) && 'bg-[#1e1e2e]',
-        isEqual(startOfDay(day), startOfDay(today)) && 'border',
+        isSameMonth(day, selectedDay) ? '' : 'text-gray-600',
+        isEqual(startOfDay(day), startOfDay(selectedDay)) ? 'bg-[#1e1e2e]' : '',
+        isEqual(startOfDay(day), startOfDay(today)) ? 'border border-gray-500' : '',
       )}
       onClick={onClick}
     >
@@ -174,14 +172,16 @@ const DayComponent = ({ day, sonarrMedia, radarrMedia, selectedDay, onClick }: I
 
 interface ISonarrReleases {
   airDateUtc: Date;
+  title: string;
   seriesId: number;
   seasonNumber: number;
   episodeNumber: number;
-  series: { images: { coverType: string; url: string }[] };
+  series: { title: string; images: { coverType: string; url: string }[] };
 }
 
 interface IRadarrReleases {
   id: number;
+  title: string;
   digitalRelease: Date;
   physicalRelease: Date;
   images: { coverType: string; url: string }[];
@@ -208,6 +208,29 @@ const MediaReleaseInfo = ({ sonarrReleases, radarrReleases, selectedDay }: IMedi
     );
   });
 
+  const getMovieDate = (digitalRelease?: Date, physicalRelease?: Date) => {
+    if (!physicalRelease && digitalRelease) {
+      return { mediaItemDate: new Date(digitalRelease), mediaReleaseType: 'Digital release' };
+    }
+
+    if (physicalRelease && !digitalRelease) {
+      return { mediaItemDate: new Date(physicalRelease), mediaReleaseType: 'Physical release' };
+    }
+
+    if (digitalRelease && physicalRelease) {
+      const digitalReleaseDate = new Date(digitalRelease);
+
+      const mediaItemDate = isEqual(startOfDay(digitalReleaseDate), startOfDay(selectedDay))
+        ? digitalReleaseDate
+        : new Date(physicalRelease);
+      const mediaReleaseType = isEqual(startOfDay(digitalReleaseDate), startOfDay(selectedDay))
+        ? 'Digital release'
+        : 'Physical release';
+      return { mediaItemDate, mediaReleaseType };
+    }
+    return;
+  };
+
   return (
     <div className="flex flex-col gap-8">
       <AnimatePresence>
@@ -215,38 +238,44 @@ const MediaReleaseInfo = ({ sonarrReleases, radarrReleases, selectedDay }: IMedi
           <MediaReleaseItem
             key={`${sonarrItem.seriesId}${sonarrItem.seasonNumber}${sonarrItem.episodeNumber}`}
             mediaImages={sonarrItem.series.images}
-            mediaItem={sonarrItem}
+            mediaItemDesc={`S${sonarrItem.seasonNumber} E${sonarrItem.episodeNumber} - ${sonarrItem.title}`}
             mediaItemType="sonarr"
-            selectedDay={selectedDay}
+            mediaItemDate={new Date(sonarrItem.airDateUtc)}
+            mediaItemTitle={sonarrItem.series.title}
           />
         ))}
 
-        {filteredRadarr.map((radarrItem) => (
-          <MediaReleaseItem
-            key={radarrItem.id}
-            mediaImages={radarrItem.images}
-            mediaItem={radarrItem}
-            mediaItemType="radarr"
-            selectedDay={selectedDay}
-          />
-        ))}
+        {filteredRadarr.map((radarrItem) => {
+          const movieDate = getMovieDate(radarrItem.digitalRelease, radarrItem.physicalRelease);
+          return (
+            <MediaReleaseItem
+              key={radarrItem.id}
+              mediaItemDate={movieDate ? movieDate.mediaItemDate : new Date(selectedDay)}
+              mediaItemDesc={movieDate ? movieDate.mediaReleaseType : 'Unknown release'}
+              mediaItemTitle={radarrItem.title}
+              mediaImages={radarrItem.images}
+              mediaItemType="radarr"
+            />
+          );
+        })}
       </AnimatePresence>
     </div>
   );
 };
 
 interface IMediaReleaseItem {
-  // FIXME: remove any type
-  mediaItem: any;
-  mediaItemType: 'sonarr' | 'radarr';
+  mediaItemTitle: string;
+  mediaItemDesc: string;
   mediaImages: { coverType: string; url: string }[];
-  selectedDay: Date;
+  mediaItemDate: Date;
+  mediaItemType: 'sonarr' | 'radarr';
 }
 const MediaReleaseItem = ({
-  mediaItem,
+  mediaItemTitle,
+  mediaItemDesc,
   mediaItemType,
+  mediaItemDate,
   mediaImages,
-  selectedDay,
 }: IMediaReleaseItem) => {
   const initial = {
     height: 0,
@@ -261,22 +290,6 @@ const MediaReleaseItem = ({
       duration: 0.4,
     },
   };
-
-  let mediaReleaseType = '';
-  let mediaItemDate = new Date();
-
-  if (mediaItemType === 'sonarr') {
-    mediaItemDate = new Date(mediaItem.airDateUtc);
-  } else if (mediaItemType === 'radarr') {
-    const digitalReleaseDate = new Date(mediaItem.digitalRelease);
-
-    mediaItemDate = isEqual(startOfDay(digitalReleaseDate), startOfDay(selectedDay))
-      ? digitalReleaseDate
-      : new Date(mediaItem.physicalRelease);
-    mediaReleaseType = isEqual(startOfDay(digitalReleaseDate), startOfDay(selectedDay))
-      ? 'Digital release'
-      : 'Physical release';
-  }
 
   return (
     <motion.div initial={initial} animate={animate} exit={initial}>
@@ -299,17 +312,12 @@ const MediaReleaseItem = ({
         })}
 
         <div>
+          <h2 className="font-bold text-2xl">{mediaItemTitle}</h2>
           {mediaItemType === 'sonarr' && (
-            <>
-              <h2 className="font-bold text-2xl">{mediaItem.series.title}</h2>
-              <h3 className="font-bold text-blue-400">{`S${mediaItem.seasonNumber} E${mediaItem.episodeNumber} - ${mediaItem.title}`}</h3>
-            </>
+            <h3 className="font-bold text-blue-400">{mediaItemDesc}</h3>
           )}
           {mediaItemType === 'radarr' && (
-            <>
-              <h2 className="font-bold text-2xl">{mediaItem.title}</h2>
-              <h3 className="font-bold text-orange-400">{mediaReleaseType}</h3>
-            </>
+            <h3 className="font-bold text-orange-400">{mediaItemDesc}</h3>
           )}
           <h4 className="text-gray-400 text-sm">
             {format(mediaItemDate, 'EE, MMM dd')} at {format(mediaItemDate, 'p')}
