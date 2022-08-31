@@ -30,6 +30,7 @@ const CalendarWidget = () => {
     start: startOfWeek(startOfMonth(selectedDay)),
     end: endOfWeek(endOfMonth(selectedDay)),
   });
+
   const weeksOfSelectedMonth = eachWeekOfInterval({
     start: startOfMonth(selectedDay),
     end: endOfMonth(selectedDay),
@@ -38,24 +39,29 @@ const CalendarWidget = () => {
   const [sonarrMedia, setSonarrMedia] = useState([]);
   const [radarrMedia, setRadarrMedia] = useState([]);
 
-  const startDate = format(startOfMonth(today), 'yyyy-MM-dd');
-  const endDate = format(endOfMonth(today), 'yyyy-MM-dd');
-
-  const getMedias = (type: string) => {
+  const getMedias = (type: string, startDate: string, endDate: string) => {
     return poster('/api/modules/calendar', { startDate, endDate, type });
   };
 
   useEffect(() => {
-    getMedias('sonarr').then((data) => {
+    const startDate = format(startOfMonth(selectedDay), 'yyyy-MM-dd');
+    const endDate = format(endOfMonth(selectedDay), 'yyyy-MM-dd');
+
+    getMedias('sonarr', startDate, endDate).then((data) => {
       setSonarrMedia(data);
     });
-    getMedias('radarr').then((data) => {
+    getMedias('radarr', startDate, endDate).then((data) => {
       setRadarrMedia(data);
     });
-  }, []);
+  }, [selectedDay]);
 
   return (
-    <div className="max-w-7xl w-full group:border col-start-2 col-span-2 bg-service-card rounded-xl backdrop-blur-sm p-8">
+    <div
+      className={classNames(
+        'max-w-7xl w-full group:border col-start-2 col-span-2',
+        'bg-service-card rounded-xl backdrop-blur-sm p-8 ',
+      )}
+    >
       <div className="pb-8 space-x-2 flex justify-center align-center">
         <div className="text-7xl self-center">
           <h2 className="">{format(selectedDay, 'dd')}</h2>
@@ -169,6 +175,8 @@ const DayComponent = ({ day, sonarrMedia, radarrMedia, selectedDay, onClick }: I
 interface ISonarrReleases {
   airDateUtc: Date;
   seriesId: number;
+  seasonNumber: number;
+  episodeNumber: number;
   series: { images: { coverType: string; url: string }[] };
 }
 
@@ -205,7 +213,7 @@ const MediaReleaseInfo = ({ sonarrReleases, radarrReleases, selectedDay }: IMedi
       <AnimatePresence>
         {filteredSonarr.map((sonarrItem) => (
           <MediaReleaseItem
-            key={sonarrItem.seriesId}
+            key={`${sonarrItem.seriesId}${sonarrItem.seasonNumber}${sonarrItem.episodeNumber}`}
             mediaImages={sonarrItem.series.images}
             mediaItem={sonarrItem}
             mediaItemType="sonarr"
