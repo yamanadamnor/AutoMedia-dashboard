@@ -13,13 +13,13 @@ async function handlePost(req: NextApiRequest, res: NextApiResponse) {
       service: 'sonarr',
       port: 8989,
       url: '/api/calendar',
-      apiKey: 'sonarr-api-key',
+      apiKey: process.env.SONARR_API,
     },
     {
       service: 'radarr',
       port: 7878,
       url: '/api/v3/calendar',
-      apiKey: 'radarr-api-key',
+      apiKey: process.env.RADARR_API,
     },
   ];
 

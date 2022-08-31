@@ -26,4 +26,4 @@ build
 .env
 
 .next
-prisma/dev.db
+dev.db
