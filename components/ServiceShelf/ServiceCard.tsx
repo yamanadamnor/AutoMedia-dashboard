@@ -4,10 +4,8 @@ import { MinusCircleIcon } from '@heroicons/react/solid';
 import { Prisma, Service } from '@prisma/client';
 import { useSWRConfig } from 'swr';
 import toast from 'react-hot-toast';
-import { useSortable } from '@dnd-kit/sortable';
 
 import { deleter } from '../utils';
-import { CSS } from '@dnd-kit/utilities';
 
 interface IService extends Prisma.ServiceCreateInput {
   id: number;
@@ -16,14 +14,7 @@ interface IService extends Prisma.ServiceCreateInput {
 
 const ServiceCard = ({ id, title, image, href, description, inEdit }: IService) => {
   const { mutate } = useSWRConfig();
-  const { attributes, listeners, setNodeRef, transform, transition } = useSortable({
-    id,
-  });
 
-  const style = {
-    transform: CSS.Transform.toString(transform),
-    transition,
-  };
 
   const handleDelete = () => {
     try {
@@ -59,10 +50,6 @@ const ServiceCard = ({ id, title, image, href, description, inEdit }: IService) 
 
   return (
     <motion.a
-      ref={setNodeRef}
-      style={style}
-      {...attributes}
-      {...listeners}
       initial={initial}
       animate={animate}
       whileHover={inEdit ? {} : whileHover}
