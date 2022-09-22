@@ -1,15 +1,16 @@
+// eslint-disable-next-line @typescript-eslint/no-var-requires
 const defaultTheme = require('tailwindcss/defaultTheme');
 
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  content: ['./index.html', './src/**/*.{vue,js,ts,jsx,tsx}'],
+  content: ['./pages/**/*.{js,ts,jsx,tsx}', './components/**/*.{js,ts,jsx,tsx}'],
   theme: {
     extend: {
       gridTemplateColumns: {
         app: '5% 1fr 1fr 5%',
       },
       backgroundImage: {
-        'main-img': "url('assets/img/acs-background-2.png')",
+        'main-img': "url('/img/acs-background-2.png')",
       },
       backgroundSize: {
         blown: '200% 200%',

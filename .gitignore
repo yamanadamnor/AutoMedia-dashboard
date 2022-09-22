@@ -24,3 +24,6 @@ dist-ssr
 *.sw?
 build
 .env
+
+.next
+dev.db
