@@ -4,6 +4,9 @@ FROM node:16-alpine AS deps
 RUN apk add --no-cache libc6-compat=1.2.3-r0
 WORKDIR /app
 
+# Copy eslint
+COPY .eslintrc.js ./
+
 # Install dependencies based on the preferred package manager
 COPY package.json yarn.lock* package-lock.json* pnpm-lock.yaml* ./
 RUN \
