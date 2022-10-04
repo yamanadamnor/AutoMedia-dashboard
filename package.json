@@ -16,7 +16,7 @@
     "@prisma/client": "^4.2.1",
     "date-fns": "^2.29.2",
     "next": "^12.2.4",
-    "next-auth": "^4.10.3",
+    "next-auth": "^4.12.2",
     "framer-motion": "^7.5.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
