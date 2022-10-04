@@ -1,4 +1,4 @@
-import { PencilAltIcon } from '@heroicons/react/solid';
+import { PencilSquareIcon } from '@heroicons/react/24/solid';
 
 interface IEditBtn {
   editHandler: () => void;
@@ -9,9 +9,10 @@ interface IEditBtn {
 const EditBtn = ({ editHandler, className }: IEditBtn) => {
   return (
     <div onClick={editHandler} className="w-14">
-      <PencilAltIcon className={className} />
+      <PencilSquareIcon className={className} />
     </div>
   );
 };
 
 export default EditBtn;
+
