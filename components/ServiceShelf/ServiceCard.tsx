@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion';
 import Image from 'next/image';
-import { MinusCircleIcon } from '@heroicons/react/solid';
+import { MinusCircleIcon } from '@heroicons/react/24/solid';
 import { Prisma, Service } from '@prisma/client';
 import { useSWRConfig } from 'swr';
 import toast from 'react-hot-toast';
