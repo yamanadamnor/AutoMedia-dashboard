@@ -12,12 +12,13 @@
     "prettier"
   ],
   "dependencies": {
+    "@headlessui/react": "^1.7.3",
     "@heroicons/react": "^2.0.12",
     "@prisma/client": "^4.2.1",
     "date-fns": "^2.29.3",
+    "framer-motion": "^7.6.1",
     "next": "^12.2.4",
     "next-auth": "^4.12.2",
-    "framer-motion": "^7.6.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-hot-toast": "^2.4.0",
