@@ -12,7 +12,7 @@
     "prettier"
   ],
   "dependencies": {
-    "@heroicons/react": "^2.0.12",
+    "@heroicons/react": "^2.0.13",
     "@prisma/client": "^4.5.0",
     "date-fns": "^2.29.3",
     "next": "^12.2.4",
