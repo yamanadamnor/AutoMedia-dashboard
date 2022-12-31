@@ -2,6 +2,7 @@ import { AnimatePresence, motion } from 'framer-motion';
 import { Prisma, Service } from '@prisma/client';
 import toast from 'react-hot-toast';
 import { useSWRConfig } from 'swr';
+
 import { poster } from '../utils';
 
 import ServiceCard from './ServiceCard';
@@ -47,6 +48,21 @@ const ServiceShelf = ({ services, inEdit }: IServiceShelf) => {
   };
 
   return (
+    <>
+
+      {inEdit && (
+        <ServiceForm
+          handleSubmit={async (formData: Prisma.ServiceCreateInput) => {
+            try {
+              await saveService(formData);
+            } catch (error) {
+              toast.error('Could not save the service');
+            }
+          }}
+          title="title"
+        description="description"
+        />
+      )}
     <AnimatePresence>
       <motion.div
         variants={serviceContainer}
@@ -54,19 +70,6 @@ const ServiceShelf = ({ services, inEdit }: IServiceShelf) => {
         animate="show"
         className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 xl:gap-10 gap-14"
       >
-        {inEdit && (
-          <ServiceForm
-            handleSubmit={async (formData: Prisma.ServiceCreateInput) => {
-              try {
-                await saveService(formData);
-              } catch (error) {
-                toast.error('Could not save the service');
-              }
-            }}
-            title="title"
-            description="description"
-          />
-        )}
         {services.map((serv) => (
           <ServiceCard
             key={serv.id}
@@ -80,6 +83,7 @@ const ServiceShelf = ({ services, inEdit }: IServiceShelf) => {
         ))}
       </motion.div>
     </AnimatePresence>
+    </>
   );
 };
 
