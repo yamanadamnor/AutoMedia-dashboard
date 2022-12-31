@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import {
+  addMonths,
   endOfMonth,
   format,
   isEqual,
@@ -14,9 +15,10 @@ import {
   eachWeekOfInterval,
   startOfDay,
 } from 'date-fns';
-
 import { classNames, poster } from '../utils';
+
 import { AnimatePresence, motion } from 'framer-motion';
+import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/24/outline';
 
 setDefaultOptions({
   weekStartsOn: 1,
@@ -25,6 +27,7 @@ setDefaultOptions({
 const CalendarWidget = () => {
   const today = startOfToday();
   const [selectedDay, setSelectedDay] = useState(today);
+  const [isCurrentMonth, setIsCurrentMonth] = useState(true);
   const weekDays = eachDayOfInterval({ start: startOfWeek(today), end: endOfWeek(today) });
   const daysOfSelectedMonth = eachDayOfInterval({
     start: startOfWeek(startOfMonth(selectedDay)),
@@ -53,6 +56,9 @@ const CalendarWidget = () => {
     getMedias('radarr', startDate, endDate).then((data) => {
       setRadarrMedia(data);
     });
+
+    setIsCurrentMonth(isEqual(startOfMonth(selectedDay), startOfMonth(today)));
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedDay]);
 
   return (
@@ -62,23 +68,48 @@ const CalendarWidget = () => {
         'bg-service-card rounded-xl backdrop-blur-sm p-8 ',
       )}
     >
-      <div className="pb-8 space-x-2 flex justify-center align-center">
-        <div className="text-7xl self-center">
-          <h2 className="">{format(selectedDay, 'dd')}</h2>
+      <div
+        className={classNames(
+          isCurrentMonth ? "pb-8" : "",
+          'space-x-2 flex justify-between items-center',
+        )}
+      >
+        <ChevronLeftIcon
+          onClick={() => setSelectedDay(startOfMonth(addMonths(selectedDay, -1)))}
+          className="p-1 h-8 rounded select-none transition ease-in-out duration-300 hover:bg-[#272731] hover:shadow-lg"
+        />
+
+        <div className="flex justify-center items-center">
+          <div className="text-7xl self-center">
+            <h2 className="select-none">{format(selectedDay, 'dd')}</h2>
+          </div>
+          <div className="flex flex-col justify-between">
+            <h2 className="select-none font-thin">{format(selectedDay, 'yyyy')}</h2>
+            <h2 className="select-none text-3xl">{format(selectedDay, 'MMMM')}</h2>
+          </div>
         </div>
-        <div className="flex flex-col justify-between">
-          <h2 className="font-thin">{format(selectedDay, 'yyyy')}</h2>
-          <h2 className="text-3xl">{format(selectedDay, 'MMMM')}</h2>
-        </div>
+
+        <ChevronRightIcon
+          onClick={() => setSelectedDay(startOfMonth(addMonths(selectedDay, 1)))}
+          className="p-1 h-8 rounded select-none transition ease-in-out duration-300 hover:bg-[#272731] hover:shadow-lg"
+        />
       </div>
 
+      {!isCurrentMonth && (
+        <h3
+          className="py-4 text-center cursor-pointer select-none"
+          onClick={() => setSelectedDay(today)}
+        >
+          today
+        </h3>
+      )}
       <div className="flex justify-center">
-        <div className="grid">
+        <div className="grid gap-y-2">
           {/* Used to skip the first row */}
           <span></span>
 
           {weeksOfSelectedMonth.map((week) => (
-            <div key={format(week, 'yyyy-MM-dd')} className="text-center self-center text-gray-600">
+            <div key={format(week, 'yyyy-MM-dd')} className="text-center self-center text-gray-700">
               {format(week, 'I')}
             </div>
           ))}

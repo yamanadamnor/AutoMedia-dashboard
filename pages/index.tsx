@@ -41,15 +41,9 @@ const App: NextPage = () => {
       <Header />
       <Hero />
 
-      <CalendarWidget />
-      <div className="max-w-7xl pb-64 w-full col-start-2 col-span-2">
-        <div className="flex">
-          <EditBtn
-            className={'w-12 hover:text-green-800 transition-all duration-150'}
-            editHandler={() => setInEdit(!inEdit)}
-            inEdit={inEdit}
-          />
-          <h2 className="text-6xl font-bold mb-8">Clients</h2>
+      <div className="w-full col-start-2 col-span-1 row-start-2 row-span-2">
+        <CalendarWidget />
+      </div>
         </div>
         {error && <div>failed to load</div>}
         {!data && <div>...loading</div>}
