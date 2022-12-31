@@ -39,10 +39,12 @@ jobs:
       # Create and populate .env.local file
       - run: |
           touch .env.local
-          echo AUTHELIA_OIDC_CLIENT_SECRET=${{ secrets.AUTHELIA_OIDC_CLIENT_SECRET }} >> .env.local
-          echo AUTHELIA_OIDC_CLIENT_ID=${{ secrets.AUTHELIA_OIDC_CLIENT_ID }} >> .env.local
+
           echo NEXT_PUBLIC_SECRET=${{ secrets.SECRET }} >> .env.local
-          echo NEXTAUTH_SECRET=${{ secrets.SECRET }} >> .env.local
+          echo NEXTAUTH_URL=http://localhost:3344 >> .env.local
+
+          echo AUTHELIA_OIDC_CLIENT_SECRET=${{ secrets.AUTHELIA_OIDC_CLIENT_ID }} >> .env.local
+          echo AUTHELIA_OIDC_CLIENT_ID=${{ secrets.AUTHELIA_OIDC_CLIENT_SECRET }} >> .env.local
 
       - run: npm run build
 
