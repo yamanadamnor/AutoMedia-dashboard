@@ -21,7 +21,6 @@ const Hero = () => {
       transition={{
         duration: 0.5,
       }}
-      className="col-start-2 col-span-2 max-w-7xl w-full my-24 "
     >
       <div className="w-full">
         <h1 className="text-2xl font-bold leading-relaxed sm:text-4xl sm:leading-20">
