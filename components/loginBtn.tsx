@@ -12,8 +12,8 @@ export default function LoginBtn() {
   const Btn = (btnKind: IBtnKind) => {
     return (
       <button
-        className={`box-border py-0 px-8 border-2 rounded-md hover:bg-white hover:text-black transition-all 
-          duration-150 ease-in-out rounded" onClick={btnKind.clickHandler`}
+        className={`box-border py-0 px-8 border-2 h-12 rounded-md hover:bg-white hover:text-black transition-all 
+          duration-150 ease-in-out`}
         onClick={btnKind.clickHandler}
       >
         {btnKind.message}
