@@ -7,7 +7,12 @@ const nextConfig = {
   reactStrictMode: true,
   output: 'standalone',
   images: {
-    domains: ['raw.githubusercontent.com', 'image.tmdb.org', 'artworks.thetvdb.com'],
+    domains: [
+      'raw.githubusercontent.com',
+      'image.tmdb.org',
+      'artworks.thetvdb.com',
+      'cdn.jsdelivr.net',
+    ],
   },
 };
 
