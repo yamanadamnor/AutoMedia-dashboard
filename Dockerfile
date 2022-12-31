@@ -27,9 +27,8 @@ COPY . .
 # Learn more here: https://nextjs.org/telemetry
 # Uncomment the following line in case you want to disable telemetry during the build.
 # ENV NEXT_TELEMETRY_DISABLED 1
-RUN npx prisma generate
-
-RUN yarn build
+RUN npx prisma generate \
+  && npm run build
 
 # If using npm comment out above and use below instead
 # RUN npm run build
