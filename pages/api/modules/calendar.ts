@@ -6,7 +6,7 @@ async function handlePost(req: NextApiRequest, res: NextApiResponse) {
     body: { startDate, endDate, type },
   }: { body: { startDate: string; endDate: string; type: 'sonarr' | 'radarr' } } = req;
 
-  const baseUrl = 'http://192.168.1.157';
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
 
   const mediaServiceUrls = [
     {
