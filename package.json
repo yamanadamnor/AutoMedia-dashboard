@@ -6,7 +6,9 @@
     "dev": "next dev -p 3344",
     "build": "next build",
     "lint": "next lint && stylelint 'styles/*.css'",
-    "test": "vitest run --coverage"
+    "test": "vitest run --coverage",
+    "start:prod": "node server.js",
+    "start:migrate:prod": "npx prisma migrate deploy && npm run start:prod"
   },
   "plugins": [
     "prettier"
