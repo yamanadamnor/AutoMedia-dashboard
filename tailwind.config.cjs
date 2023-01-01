@@ -6,8 +6,12 @@ module.exports = {
   content: ['./pages/**/*.{js,ts,jsx,tsx}', './components/**/*.{js,ts,jsx,tsx}'],
   theme: {
     extend: {
+      aspectRatio: {
+        '2/3': '2 / 3'
+      },
       gridTemplateColumns: {
         app: '1% 2fr repeat(6, 1fr) 1%',
+        mediaItem: 'auto 1fr'
       },
       gridTemplateRows: {
         app: 'auto auto'

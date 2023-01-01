@@ -58,7 +58,7 @@ const CalendarWidget = () => {
     });
 
     setIsCurrentMonth(isEqual(startOfMonth(selectedDay), startOfMonth(today)));
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedDay]);
 
   return (
@@ -70,7 +70,7 @@ const CalendarWidget = () => {
     >
       <div
         className={classNames(
-          isCurrentMonth ? "pb-8" : "",
+          isCurrentMonth ? 'pb-8' : '',
           'space-x-2 flex justify-between items-center',
         )}
       >
@@ -324,11 +324,11 @@ const MediaReleaseItem = ({
 
   return (
     <motion.div initial={initial} animate={animate} exit={initial}>
-      <div className="flex gap-4 justift-start items-start">
+      <div className="grid grid-cols-mediaItem gap-x-4">
         {mediaImages.map((image) => {
           if (image.coverType === 'poster') {
             return (
-              <div key={image.coverType} className="relative w-20 h-28 object-cover">
+              <div key={image.coverType} className="aspect-2/3 w-20 relative">
                 <Image
                   src={image.url}
                   alt="Media poster"
@@ -343,12 +343,12 @@ const MediaReleaseItem = ({
         })}
 
         <div>
-          <h2 className="font-bold text-2xl">{mediaItemTitle}</h2>
+          <h2 className="font-bold text-xl">{mediaItemTitle}</h2>
           {mediaItemType === 'sonarr' && (
-            <h3 className="font-bold text-blue-400">{mediaItemDesc}</h3>
+            <h3 className="text-sm font-bold text-blue-400">{mediaItemDesc}</h3>
           )}
           {mediaItemType === 'radarr' && (
-            <h3 className="font-bold text-orange-400">{mediaItemDesc}</h3>
+            <h3 className="text-sm font-bold text-orange-400">{mediaItemDesc}</h3>
           )}
           <h4 className="text-gray-400 text-sm">
             {format(mediaItemDate, 'EE, MMM dd')} at {format(mediaItemDate, 'p')}
