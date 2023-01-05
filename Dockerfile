@@ -71,11 +71,9 @@ COPY --from=builder /app/package.json ./package.json
 COPY --from=dependencies /app/prod_node_modules ./node_modules
 COPY --from=builder --chown=node:node /app/.next ./.next
 # use schema from container
-COPY --from=builder --chown=node:node /app/prisma ./prisma
+COPY --from=builder /app/prisma ./prisma
 
-COPY --from=builder --chown=node:node /app/config ./config
-
-USER node
+COPY --from=builder /app/config ./config
 
 EXPOSE 3344
 
