@@ -1,3 +1,5 @@
+import { Prisma, Service } from '@prisma/client';
+import { SignInResponse } from 'next-auth/react';
 import { StaticImageData } from 'next/image';
 
 export interface IService {
@@ -10,6 +12,17 @@ export interface IService {
   handleServiceDelete?: () => void;
   handleServiceAdd?: () => void;
 }
+
+export interface IServiceCard extends Prisma.ServiceCreateInput {
+  id: number;
+  inEdit?: boolean;
+}
+
+export interface IServiceShelf {
+  services: Service[];
+  inEdit: boolean;
+}
+
 export interface ISonarrReleases {
   airDateUtc: Date;
   title: string;
@@ -52,4 +65,10 @@ export interface IDayComponent {
     digitalRelease: Date;
     physicalRelease: Date;
   }[];
+}
+
+export interface IBtnKind {
+  type: 'signin' | 'signout';
+  clickHandler: () => Promise<SignInResponse> | Promise<undefined>;
+  message: string;
 }

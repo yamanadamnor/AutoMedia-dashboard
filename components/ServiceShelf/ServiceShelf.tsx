@@ -1,17 +1,14 @@
 import { AnimatePresence, motion } from 'framer-motion';
-import { Prisma, Service } from '@prisma/client';
+import { Prisma } from '@prisma/client';
 import toast from 'react-hot-toast';
 import { useSWRConfig } from 'swr';
 
-import { poster } from '../utils';
+import { classNames, poster } from '../utils';
+import { IServiceShelf } from '../interfaces';
 
 import ServiceCard from './ServiceCard';
 import ServiceForm from './ServiceForm';
 
-interface IServiceShelf {
-  services: Service[];
-  inEdit: boolean;
-}
 
 const ServiceShelf = ({ services, inEdit }: IServiceShelf) => {
   const { mutate } = useSWRConfig();
@@ -49,7 +46,6 @@ const ServiceShelf = ({ services, inEdit }: IServiceShelf) => {
 
   return (
     <>
-
       {inEdit && (
         <ServiceForm
           handleSubmit={async (formData: Prisma.ServiceCreateInput) => {
@@ -60,29 +56,34 @@ const ServiceShelf = ({ services, inEdit }: IServiceShelf) => {
             }
           }}
           title="title"
-        description="description"
+          description="description"
         />
       )}
-    <AnimatePresence>
-      <motion.div
-        variants={serviceContainer}
-        initial="hidden"
-        animate="show"
-        className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 xl:gap-10 gap-14"
-      >
-        {services.map((serv) => (
-          <ServiceCard
-            key={serv.id}
-            id={serv.id}
-            title={serv.title}
-            image={serv.image}
-            href={serv.href}
-            description={serv.description}
-            inEdit={inEdit}
-          />
-        ))}
-      </motion.div>
-    </AnimatePresence>
+      <AnimatePresence>
+        <motion.div
+          variants={serviceContainer}
+          initial="hidden"
+          animate="show"
+          className={classNames(
+            'grid grid-cols-1 gap-6',
+            'sm:grid-cols-2 sm:gap-4',
+            'lg:grid-cols-3 lg:gap-6',
+            'xl:grid-cols-4',
+          )}
+        >
+          {services.map((serv) => (
+            <ServiceCard
+              key={serv.id}
+              id={serv.id}
+              title={serv.title}
+              image={serv.image}
+              href={serv.href}
+              description={serv.description}
+              inEdit={inEdit}
+            />
+          ))}
+        </motion.div>
+      </AnimatePresence>
     </>
   );
 };

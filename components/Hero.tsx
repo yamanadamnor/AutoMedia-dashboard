@@ -2,6 +2,7 @@ import { motion } from 'framer-motion';
 import { useSession } from 'next-auth/react';
 
 import CompanyTag from './CompanyTag';
+import { classNames } from './utils';
 
 const Hero = () => {
   const { data: session } = useSession();
@@ -23,12 +24,14 @@ const Hero = () => {
       }}
     >
       <div className="w-full">
-        <h1 className="text-2xl font-bold leading-relaxed sm:text-4xl sm:leading-20">
+        <h1
+          className={classNames('text-2xl font-bold leading-relaxed', 'sm:text-4xl sm:leading-20')}
+        >
           Welcome {welcome} to
           <br />
           <CompanyTag />
         </h1>
-        <p className="mt-4 text-lg sm:text-2xl">
+        <p className={classNames('mt-4 text-lg', 'sm:text-2xl')}>
           The leading media provider for friends and family ❤️. Request that trending series your
           friends won{"'"}t shut up about or enjoy our already expansive library.
         </p>

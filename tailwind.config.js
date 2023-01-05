@@ -15,7 +15,7 @@ module.exports = {
         mediaItem: 'auto 1fr'
       },
       gridTemplateRows: {
-        app: 'auto auto'
+        app: 'auto auto 1fr'
       },
       backgroundImage: {
         'main-img': "url('/img/acs-background-2.png')",

@@ -2,18 +2,15 @@ import { useState, MouseEvent } from 'react';
 import { motion } from 'framer-motion';
 import Image from 'next/image';
 import { MinusCircleIcon } from '@heroicons/react/24/solid';
-import { Prisma, Service } from '@prisma/client';
+import { Service } from '@prisma/client';
 import { useSWRConfig } from 'swr';
 import toast from 'react-hot-toast';
 
+import { IServiceCard } from '../interfaces';
 import { deleter } from '../utils';
 
-interface IService extends Prisma.ServiceCreateInput {
-  id: number;
-  inEdit?: boolean;
-}
 
-const ServiceCard = ({ id, title, image, href, description, inEdit }: IService) => {
+const ServiceCard = ({ id, title, image, href, description, inEdit }: IServiceCard) => {
   const { mutate } = useSWRConfig();
   const [isHovered, setIsHovered] = useState(false);
 

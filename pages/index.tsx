@@ -10,7 +10,7 @@ import Header from '../components/Header';
 import Footer from '../components/Footer';
 import ServiceShelf from '../components/ServiceShelf/ServiceShelf';
 
-import { fetcher } from '../components/utils';
+import { classNames, fetcher } from '../components/utils';
 import CalendarWidget from '../components/CalendarWidget/CalendarWidget';
 
 import { AddServiceModalAtom } from '../components/states';
@@ -20,7 +20,14 @@ const App: NextPage = () => {
   const { data, error } = useSWR<Service[]>('/api/services', fetcher);
 
   return (
-    <div className="relative min-h-screen grid grid-cols-app gap-y-8 gap-x-8 justify-items-center place-content-start h-full text-white">
+    <div
+      className={classNames(
+        'relative min-h-screen grid grid-cols-app',
+        'grid-rows-app gap-y-8 gap-x-2 justify-items-centerr',
+        'place-content-start h-full text-white',
+        'lg:gap-x-8',
+      )}
+    >
       <Toaster
         position="top-right"
         toastOptions={{
@@ -40,29 +47,56 @@ const App: NextPage = () => {
           },
         }}
       />
-      <div className="col-start-2 col-span-7 row-start-1 row-end-2 h-24 py-6 flex justify-between items-center w-full ">
+      <div
+        className={classNames(
+          'col-start-2 col-span-7 row-start-1 row-end-2 h-24',
+          'py-6 flex justify-between items-center w-full ',
+        )}
+      >
         <Header />
       </div>
 
-      <div className="w-full col-start-3 col-span-6 row-start-2">
+      <div
+        className={classNames(
+          'hidden w-full col-start-4 col-span-5 row-start-2',
+          'lg:block',
+          'xl:col-start-3 xl:col-span-6',
+        )}
+      >
         <Hero />
       </div>
 
-      <div className="w-full col-start-2 col-span-1 row-start-2 row-span-2">
-        <CalendarWidget />
+      {/* <---- Sidebar ----> */}
+      <div
+        className={classNames(
+          'w-full col-start-2 col-end-[-2] row-start-2',
+          'lg:col-end-4 lg:row-end-[-1]',
+          'xl:col-end-3',
+        )}
+      >
+        <div className="w-full">
+          <CalendarWidget />
+        </div>
       </div>
 
-      <div className="w-full col-start-3 col-span-6 row-start-3">
+      {/* <---- Services ----> */}
+      <div
+        className={classNames(
+          'w-full col-start-2 col-end-[-2]',
+          'lg:col-start-4 lg:row-start-3 lg:col-span-5',
+          'xl:col-start-3 xl:col-span-6',
+        )}
+      >
         <div className="flex items-center flex-gap-48 justify-center"></div>
 
         <div className="flex my-4">
           <button
             type="button"
             onClick={() => setAddServiceModal(true)}
-            className=" `box-border py-2 px-8 border-2 h-12 rounded-md hover:bg-white hover:text-black transition-all duration-150 ease-in-out"
-            // className="rounded-md bg-black flex-grow-0 bg-opacity-20 px-4 py-2 text-lg font-medium
-            //   text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2
-            //   focus-visible:ring-white focus-visible:ring-opacity-75"
+            className={classNames(
+              'box-border py-2 px-8 border-2 h-12 rounded-md hover:bg-white',
+              'hover:text-black transition-all duration-150 ease-in-out',
+            )}
           >
             Add service
           </button>
@@ -72,7 +106,12 @@ const App: NextPage = () => {
         {data && <ServiceShelf inEdit={isAddServiceModalOpen} services={data} />}
       </div>
 
-      <div className="w-full bottom-0 col-start-1 col-span-9 grid mx-8 p-8 row-start- bg-service-card rounded-t-2xl">
+      <div
+        className={classNames(
+          'w-full bottom-0 col-start-1 col-end-[-1] grid p-8',
+          'bg-service-card rounded-t-2xl',
+        )}
+      >
         <Footer />
       </div>
     </div>

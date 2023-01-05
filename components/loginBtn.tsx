@@ -1,10 +1,6 @@
-import { useSession, signIn, signOut, SignInResponse } from 'next-auth/react';
+import { useSession, signIn, signOut } from 'next-auth/react';
 
-interface IBtnKind {
-  type: 'signin' | 'signout';
-  clickHandler: () => Promise<SignInResponse> | Promise<undefined>;
-  message: string;
-}
+import { IBtnKind } from './interfaces';
 
 export default function LoginBtn() {
   const { data: session, status } = useSession();
