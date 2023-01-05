@@ -19,6 +19,31 @@
 /* stylelint-disable-next-line at-rule-no-unknown */
 @tailwind utilities;
 
+@layer utilities {
+  .scrollbar::-webkit-scrollbar {
+    width: 4px;
+    height: 10px;
+  }
+
+  .scrollbar::-webkit-scrollbar-track {
+    border-radius: 100vh;
+    background: none;
+  }
+
+  .scrollbar::-webkit-scrollbar-thumb {
+    background: #3f3f52;
+    border-radius: 100vh;
+  }
+
+  .scrollbar::-webkit-scrollbar:hover {
+    width: 10px;
+  }
+
+  .scrollbar::-webkit-scrollbar-thumb:hover {
+    background: #858585;
+  }
+}
+
 /**
  * Use this directive to control where Tailwind injects the hover, focus,
  * responsive, dark mode, and other variants of each class.

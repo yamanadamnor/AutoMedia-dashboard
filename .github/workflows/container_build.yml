@@ -10,53 +10,7 @@ env:
   IMAGE_NAME: ${{ github.repository }}
 
 jobs:
-  next-build:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Setup node
-        uses: actions/setup-node@v3
-        with:
-          node-version: 16
-          check-latest: true
-
-      - name: Checkout github.repository
-        uses: actions/checkout@v3
-
-      - name: Cache build
-        uses: actions/cache@v3.0.1
-        with:
-          path: |
-            ~/.npm
-            ${{ github.workspace }}/.next/cache
-          # Generate a new cache whenever packages or source files change.
-          key: ${{ runner.os }}-nextjs-${{ hashFiles('**/package-lock.json') }}-${{ hashFiles('**.[jt]s', '**.[jt]sx') }}
-          # If source files changed but packages didn't, rebuild from a prior cache.
-          restore-keys: |
-            ${{ runner.os }}-nextjs-${{ hashFiles('**/package-lock.json') }}-
-
-      - run: npm ci
-      
-      # Create and populate .env.local file
-      - run: |
-          touch .env.local
-          echo AUTHELIA_OIDC_CLIENT_SECRET=${{ secrets.AUTHELIA_OIDC_CLIENT_SECRET }} >> .env.local
-          echo AUTHELIA_OIDC_CLIENT_ID=${{ secrets.AUTHELIA_OIDC_CLIENT_ID }} >> .env.local
-          echo NEXT_PUBLIC_SECRET=${{ secrets.SECRET }} >> .env.local
-          echo NEXTAUTH_SECRET=${{ secrets.SECRET }} >> .env.local
-
-      - run: npm run build
-
-      - name: Upload Next build # Upload the artifact
-        uses: actions/upload-artifact@v3.1.0
-        with:
-          name: build
-          path: |
-            .next
-            public
-          retention-days: 7
-
-  deploy-image:
-    needs: next-build # Job depends on next-build(above) job
+  build-and-deploy-image:
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -64,15 +18,10 @@ jobs:
 
     steps:
       - name: Checkout github.repository
-        uses: actions/checkout@v3
-
-      - name: Download next build # Download the above uploaded artifact
-        uses: actions/download-artifact@v2
-        with:
-          name: build
+        uses: actions/checkout@v3.2.0
 
       - name: Login to registry
-        uses: docker/login-action@v2.0.0
+        uses: docker/login-action@v2.1.0
         with:
           registry: ${{ env.REGISTRY }}
           username: ${{ github.actor }}
@@ -80,14 +29,18 @@ jobs:
 
       - name: Extract metadata (tags, labels) for Docker
         id: meta
-        uses: docker/metadata-action@v4.0.1
+        uses: docker/metadata-action@v4.1.1
         with:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
 
       - name: Build and push Docker image
-        uses: docker/build-push-action@v3.1.0
+        uses: docker/build-push-action@v3.2.0
         with:
           context: .
+          build-args: |
+            "ARG_DATABASE_URL=${{ secrets.DATABASE_URL }}"
+            "ARG_NEXTAUTH_URL=${{ secrets.NEXTAUTH_URL }}"
+            "ARG_NEXT_PUBLIC_SECRET=${{ secrets.NEXT_PUBLIC_SECRET }}"
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}

@@ -1,24 +1,33 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { NextPage } from 'next';
 import { Toaster } from 'react-hot-toast';
 import useSWR from 'swr';
 import { Service } from '@prisma/client';
+import { useAtom } from 'jotai';
 
 import Hero from '../components/Hero';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
-import EditBtn from '../components/EditBtn';
 import ServiceShelf from '../components/ServiceShelf/ServiceShelf';
 
-import { fetcher } from '../components/utils';
+import { classNames, fetcher } from '../components/utils';
 import CalendarWidget from '../components/CalendarWidget/CalendarWidget';
 
+import { AddServiceModalAtom } from '../components/states';
+
 const App: NextPage = () => {
-  const [inEdit, setInEdit] = useState<boolean>(false);
+  const [isAddServiceModalOpen, setAddServiceModal] = useAtom(AddServiceModalAtom);
   const { data, error } = useSWR<Service[]>('/api/services', fetcher);
 
   return (
-    <div className="relative min-h-screen grid grid-cols-app justify-items-center place-content-center h-full text-white">
+    <div
+      className={classNames(
+        'relative min-h-screen grid grid-cols-app',
+        'grid-rows-app gap-y-8 gap-x-2 justify-items-centerr',
+        'place-content-start h-full text-white',
+        'lg:gap-x-8',
+      )}
+    >
       <Toaster
         position="top-right"
         toastOptions={{
@@ -38,26 +47,73 @@ const App: NextPage = () => {
           },
         }}
       />
-      <Header />
-      <Hero />
+      <div
+        className={classNames(
+          'col-start-2 col-span-7 row-start-1 row-end-2 h-24',
+          'py-6 flex justify-between items-center w-full ',
+        )}
+      >
+        <Header />
+      </div>
 
-      <CalendarWidget />
-      <div className="max-w-7xl pb-64 w-full col-start-2 col-span-2">
-        <div className="flex">
-          <EditBtn
-            className={'w-12 hover:text-green-800 transition-all duration-150'}
-            editHandler={() => setInEdit(!inEdit)}
-            inEdit={inEdit}
-          />
-          <h2 className="text-6xl font-bold mb-8">Clients</h2>
+      <div
+        className={classNames(
+          'hidden w-full col-start-4 col-span-5 row-start-2',
+          'lg:block',
+          'xl:col-start-3 xl:col-span-6',
+        )}
+      >
+        <Hero />
+      </div>
+
+      {/* <---- Sidebar ----> */}
+      <div
+        className={classNames(
+          'w-full col-start-2 col-end-[-2] row-start-2',
+          'lg:col-end-4 lg:row-end-[-1]',
+          'xl:col-end-3',
+        )}
+      >
+        <div className="w-full">
+          <CalendarWidget />
+        </div>
+      </div>
+
+      {/* <---- Services ----> */}
+      <div
+        className={classNames(
+          'w-full col-start-2 col-end-[-2]',
+          'lg:col-start-4 lg:row-start-3 lg:col-span-5',
+          'xl:col-start-3 xl:col-span-6',
+        )}
+      >
+        <div className="flex items-center flex-gap-48 justify-center"></div>
+
+        <div className="flex my-4">
+          <button
+            type="button"
+            onClick={() => setAddServiceModal(true)}
+            className={classNames(
+              'box-border py-2 px-8 border-2 h-12 rounded-md hover:bg-white',
+              'hover:text-black transition-all duration-150 ease-in-out',
+            )}
+          >
+            Add service
+          </button>
         </div>
         {error && <div>failed to load</div>}
         {!data && <div>...loading</div>}
-        {data && <ServiceShelf inEdit={inEdit} services={data} />}
+        {data && <ServiceShelf inEdit={isAddServiceModalOpen} services={data} />}
       </div>
 
-
-      <Footer />
+      <div
+        className={classNames(
+          'w-full bottom-0 col-start-1 col-end-[-1] grid p-8',
+          'bg-service-card rounded-t-2xl',
+        )}
+      >
+        <Footer />
+      </div>
     </div>
   );
 };

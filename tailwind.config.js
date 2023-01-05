@@ -2,12 +2,20 @@
 const defaultTheme = require('tailwindcss/defaultTheme');
 
 /** @type {import('tailwindcss').Config} */
+
 module.exports = {
   content: ['./pages/**/*.{js,ts,jsx,tsx}', './components/**/*.{js,ts,jsx,tsx}'],
   theme: {
     extend: {
+      aspectRatio: {
+        '2/3': '2 / 3'
+      },
       gridTemplateColumns: {
-        app: '5% 1fr 1fr 5%',
+        app: '1% 2fr repeat(6, 1fr) 1%',
+        mediaItem: 'auto 1fr'
+      },
+      gridTemplateRows: {
+        app: 'auto auto 1fr'
       },
       backgroundImage: {
         'main-img': "url('/img/acs-background-2.png')",
@@ -17,6 +25,7 @@ module.exports = {
       },
       colors: {
         'service-card': '#393b4360',
+        'service-card-solid': '#21222e',
         'light-shadow': '#30304555',
         'dark-shadow': '#00000055',
         'service-desc-dark': 'rgba(238, 238, 238, 0.404)',

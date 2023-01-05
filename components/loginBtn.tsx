@@ -1,10 +1,6 @@
-import { useSession, signIn, signOut, SignInResponse } from 'next-auth/react';
+import { useSession, signIn, signOut } from 'next-auth/react';
 
-interface IBtnKind {
-  type: 'signin' | 'signout';
-  clickHandler: () => Promise<SignInResponse> | Promise<undefined>;
-  message: string;
-}
+import { IBtnKind } from './interfaces';
 
 export default function LoginBtn() {
   const { data: session, status } = useSession();
@@ -12,8 +8,8 @@ export default function LoginBtn() {
   const Btn = (btnKind: IBtnKind) => {
     return (
       <button
-        className={`box-border py-0 px-8 border-2 rounded-md hover:bg-white hover:text-black transition-all 
-          duration-150 ease-in-out rounded" onClick={btnKind.clickHandler`}
+        className={`box-border py-0 px-8 border-2 h-12 rounded-md hover:bg-white hover:text-black transition-all 
+          duration-150 ease-in-out`}
         onClick={btnKind.clickHandler}
       >
         {btnKind.message}

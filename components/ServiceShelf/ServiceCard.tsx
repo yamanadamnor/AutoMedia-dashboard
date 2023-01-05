@@ -1,22 +1,21 @@
+import { useState, MouseEvent } from 'react';
 import { motion } from 'framer-motion';
 import Image from 'next/image';
 import { MinusCircleIcon } from '@heroicons/react/24/solid';
-import { Prisma, Service } from '@prisma/client';
+import { Service } from '@prisma/client';
 import { useSWRConfig } from 'swr';
 import toast from 'react-hot-toast';
 
+import { IServiceCard } from '../interfaces';
 import { deleter } from '../utils';
 
-interface IService extends Prisma.ServiceCreateInput {
-  id: number;
-  inEdit?: boolean;
-}
 
-const ServiceCard = ({ id, title, image, href, description, inEdit }: IService) => {
+const ServiceCard = ({ id, title, image, href, description, inEdit }: IServiceCard) => {
   const { mutate } = useSWRConfig();
+  const [isHovered, setIsHovered] = useState(false);
 
-
-  const handleDelete = () => {
+  const handleDelete = (e: MouseEvent) => {
+    e.preventDefault();
     try {
       mutate('/api/services', deleter(`/api/service/${id}`), {
         populateCache: (deletedService: Service, services: Service[]) => {
@@ -36,6 +35,7 @@ const ServiceCard = ({ id, title, image, href, description, inEdit }: IService) 
   const animate = {
     opacity: 1,
     y: 0,
+    height: 'auto',
   };
 
   const whileHover = {
@@ -48,12 +48,21 @@ const ServiceCard = ({ id, title, image, href, description, inEdit }: IService) 
     transition: { duration: 0.05 },
   };
 
+  const exit = {
+    opacity: 0,
+    y: -40,
+    transition: { duration: 0.05 },
+  };
+
   return (
     <motion.a
       initial={initial}
       animate={animate}
+      exit={exit}
       whileHover={inEdit ? {} : whileHover}
       whileTap={whileTap}
+      onMouseOver={() => setIsHovered(true)}
+      onMouseOut={() => setIsHovered(false)}
       className="relative group select-none flex flex-col justify-between items-start transition ease-in-out
         duration-300 bg-service-card rounded-xl py-2 px-5 backdrop-blur-sm hover:shadow-service"
       href={href}
@@ -63,14 +72,13 @@ const ServiceCard = ({ id, title, image, href, description, inEdit }: IService) 
         }
       }}
     >
-      {inEdit && (
-        <div onClick={() => handleDelete()}>
+      {isHovered && (
+        <motion.div initial={{ opacity: 0 }} animate={animate} onClick={(e) => handleDelete(e)}>
           <MinusCircleIcon
             className="absolute -top-2 -right-2 w-8 hover:text-red-600 
-            transition-all duration-200 ease-in-out"
+          transition-all duration-200 ease-in-out"
           />
-          {id}
-        </div>
+        </motion.div>
       )}
       <div className="flex items-center justify-start w-full">
         <div className="flex w-7 p-0 mr-4 grayscale transition ease-in-out duration-300 group-hover:grayscale-0">
