@@ -35,8 +35,7 @@ jobs:
             ${{ runner.os }}-nextjs-${{ hashFiles('**/package-lock.json') }}-
 
       - name: install dependencies
-        run: npm ci \
-          npm i sharp
+        run: npm ci
 
       - name: create env.production file
         run: |
