@@ -25,8 +25,12 @@ function MediaReleaseItem({
     },
   };
 
+  const exit = {
+    opacity: 0,
+  };
+
   return (
-    <motion.div initial={initial} animate={animate} exit={initial}>
+    <motion.div initial={initial} animate={animate} exit={exit}>
       <div className="grid grid-cols-mediaItem gap-x-4">
         {mediaImages.map((image) => {
           if (image.coverType === 'poster') {

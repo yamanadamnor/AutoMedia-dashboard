@@ -28,9 +28,9 @@ setDefaultOptions({
 
 const CalendarWidget = () => {
   const today = startOfToday();
-  const [selectedDay, setSelectedDay] = useAtom(selectedDate);
   const [todaysSonarrReleases, setTodaysSonarr] = useState<ISonarrReleases[]>([]);
   const [todaysRadarrReleases, setTodaysRadarr] = useState<IRadarrReleases[]>([]);
+  const [selectedDay, setSelectedDay] = useAtom(selectedDate);
   const [isCurrentMonth, setIsCurrentMonth] = useAtom(isThisMonth);
   const weekDays = eachDayOfInterval({
     start: startOfWeek(selectedDay),
@@ -50,7 +50,7 @@ const CalendarWidget = () => {
   const [radarrMedia, setRadarrMedia] = useAtom(radarrMedias);
 
   const getMedias = (type: string, startDate: string, endDate: string) => {
-    return poster('/api/modules/calendar', { startDate, endDate, type });
+    return poster('/api/modules/calendar', 'POST', { startDate, endDate, type });
   };
 
   useEffect(() => {
@@ -156,7 +156,7 @@ const CalendarWidget = () => {
                 key={format(weekday, 'yyyy-MM-dd')}
                 className="text-center font-bold text-gray-600"
               >
-                {format(weekday, 'EE')}
+                {format(weekday, 'EEEEE')}
               </div>
             ))}
 
