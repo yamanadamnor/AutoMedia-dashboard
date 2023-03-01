@@ -156,7 +156,9 @@ const CalendarWidget = () => {
                 key={format(weekday, 'yyyy-MM-dd')}
                 className="text-center font-bold text-gray-600"
               >
-                {format(weekday, 'EEEEE')}
+                <span className="hidden sm:block">{format(weekday, 'EE')}</span>
+
+                <span className="sm:hidden">{format(weekday, 'EEEEE')}</span>
               </div>
             ))}
 
