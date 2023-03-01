@@ -89,7 +89,8 @@
 }
 
 body {
-  @apply bg-main-img;
+  /* @apply bg-main-img; */
+  @apply bg-background;
   @apply bg-cover;
   @apply bg-no-repeat;
   @apply bg-center;
