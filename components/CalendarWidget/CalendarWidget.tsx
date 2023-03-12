@@ -50,7 +50,7 @@ const CalendarWidget = () => {
   const [radarrMedia, setRadarrMedia] = useAtom(radarrMedias);
 
   const getMedias = (type: string, startDate: string, endDate: string) => {
-    return poster('/api/modules/calendar', 'POST', { startDate, endDate, type });
+    return poster('/api/modules/calendar', { startDate, endDate, type });
   };
 
   useEffect(() => {

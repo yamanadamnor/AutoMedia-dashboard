@@ -19,14 +19,17 @@ export function poster<T>(url: string, data: T) {
 
 // Function used for sending DELETE requests
 export function deleter(url: string) {
-  return fetch(url, { method: 'DELETE', headers: { 'content-type': 'application/json' } }).then(
-    (res) => res.json(),
-  );
+  return fetch(url, {
+    method: 'DELETE',
+    headers: {
+      'content-type': 'application/json',
+    },
+  }).then((res) => res.json());
 }
 
-export const classNames = (...classes: string[]) => {
+export function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(' ');
-};
+}
 
 // Credit: https://usehooks.com/useDebounce/
 // T is a generic type for value parameter, our case this will be string

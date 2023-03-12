@@ -38,9 +38,8 @@ function MediaReleaseItem({
               <div key={image.coverType} className="aspect-2/3 w-12 md:w-20 relative ">
                 <Image
                   src={image.url}
+                  fill
                   alt="Media poster"
-                  layout="fill"
-                  objectFit="contain"
                   placeholder="blur"
                   blurDataURL={image.url}
                 />
