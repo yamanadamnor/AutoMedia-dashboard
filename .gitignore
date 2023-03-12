@@ -26,5 +26,4 @@ build
 .env
 
 .next
-prisma/dev.db
-prisma/dev.db-journal
+config/dashboard.db

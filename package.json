@@ -18,9 +18,9 @@
     "@heroicons/react": "^2.0.13",
     "@prisma/client": "^4.6.1",
     "date-fns": "^2.29.3",
-    "framer-motion": "^8.0.2",
+    "framer-motion": "^10.1.0",
     "jotai": "^1.8.6",
-    "next": "^12.2.4",
+    "next": "^13.2.3",
     "next-auth": "^4.18.7",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
@@ -44,14 +44,14 @@
     "eslint-plugin-prettier": "^4.2.1",
     "eslint-plugin-react": "^7.31.10",
     "eslint-plugin-react-hooks": "^4.6.0",
-    "postcss": "^8.4.19",
-    "prettier": "^2.8.1",
+    "postcss": "^8.4.21",
+    "prettier": "^2.8.4",
     "prisma": "^4.8.1",
     "stylelint": "^14.16.0",
     "stylelint-config-prettier": "^9.0.4",
     "stylelint-config-standard": "^29.0.0",
     "tailwindcss": "^3.2.4",
     "typescript": "^4.8.4",
-    "vitest": "^0.26.2"
+    "vitest": "^0.29.2"
   }
 }

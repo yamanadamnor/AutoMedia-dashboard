@@ -45,7 +45,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
           id: Array.isArray(id) ? parseInt(id[0]) : parseInt(id),
         },
       });
-      console.log(updatedUser)
       return res.json(updatedUser);
     } catch (error) {
       return res.status(500).send('Could not edit service, try again');
