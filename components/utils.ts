@@ -16,6 +16,14 @@ export function poster<T>(url: string, data: T) {
     headers: { 'content-type': 'application/json' },
   }).then((res) => res.json());
 }
+// Function for sending PUT requests
+export function putter<T>(url: string, data: T) {
+  return fetch(url, {
+    method: 'PUT',
+    body: JSON.stringify(data),
+    headers: { 'content-type': 'application/json' },
+  }).then((res) => res.json());
+}
 
 // Function used for sending DELETE requests
 export function deleter(url: string) {

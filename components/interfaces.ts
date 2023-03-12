@@ -72,3 +72,12 @@ export interface IBtnKind {
   clickHandler: () => Promise<SignInResponse> | Promise<undefined>;
   message: string;
 }
+
+type HeroIcon = React.ComponentType<React.ComponentProps<'svg'>>;
+
+export interface IMenuItem {
+  buttonText: string;
+  Icon: HeroIcon;
+  onClick: (e: React.MouseEvent) => void;
+}
+
