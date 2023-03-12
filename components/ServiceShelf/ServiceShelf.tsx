@@ -1,39 +1,12 @@
 import { AnimatePresence, motion } from 'framer-motion';
-import { Prisma } from '@prisma/client';
-import toast from 'react-hot-toast';
-import { useSWRConfig } from 'swr';
 
-import { classNames, poster } from '../utils';
+import { classNames } from '../utils';
 import { IServiceShelf } from '../interfaces';
 
 import ServiceCard from './ServiceCard';
 import ServiceForm from './ServiceForm';
 
-
 const ServiceShelf = ({ services, inEdit }: IServiceShelf) => {
-  const { mutate } = useSWRConfig();
-
-  const saveService = async (service: Prisma.ServiceCreateInput) => {
-    const noEmptyValues = Object.values(service).every((value) => {
-      if (typeof value === 'string' && value.trim().length !== 0) {
-        return true;
-      }
-      return false;
-    });
-
-    if (!noEmptyValues) {
-      toast.error('Empty values not allowed');
-      return;
-    }
-    await mutate('/api/services', poster('/api/services', service), {
-      populateCache: (newServ, services) => {
-        return [...services, newServ];
-      },
-      revalidate: false,
-    });
-    toast.success(`${service.title} was added`);
-  };
-
   const serviceContainer = {
     hidden: { opacity: 0 },
     show: {
@@ -46,19 +19,7 @@ const ServiceShelf = ({ services, inEdit }: IServiceShelf) => {
 
   return (
     <>
-      {inEdit && (
-        <ServiceForm
-          handleSubmit={async (formData: Prisma.ServiceCreateInput) => {
-            try {
-              await saveService(formData);
-            } catch (error) {
-              toast.error('Could not save the service');
-            }
-          }}
-          title="title"
-          description="description"
-        />
-      )}
+      {inEdit && <ServiceForm />}
       <AnimatePresence>
         <motion.div
           variants={serviceContainer}

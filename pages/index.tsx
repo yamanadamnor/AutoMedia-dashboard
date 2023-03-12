@@ -3,7 +3,7 @@ import { NextPage } from 'next';
 import { Toaster } from 'react-hot-toast';
 import useSWR from 'swr';
 import { Service } from '@prisma/client';
-import { useAtom } from 'jotai';
+import { useAtom, useSetAtom } from 'jotai';
 
 import Hero from '../components/Hero';
 import Header from '../components/Header';
@@ -13,10 +13,11 @@ import ServiceShelf from '../components/ServiceShelf/ServiceShelf';
 import { classNames, fetcher } from '../components/utils';
 import CalendarWidget from '../components/CalendarWidget/CalendarWidget';
 
-import { AddServiceModalAtom } from '../components/states';
+import { AddServiceModalAtom, editServiceIdAtom } from '../components/states';
 
 const App: NextPage = () => {
   const [isAddServiceModalOpen, setAddServiceModal] = useAtom(AddServiceModalAtom);
+  const setEditServiceId = useSetAtom(editServiceIdAtom);
   const { data, error } = useSWR<Service[]>('/api/services', fetcher);
 
   return (
@@ -92,7 +93,10 @@ const App: NextPage = () => {
         <div className="flex my-4">
           <button
             type="button"
-            onClick={() => setAddServiceModal(true)}
+            onClick={() => {
+              setAddServiceModal(true);
+              setEditServiceId(0);
+            }}
             className={classNames(
               'box-border py-2 px-8 border-2 h-12 rounded-md hover:bg-white',
               'hover:text-black transition-all duration-150 ease-in-out',

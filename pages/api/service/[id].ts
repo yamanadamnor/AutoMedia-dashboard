@@ -1,34 +1,56 @@
-import { PrismaClient } from '@prisma/client';
 import { NextApiRequest, NextApiResponse } from 'next';
 
-const prisma = new PrismaClient();
+import { prisma } from '../../../server/prisma';
+
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   const {
     query: { id },
     method,
   } = req;
 
-  let deletedUser = {};
+  if (!id) return;
 
-  switch (method) {
-    case 'DELETE':
-      if (!id) return;
-      try {
-        deletedUser = await prisma.service.delete({
-          where: {
-            id: Array.isArray(id) ? parseInt(id[0]) : parseInt(id),
-          },
-        });
-        res.status(200).send(deletedUser);
-      } catch (error) {
-        res.status(500).send('Could not delete service');
-      }
+  // Get Service
+  if (method === 'GET') {
+    try {
+      const service = await prisma.service.findFirst({
+        where: {
+          id: Array.isArray(id) ? parseInt(id[0]) : parseInt(id),
+        },
+      });
+      return res.status(200).send(service);
+    } catch (error) {
+      return res.status(500).send('Could not delete service');
+    }
+    // Delete Service
+  } else if (method === 'DELETE') {
+    try {
+      const deletedService = await prisma.service.delete({
+        where: {
+          id: Array.isArray(id) ? parseInt(id[0]) : parseInt(id),
+        },
+      });
+      return res.status(200).send(deletedService);
+    } catch (error) {
+      return res.status(500).send('Could not delete service');
+    }
 
-      break;
-
-    default:
-      res.setHeader('Allow', ['GET', 'DELETE']);
-      res.status(405).end(`Method ${method} Not Allowed`);
-      break;
+    // Update Service
+  } else if (method === 'PUT') {
+    try {
+      const data = req.body;
+      const updatedUser = await prisma.service.update({
+        data,
+        where: {
+          id: Array.isArray(id) ? parseInt(id[0]) : parseInt(id),
+        },
+      });
+      return res.json(updatedUser);
+    } catch (error) {
+      return res.status(500).send('Could not edit service, try again');
+    }
   }
+
+  res.setHeader('Allow', ['GET', 'PUT', 'DELETE']);
+  res.status(405).end(`Method ${method} Not Allowed`);
 }

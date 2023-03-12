@@ -1,31 +1,43 @@
 import { useEffect, useState } from 'react';
 
 // Function used for sending GET requests
-export const fetcher = (url: string) =>
-  fetch(url, {
+export function fetcher(url: string) {
+  return fetch(url, {
     method: 'GET',
     headers: { 'content-type': 'application/json' },
   }).then((res) => res.json());
+}
 
 // Function used for sending POST requests
-export const poster = <T>(url: string, data: T) => {
+export function poster<T>(url: string, data: T) {
   return fetch(url, {
     method: 'POST',
     body: JSON.stringify(data),
     headers: { 'content-type': 'application/json' },
   }).then((res) => res.json());
-};
+}
+// Function for sending PUT requests
+export function putter<T>(url: string, data: T) {
+  return fetch(url, {
+    method: 'PUT',
+    body: JSON.stringify(data),
+    headers: { 'content-type': 'application/json' },
+  }).then((res) => res.json());
+}
 
 // Function used for sending DELETE requests
-export const deleter = (url: string) => {
-  return fetch(url, { method: 'DELETE', headers: { 'content-type': 'application/json' } }).then(
-    (res) => res.json(),
-  );
-};
+export function deleter(url: string) {
+  return fetch(url, {
+    method: 'DELETE',
+    headers: {
+      'content-type': 'application/json',
+    },
+  }).then((res) => res.json());
+}
 
-export const classNames = (...classes: string[]) => {
+export function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(' ');
-};
+}
 
 // Credit: https://usehooks.com/useDebounce/
 // T is a generic type for value parameter, our case this will be string
@@ -45,7 +57,7 @@ export function useDebounce<T>(value: T, delay: number): T {
         clearTimeout(handler);
       };
     },
-    [value, delay] // Only re-call effect if value or delay changes
+    [value, delay], // Only re-call effect if value or delay changes
   );
   return debouncedValue;
 }

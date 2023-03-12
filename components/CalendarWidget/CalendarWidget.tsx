@@ -28,9 +28,9 @@ setDefaultOptions({
 
 const CalendarWidget = () => {
   const today = startOfToday();
-  const [selectedDay, setSelectedDay] = useAtom(selectedDate);
   const [todaysSonarrReleases, setTodaysSonarr] = useState<ISonarrReleases[]>([]);
   const [todaysRadarrReleases, setTodaysRadarr] = useState<IRadarrReleases[]>([]);
+  const [selectedDay, setSelectedDay] = useAtom(selectedDate);
   const [isCurrentMonth, setIsCurrentMonth] = useAtom(isThisMonth);
   const weekDays = eachDayOfInterval({
     start: startOfWeek(selectedDay),
@@ -156,7 +156,9 @@ const CalendarWidget = () => {
                 key={format(weekday, 'yyyy-MM-dd')}
                 className="text-center font-bold text-gray-600"
               >
-                {format(weekday, 'EE')}
+                <span className="hidden sm:block">{format(weekday, 'EE')}</span>
+
+                <span className="sm:hidden">{format(weekday, 'EEEEE')}</span>
               </div>
             ))}
 

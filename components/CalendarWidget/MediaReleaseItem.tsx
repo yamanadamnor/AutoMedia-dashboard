@@ -25,8 +25,12 @@ function MediaReleaseItem({
     },
   };
 
+  const exit = {
+    opacity: 0,
+  };
+
   return (
-    <motion.div initial={initial} animate={animate} exit={initial}>
+    <motion.div initial={initial} animate={animate} exit={exit}>
       <div className="grid grid-cols-mediaItem gap-x-4">
         {mediaImages.map((image) => {
           if (image.coverType === 'poster') {
@@ -34,9 +38,8 @@ function MediaReleaseItem({
               <div key={image.coverType} className="aspect-2/3 w-12 md:w-20 relative ">
                 <Image
                   src={image.url}
+                  fill
                   alt="Media poster"
-                  layout="fill"
-                  objectFit="contain"
                   placeholder="blur"
                   blurDataURL={image.url}
                 />

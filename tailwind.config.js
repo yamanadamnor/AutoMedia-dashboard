@@ -30,6 +30,7 @@ module.exports = {
         'dark-shadow': '#00000055',
         'service-desc-dark': 'rgba(238, 238, 238, 0.404)',
         'service-desc-light': 'rgba(238, 238, 238, 0.909)',
+        'background': '#111019'
       },
       boxShadow: {
         service: '-8px -8px 30px #30304555, 8px 8px 30px #00000055, inset 0 0 0 4px #30304555;',

@@ -26,6 +26,7 @@ RUN npm  ci --production=true --frozen-lockfile --ignore-scripts \
   && node-prune \
   && cp -R node_modules prod_node_modules \
   && npm ci --production=false --prefer-offline \
+  && npm ci sharp \
   && npx prisma generate \
   && rm -rf prisma
 
@@ -73,7 +74,7 @@ COPY --from=builder --chown=node:node /app/.next ./.next
 # use schema from container
 COPY --from=builder /app/prisma ./prisma
 
-COPY --from=builder /app/config ./config
+RUN mkdir -p config
 
 EXPOSE 3344
 
