@@ -8,7 +8,8 @@
     "lint": "next lint && stylelint 'styles/*.css'",
     "test": "vitest run --coverage",
     "start:prod": "npm start",
-    "start:migrate:prod": "npx prisma migrate deploy && npm run start:prod"
+    "start:migrate:prod": "npx prisma migrate deploy && npm run start:prod",
+    "validate": "npm run lint && npm run build && npm run start:migrate:prod"
   },
   "plugins": [
     "prettier"
