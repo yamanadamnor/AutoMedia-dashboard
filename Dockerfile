@@ -73,7 +73,7 @@ COPY --from=builder --chown=node:node /app/.next ./.next
 # use schema from container
 COPY --from=builder /app/prisma ./prisma
 
-COPY --from=builder /app/config ./config
+RUN mkdir -p config
 
 EXPOSE 3344
 
