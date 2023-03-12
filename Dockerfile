@@ -26,6 +26,7 @@ RUN npm  ci --production=true --frozen-lockfile --ignore-scripts \
   && node-prune \
   && cp -R node_modules prod_node_modules \
   && npm ci --production=false --prefer-offline \
+  && npm ci sharp \
   && npx prisma generate \
   && rm -rf prisma
 
