@@ -8,6 +8,10 @@ The official dashboard for [AutoMedia](https://github.com/yamanadamnor/AutoMedia
 - npm v8.15+
 
 ## Run locally
+Copy the `.env` file by running
+```bash
+cp .env-example .env
+```
 Begin with installing all of the dependencies
 `npm install`
 ### Run development server
