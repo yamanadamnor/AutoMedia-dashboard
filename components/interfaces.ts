@@ -29,6 +29,7 @@ export interface ISonarrReleases {
   seriesId: number;
   seasonNumber: number;
   episodeNumber: number;
+  hasFile: boolean;
   series: { title: string; images: { coverType: string; url: string }[] };
 }
 
@@ -37,6 +38,7 @@ export interface IRadarrReleases {
   title: string;
   digitalRelease: Date;
   physicalRelease: Date;
+  hasFile: boolean;
   images: { coverType: string; url: string }[];
 }
 
@@ -52,6 +54,7 @@ export interface IMediaReleaseItem {
   mediaImages: { coverType: string; url: string }[];
   mediaItemDate: Date;
   mediaItemType: 'sonarr' | 'radarr';
+  mediaHasFile: boolean;
 }
 
 export interface IDayComponent {
