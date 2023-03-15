@@ -42,9 +42,8 @@ function MediaReleaseInfo({ sonarrReleases, radarrReleases, selectedDay }: IMedi
   };
 
   return (
-    // <div className="flex flex-col gap-4 md:gap-8">
     <div className="flex flex-col gap-4 md:gap-8">
-      <AnimatePresence>
+      <AnimatePresence initial={false}>
         {filteredSonarr.map((sonarrItem) => (
           <MediaReleaseItem
             key={`${sonarrItem.seriesId}${sonarrItem.seasonNumber}${sonarrItem.episodeNumber}`}

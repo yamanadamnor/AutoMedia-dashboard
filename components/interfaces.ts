@@ -89,4 +89,3 @@ export interface IMenuItem {
   Icon: HeroIcon;
   onClick: (e: React.MouseEvent) => void;
 }
-

@@ -2,7 +2,13 @@ import { format, isEqual, startOfToday, startOfDay, isSameMonth } from 'date-fns
 import type { IDayComponent } from '../interfaces';
 import { classNames } from '../utils';
 
-function DayComponent({ day, sonarrMedia, radarrMedia, selectedDay, onClick }: IDayComponent) {
+function DayComponent({
+  day,
+  sonarrMedia,
+  radarrMedia,
+  selectedDay,
+  onClick,
+}: IDayComponent) {
   const today = startOfToday();
   if (!sonarrMedia && !radarrMedia) return <h2 className="font-bold">No releases</h2>;
 
@@ -31,7 +37,7 @@ function DayComponent({ day, sonarrMedia, radarrMedia, selectedDay, onClick }: I
       onClick={onClick}
     >
       {format(day, 'd')}
-      <div className="flex justify-around pt-1 px-1">
+      <div className="flex justify-around pt-1 px-1 h-full">
         {radarrReleases && radarrReleases.length > 0 && (
           <div className="w-1.5 h-1.5 rounded-full bg-orange-400"></div>
         )}
