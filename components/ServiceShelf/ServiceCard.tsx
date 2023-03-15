@@ -25,12 +25,11 @@ const ServiceCard = ({ id, title, image, href, description, inEdit }: IServiceCa
   };
 
   const whileHover = {
-    x: 5,
+    y: -2,
     transition: { duration: 0.05 },
   };
 
   const whileTap = {
-    x: 5,
     transition: { duration: 0.05 },
   };
 
