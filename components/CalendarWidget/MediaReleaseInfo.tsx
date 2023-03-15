@@ -48,11 +48,12 @@ function MediaReleaseInfo({ sonarrReleases, radarrReleases, selectedDay }: IMedi
         {filteredSonarr.map((sonarrItem) => (
           <MediaReleaseItem
             key={`${sonarrItem.seriesId}${sonarrItem.seasonNumber}${sonarrItem.episodeNumber}`}
-            mediaImages={sonarrItem.series.images}
-            mediaItemDesc={`S${sonarrItem.seasonNumber} E${sonarrItem.episodeNumber} - ${sonarrItem.title}`}
-            mediaItemType="sonarr"
             mediaItemDate={new Date(sonarrItem.airDateUtc)}
+            mediaItemDesc={`S${sonarrItem.seasonNumber} E${sonarrItem.episodeNumber} - ${sonarrItem.title}`}
             mediaItemTitle={sonarrItem.series.title}
+            mediaImages={sonarrItem.series.images}
+            mediaHasFile={sonarrItem.hasFile}
+            mediaItemType="sonarr"
           />
         ))}
 
@@ -65,6 +66,7 @@ function MediaReleaseInfo({ sonarrReleases, radarrReleases, selectedDay }: IMedi
               mediaItemDesc={movieDate ? movieDate.mediaReleaseType : 'Unknown release'}
               mediaItemTitle={radarrItem.title}
               mediaImages={radarrItem.images}
+              mediaHasFile={radarrItem.hasFile}
               mediaItemType="radarr"
             />
           );

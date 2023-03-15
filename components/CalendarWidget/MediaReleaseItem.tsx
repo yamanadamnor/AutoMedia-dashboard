@@ -3,6 +3,7 @@ import Image from 'next/image';
 import { motion } from 'framer-motion';
 
 import { IMediaReleaseItem } from '../interfaces';
+import { classNames } from '../utils';
 
 function MediaReleaseItem({
   mediaItemTitle,
@@ -10,6 +11,7 @@ function MediaReleaseItem({
   mediaItemType,
   mediaItemDate,
   mediaImages,
+  mediaHasFile,
 }: IMediaReleaseItem) {
   const initial = {
     height: 0,
@@ -50,12 +52,28 @@ function MediaReleaseItem({
 
         <div>
           <h2 className="font-bold text-md md:text-xl">{mediaItemTitle}</h2>
-          {mediaItemType === 'sonarr' && (
-            <h3 className="text-xs md:text-sm font-bold text-blue-400">{mediaItemDesc}</h3>
+          <h3
+            className={classNames(
+              'text-xs md:text-sm font-bold ',
+              mediaItemType === 'sonarr' ? 'text-blue-400' : '',
+              mediaItemType === 'radarr' ? 'text-orange-400' : '',
+            )}
+          >
+            {mediaItemDesc}
+          </h3>
+
+          {mediaHasFile && (
+            <div
+              className={classNames(
+                'inline-block px-2 py-1 my-2 rounded-full',
+                mediaItemType === 'sonarr' ? 'bg-blue-400' : '',
+                mediaItemType === 'radarr' ? 'bg-orange-400' : '',
+              )}
+            >
+              <p className={classNames('text-[10px]')}>Downloaded</p>
+            </div>
           )}
-          {mediaItemType === 'radarr' && (
-            <h3 className="text-xs md:text-sm font-bold text-orange-400">{mediaItemDesc}</h3>
-          )}
+
           <h4 className="text-gray-400 text-xs md:text-sm">
             {format(mediaItemDate, 'EE, MMM dd')} at {format(mediaItemDate, 'p')}
           </h4>
