@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useAtom } from 'jotai';
+import { useAtom, useAtomValue } from 'jotai';
 import {
   addMonths,
   endOfMonth,
@@ -13,11 +13,12 @@ import {
   setDefaultOptions,
   eachWeekOfInterval,
   startOfDay,
+  isSameWeek,
 } from 'date-fns';
 import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/24/outline';
 
 import { classNames, poster } from '../utils';
-import { sonarrMedias, radarrMedias, selectedDate, isThisMonth } from '../states';
+import { sonarrMedias, radarrMedias, selectedDate } from '../states';
 import { IRadarrReleases, ISonarrReleases } from '../interfaces';
 import DayComponent from './DayComponent';
 import MediaReleaseInfo from './MediaReleaseInfo';
@@ -31,19 +32,11 @@ const CalendarWidget = () => {
   const [todaysSonarrReleases, setTodaysSonarr] = useState<ISonarrReleases[]>([]);
   const [todaysRadarrReleases, setTodaysRadarr] = useState<IRadarrReleases[]>([]);
   const [selectedDay, setSelectedDay] = useAtom(selectedDate);
-  const [isCurrentMonth, setIsCurrentMonth] = useAtom(isThisMonth);
+  const [isCurrentMonth, setIsCurrentMonth] = useState(true);
+
   const weekDays = eachDayOfInterval({
     start: startOfWeek(selectedDay),
     end: endOfWeek(selectedDay),
-  });
-  const daysOfSelectedMonth = eachDayOfInterval({
-    start: startOfWeek(startOfMonth(selectedDay)),
-    end: endOfWeek(endOfMonth(selectedDay)),
-  });
-
-  const weeksOfSelectedMonth = eachWeekOfInterval({
-    start: startOfMonth(selectedDay),
-    end: endOfMonth(selectedDay),
   });
 
   const [sonarrMedia, setSonarrMedia] = useAtom(sonarrMedias);
@@ -89,7 +82,7 @@ const CalendarWidget = () => {
     <div
       className={classNames(
         '@container',
-        'w-full group:border bg-service-card rounded-xl backdrop-blur-sm p-8',
+        'w-full group:border bg-service-card rounded-xl backdrop-blur-sm p-3 py-8',
         'flex flex-col gap-4',
         'md:flex-row',
         'lg:flex-col',
@@ -138,66 +131,131 @@ const CalendarWidget = () => {
           </h3>
         )}
         <div className="flex justify-center">
-          <div className="grid gap-y-2">
-            {/* Used to skip the first row */}
-            <span></span>
-
-            {weeksOfSelectedMonth.map((week) => (
-              <div
-                key={format(week, 'yyyy-MM-dd')}
-                className="text-center self-center text-gray-700"
-              >
-                {format(week, 'I')}
-              </div>
-            ))}
-          </div>
-          <div className="w-full grid grid-cols-7 gap-y-2">
+          <div className="w-full grid grid-cols-8 gap-y-2">
+            <div className="text-center font-bold text-gray-600"></div>
             {weekDays.map((weekday) => (
               <div
                 key={format(weekday, 'yyyy-MM-dd')}
-                className="text-center font-bold text-gray-600"
+                className={classNames(
+                  isEqual(selectedDay, weekday) ? "text-gray-300" : "text-gray-600",
+                  "text-center font-bold")}
               >
                 <span className="hidden @sm:block">{format(weekday, 'EE')}</span>
 
                 <span className="@sm:hidden">{format(weekday, 'EEEEE')}</span>
               </div>
             ))}
-
-            {daysOfSelectedMonth.map((day) => (
-              <DayComponent
-                key={format(day, 'yyyy-MM-dd')}
-                day={day}
-                selectedDay={selectedDay}
-                onClick={() => setSelectedDay(day)}
-                sonarrMedia={sonarrMedia}
-                radarrMedia={radarrMedia}
-              />
-            ))}
+            <RenderCalendarCells />
+            {/* {daysOfSelectedMonth.map((day, index) => {
+              if (index % 8 == 0) {
+                const weekIndex = index / 8;
+                return (
+                  <div
+                    key={format(weeksOfSelectedMonth[weekIndex], 'yyyy-MM-dd')}
+                    className="justify-self-center text-gray-700"
+                  >
+                    {format(weeksOfSelectedMonth[weekIndex], 'I')}
+                  </div>
+                );
+              } else {
+                return (
+                  <DayComponent
+                    key={format(day, 'yyyy-MM-dd')}
+                    day={day}
+                    selectedDay={selectedDay}
+                    onClick={() => setSelectedDay(day)}
+                    sonarrMedia={sonarrMedia}
+                    radarrMedia={radarrMedia}
+                  />
+                );
+              }
+            })} */}
           </div>
         </div>
       </div>
 
-      {(todaysRadarrReleases.length > 0 || todaysSonarrReleases.length > 0) && (
-        <>
-          <div
-            className={classNames(
-              'w-auto h-0.5 rounded-full bg-service-card',
-              'md:w-0.5 md:h-auto',
-              'lg:w-auto lg:h-0.5 ',
-            )}
-          ></div>
+      {
+        (todaysRadarrReleases.length > 0 || todaysSonarrReleases.length > 0) && (
+          <>
+            <div
+              className={classNames(
+                'w-auto h-0.5 rounded-full bg-service-card',
+                'md:w-0.5 md:h-auto',
+                'lg:w-auto lg:h-0.5 ',
+              )}
+            ></div>
 
-          <div className="max-h-96 overflow-y-auto scrollbar">
-            <MediaReleaseInfo
-              sonarrReleases={sonarrMedia}
-              radarrReleases={radarrMedia}
-              selectedDay={selectedDay}
-            />
-          </div>
-        </>
-      )}
-    </div>
+            <div className="max-h-96 overflow-y-auto scrollbar">
+              <MediaReleaseInfo
+                sonarrReleases={sonarrMedia}
+                radarrReleases={radarrMedia}
+                selectedDay={selectedDay}
+              />
+            </div>
+          </>
+        )
+      }
+    </div >
   );
 };
+
+function RenderCalendarCells() {
+  const [selectedDay, setSelectedDay] = useAtom(selectedDate);
+  const sonarrMedia = useAtomValue(sonarrMedias);
+  const radarrMedia = useAtomValue(radarrMedias);
+
+  const weeksOfSelectedMonth = eachWeekOfInterval({
+    start: startOfMonth(selectedDay),
+    end: endOfMonth(selectedDay),
+  });
+
+  const daysOfSelectedMonth: Date[][] = [];
+  weeksOfSelectedMonth.map((startOfWeek) => {
+    daysOfSelectedMonth.push([startOfWeek,
+      ...eachDayOfInterval(
+        {
+          start: startOfWeek,
+          end: endOfWeek(startOfWeek)
+        })
+    ]);
+  })
+
+  return (
+    <>
+      {
+        daysOfSelectedMonth.map((row) => {
+          return row.map((cell, index) => {
+            if (index % 8 == 0) {
+
+              return (
+                <div
+                  key={format(cell, 'yyyy-MM-dd') + index}
+                  className={
+                    classNames(
+                      "justify-self-center pt-1 text-sm select-none",
+                      isSameWeek(cell, selectedDay) ? "text-gray-300" : "text-gray-600",
+                    )}>
+                  {format(cell, 'I')}
+                </div>
+              )
+            }
+            else {
+              return (
+                <DayComponent
+                  key={format(cell, 'yyyy-MM-dd')}
+                  day={cell}
+                  selectedDay={selectedDay}
+                  onClick={() => setSelectedDay(cell)}
+                  sonarrMedia={sonarrMedia}
+                  radarrMedia={radarrMedia}
+                />
+              )
+            }
+          });
+        })
+      }
+    </>
+  );
+}
 
 export default CalendarWidget;
