@@ -97,6 +97,7 @@ const CalendarWidget = () => {
   return (
     <div
       className={classNames(
+        '@container',
         'w-full group:border bg-service-card rounded-xl backdrop-blur-sm p-8',
         'flex flex-col gap-4',
         'md:flex-row',
@@ -165,9 +166,9 @@ const CalendarWidget = () => {
                 key={format(weekday, 'yyyy-MM-dd')}
                 className="text-center font-bold text-gray-600"
               >
-                <span className="hidden sm:block">{format(weekday, 'EE')}</span>
+                <span className="hidden @sm:block">{format(weekday, 'EE')}</span>
 
-                <span className="sm:hidden">{format(weekday, 'EEEEE')}</span>
+                <span className="@sm:hidden">{format(weekday, 'EEEEE')}</span>
               </div>
             ))}
 
