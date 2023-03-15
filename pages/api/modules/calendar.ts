@@ -12,7 +12,7 @@ async function handlePost(req: NextApiRequest, res: NextApiResponse) {
     {
       service: 'sonarr',
       port: 8989,
-      url: '/api/calendar',
+      url: '/api/v3/calendar',
       apiKey: process.env.NEXT_PUBLIC_SONARR_API,
     },
     {
@@ -33,7 +33,9 @@ async function handlePost(req: NextApiRequest, res: NextApiResponse) {
   if (!serviceConfig) return;
   const { port, url, apiKey } = serviceConfig;
 
-  const requestUrl = `${baseUrl}:${port}${url}?apikey=${apiKey}&start=${startDate}&end=${endDate}`;
+  let requestUrl = `${baseUrl}:${port}${url}?apikey=${apiKey}&start=${startDate}&end=${endDate}`;
+
+  requestUrl += type === 'sonarr' ? '&includeSeries=true' : '';
 
   const mediaData = await fetcher(requestUrl);
   return res.json(mediaData);
