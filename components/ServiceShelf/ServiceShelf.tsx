@@ -1,12 +1,16 @@
 import { AnimatePresence, motion } from 'framer-motion';
+import { Service } from '@prisma/client';
+import useSWR from "swr";
 
-import { classNames } from '../utils';
+import { classNames, fetcher} from '../utils';
 import type { IServiceShelf } from '../interfaces';
 
 import ServiceCard from './ServiceCard';
 import ServiceForm from './ServiceForm';
 
-const ServiceShelf = ({ services, inEdit }: IServiceShelf) => {
+const ServiceShelf = ({ inEdit }: IServiceShelf) => {
+  const { data, error, isLoading } = useSWR<Service[]>('/api/services', fetcher);
+
   const serviceContainer = {
     hidden: { opacity: 0 },
     show: {
@@ -32,7 +36,12 @@ const ServiceShelf = ({ services, inEdit }: IServiceShelf) => {
             'xl:grid-cols-4',
           )}
         >
-          {services.map((serv) => (
+
+          {error && <div>failed to load</div>}
+
+          {isLoading && <div>Loading...</div>}
+
+          {data && data.map((serv) => (
             <ServiceCard
               key={serv.id}
               id={serv.id}

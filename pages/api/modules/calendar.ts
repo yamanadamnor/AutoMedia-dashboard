@@ -32,6 +32,7 @@ async function handlePost(req: NextApiRequest, res: NextApiResponse) {
   }
 
   const serviceConfig = mediaServiceUrls.find((service) => service.service === type);
+
   if (!serviceConfig) return;
   const { port, url, apiKey } = serviceConfig;
 
@@ -47,8 +48,8 @@ async function handlePost(req: NextApiRequest, res: NextApiResponse) {
 }
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-  if (req.method === 'POST') {
-    return handlePost(req, res);
+  if (req.method === 'GET') {
+    return handleGet(req, res);
   }
 
   return res.status(405).json({
