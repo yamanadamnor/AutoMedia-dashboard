@@ -28,11 +28,12 @@ const ServiceCard = ({ id, title, image, href, description, inEdit }: IServiceCa
   };
 
   const whileHover = {
-    y: -2,
+    y: 0,
     transition: { duration: 0.05 },
   };
 
   const whileTap = {
+    boxShadow: "none",
     transition: { duration: 0.05 },
   };
 
@@ -65,7 +66,7 @@ const ServiceCard = ({ id, title, image, href, description, inEdit }: IServiceCa
           <div className="flex w-7 p-0 mr-4 grayscale transition ease-in-out duration-300 group-hover:grayscale-0">
             <Image width={200} height={200} className="object-contain" src={image} alt="" />
           </div>
-          <h2 className="my-4 text-service-desc-light text-2xl font-bold overflow-x-hidden">
+          <h2 className="my-4 truncate text-service-desc-light text-xl font-bold overflow-x-hidden">
             {title}
           </h2>
         </div>
@@ -120,7 +121,7 @@ function EditDropdown({ cardId, cardTitle }: IEditDropdown) {
     <Menu>
       <Menu.Button
         className={classNames(
-          'py-2 rounded-lg transition ease-in-out',
+          'absolute top-0 right-0 mr-3 mt-3 py-2 rounded-lg transition ease-in-out bg-service-card-solid',
           'hover:bg-[#272731] hover:shadow-lg',
         )}
       >

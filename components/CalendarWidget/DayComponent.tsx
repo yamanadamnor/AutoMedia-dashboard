@@ -1,4 +1,7 @@
+<<<<<<< HEAD
 import { format, isEqual, startOfToday, startOfDay, isSameMonth } from 'date-fns';
+import { format, isEqual, startOfDay, isSameMonth, isToday, isSameDay } from 'date-fns';
+import { motion } from 'framer-motion';
 import type { IDayComponent } from '../interfaces';
 import { classNames } from '../utils';
 
@@ -9,7 +12,6 @@ function DayComponent({
   selectedDay,
   onClick,
 }: IDayComponent) {
-  const today = startOfToday();
   if (!sonarrMedia && !radarrMedia) return <h2 className="font-bold">No releases</h2>;
 
   const sonarrReleases = sonarrMedia.filter((media) => {
@@ -31,8 +33,8 @@ function DayComponent({
       className={classNames(
         'w-8 h-12 transition ease-in-out duration-300 flex flex-col justify-center items-center rounded select-none hover:bg-[#272731] hover:shadow-lg',
         isSameMonth(day, selectedDay) ? '' : 'text-gray-600',
-        isEqual(startOfDay(day), startOfDay(selectedDay)) ? 'bg-[#272731]' : '',
-        isEqual(startOfDay(day), startOfDay(today)) ? 'border border-gray-500' : '',
+        isSameDay(day, selectedDay) ? 'bg-[#272731] shadow-lg' : '',
+        isToday(day) ? 'border border-gray-700' : '',
       )}
       onClick={onClick}
     >

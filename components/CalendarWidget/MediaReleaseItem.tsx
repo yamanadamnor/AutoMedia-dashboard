@@ -1,4 +1,4 @@
-import { format } from 'date-fns';
+import { format, formatISO } from 'date-fns';
 import Image from 'next/image';
 import { motion } from 'framer-motion';
 
@@ -27,7 +27,7 @@ function MediaReleaseItem({
   const transition = { opacity: { duration: 0.4 } }
 
   return (
-    <motion.div variants={releaseItemVariant} initial="hidden" animate="show" transition={transition} >
+    <motion.div variants={releaseItemVariant} initial="hidden" animate="show" transition={transition}>
       < div className="grid grid-cols-mediaItem gap-x-4" >
         {
           mediaImages.map((image) => {
@@ -73,9 +73,9 @@ function MediaReleaseItem({
             )
           }
 
-          <h4 className="text-gray-400 text-xs md:text-sm">
+          <time dateTime={formatISO(mediaItemDate)} className="block text-gray-400 text-xs md:text-sm">
             {format(mediaItemDate, 'EE, MMM dd')} at {format(mediaItemDate, 'p')}
-          </h4>
+          </time>
         </div >
       </div >
     </motion.div >
