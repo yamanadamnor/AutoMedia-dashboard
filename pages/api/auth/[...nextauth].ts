@@ -1,6 +1,6 @@
-import NextAuth from 'next-auth';
+import NextAuth, { NextAuthOptions } from 'next-auth';
 
-export default NextAuth({
+export const authOptions: NextAuthOptions = {
   secret: process.env.NEXT_PUBLIC_SECRET,
   providers: [
     {
@@ -23,4 +23,19 @@ export default NextAuth({
       },
     },
   ],
-});
+  callbacks: {
+    async session({ session, token }) {
+      session.user.isAdmin = token.isAdmin;
+      return session;
+    },
+    async jwt({ token, profile }) {
+      if (profile) {
+        token.isAdmin = profile.groups.includes('admin');
+      }
+
+      return token;
+    },
+  },
+};
+
+export default NextAuth(authOptions);
