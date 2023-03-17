@@ -7,11 +7,14 @@ module.exports = {
   content: ['./pages/**/*.{js,ts,jsx,tsx}', './components/**/*.{js,ts,jsx,tsx}'],
   theme: {
     extend: {
+      maxWidth: {
+        '8xl': '90rem'
+      },
       aspectRatio: {
         '2/3': '2 / 3',
       },
       gridTemplateColumns: {
-        app: '1% 2fr repeat(6, 1fr) 1%',
+        app: '1% 3fr repeat(6, 1fr) 1%',
         mediaItem: 'auto 1fr',
       },
       gridTemplateRows: {
@@ -26,15 +29,16 @@ module.exports = {
       colors: {
         'service-card': '#393b4360',
         'service-card-solid': '#21222e',
-        'light-shadow': '#30304555',
-        'dark-shadow': '#00000055',
+        'light-shadow': '#2f376444',
+        'dark-shadow': '#22405A44',
         'service-desc-dark': 'rgba(238, 238, 238, 0.404)',
         'service-desc-light': 'rgba(238, 238, 238, 0.909)',
         background: '#111019',
       },
-      boxShadow: {
-        service: '-8px -8px 30px #30304555, 8px 8px 30px #00000055, inset 0 0 0 4px #30304555;',
-      },
+      boxShadow: ({ theme }) => ({
+        'service': `-8px -8px 30px ${theme('colors.light-shadow')}, 8px 8px 30px ${theme('colors.dark-shadow')}, inset 0 0 0 2px ${theme('colors.light-shadow')};`,
+        'service-sm': `-6px -6px 20px ${theme('colors.light-shadow')}, 6px 6px 20px ${theme('colors.dark-shadow')}, inset 0 0 0 1px ${theme('colors.light-shadow')};`,
+      }),
       fontFamily: {
         'gt-walsheim-pro': ['GT Walsheim Pro'],
         sans: ['GT Walsheim Pro', ...defaultTheme.fontFamily.sans],
