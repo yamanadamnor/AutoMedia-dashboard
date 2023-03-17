@@ -1,10 +1,10 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import { fetcher } from '../../../components/utils';
 
-async function handlePost(req: NextApiRequest, res: NextApiResponse) {
+async function handleGet(req: NextApiRequest, res: NextApiResponse) {
   const {
-    body: { startDate, endDate, type },
-  }: { body: { startDate: string; endDate: string; type: 'sonarr' | 'radarr' } } = req;
+    query: { startDate, endDate, type }
+  } = req
 
   const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
 
@@ -30,6 +30,7 @@ async function handlePost(req: NextApiRequest, res: NextApiResponse) {
   }
 
   const serviceConfig = mediaServiceUrls.find((service) => service.service === type);
+
   if (!serviceConfig) return;
   const { port, url, apiKey } = serviceConfig;
 
@@ -42,8 +43,8 @@ async function handlePost(req: NextApiRequest, res: NextApiResponse) {
 }
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-  if (req.method === 'POST') {
-    return handlePost(req, res);
+  if (req.method === 'GET') {
+    return handleGet(req, res);
   }
 
   return res.status(405).json({
