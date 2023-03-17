@@ -5,7 +5,10 @@ import type { Session } from 'next-auth';
 import { SessionProvider } from 'next-auth/react';
 import '../styles/global.css';
 
-function MyApp({ Component, pageProps: { session, ...pageProps } }: AppProps<{session: Session}>) {
+function MyApp({
+  Component,
+  pageProps: { session, ...pageProps },
+}: AppProps<{ session: Session }>) {
   return (
     <>
       <Head>
@@ -13,7 +16,7 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }: AppProps<{se
       </Head>
 
       <SessionProvider session={session}>
-        <Component {...pageProps}/>
+        <Component {...pageProps} />
       </SessionProvider>
     </>
   );

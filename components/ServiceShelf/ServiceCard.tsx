@@ -7,6 +7,7 @@ import { useSWRConfig } from 'swr';
 import toast from 'react-hot-toast';
 import { Menu } from '@headlessui/react';
 import { useSetAtom } from 'jotai';
+import { useSession } from 'next-auth/react';
 
 import { EllipsisVerticalIcon, PencilIcon, TrashIcon } from '@heroicons/react/24/solid';
 
@@ -16,6 +17,7 @@ import { AddServiceModalAtom, editServiceIdAtom } from '../states';
 
 const ServiceCard = ({ id, title, image, href, description, inEdit }: IServiceCard) => {
   const [isHovered, setIsHovered] = useState(false);
+  const { data: session } = useSession();
 
   const initial = { opacity: 0, y: -40 };
 
@@ -67,7 +69,7 @@ const ServiceCard = ({ id, title, image, href, description, inEdit }: IServiceCa
             {title}
           </h2>
         </div>
-        {isHovered && <EditDropdown cardId={id} cardTitle={title} />}
+        {session?.user.isAdmin && isHovered && <EditDropdown cardId={id} cardTitle={title} />}
       </div>
 
       <p
