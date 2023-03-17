@@ -3,6 +3,7 @@ import { NextPage } from 'next';
 import { Toaster } from 'react-hot-toast';
 import useSWR from 'swr';
 import { Service } from '@prisma/client';
+import { useSession } from 'next-auth/react';
 import { useAtom, useSetAtom } from 'jotai';
 
 import Hero from '../components/Hero';
@@ -19,6 +20,7 @@ const App: NextPage = () => {
   const [isAddServiceModalOpen, setAddServiceModal] = useAtom(AddServiceModalAtom);
   const setEditServiceId = useSetAtom(editServiceIdAtom);
   const { data, error } = useSWR<Service[]>('/api/services', fetcher);
+  const { data: session } = useSession();
 
   return (
     <div
@@ -90,23 +92,25 @@ const App: NextPage = () => {
       >
         <div className="flex items-center flex-gap-48 justify-center"></div>
 
-        <div className="flex my-4">
-          <button
-            type="button"
-            onClick={() => {
-              setAddServiceModal(true);
-              setEditServiceId(0);
-            }}
-            className={classNames(
-              'box-border py-2 px-8 border-2 h-12 rounded-md hover:bg-white',
-              'hover:text-black transition-all duration-150 ease-in-out',
-            )}
-          >
-            Add service
-          </button>
-        </div>
+        {session?.user.isAdmin && (
+          <div className="my-4">
+            <button
+              type="button"
+              onClick={() => {
+                setAddServiceModal(true);
+                setEditServiceId(0);
+              }}
+              className={classNames(
+                'box-border py-2 px-8 border-2 h-12 rounded-md hover:bg-white',
+                'hover:text-black transition-all duration-150 ease-in-out',
+              )}
+            >
+              Add service
+            </button>
+          </div>
+        )}
         {error && <div>failed to load</div>}
-        {!data && <div>...loading</div>}
+        {!data && !error && <div>...loading</div>}
         {data && <ServiceShelf inEdit={isAddServiceModalOpen} services={data} />}
       </div>
 
