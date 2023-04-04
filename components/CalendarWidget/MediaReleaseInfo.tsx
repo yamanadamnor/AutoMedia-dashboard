@@ -1,6 +1,7 @@
 import { isEqual, startOfDay } from 'date-fns';
-import { AnimatePresence } from 'framer-motion';
+import { AnimatePresence, motion } from 'framer-motion';
 import { IMediaReleaseInfo } from '../interfaces';
+import { classNames } from '../utils';
 import MediaReleaseItem from './MediaReleaseItem';
 
 function MediaReleaseInfo({ sonarrReleases, radarrReleases, selectedDay }: IMediaReleaseInfo) {
@@ -42,11 +43,14 @@ function MediaReleaseInfo({ sonarrReleases, radarrReleases, selectedDay }: IMedi
   };
 
   return (
-    <div className="flex flex-col gap-4 md:gap-8">
-      <AnimatePresence initial={false}>
+    <motion.div
+      className={classNames("flex flex-col")}
+    >
+
+      <AnimatePresence mode="popLayout">
         {filteredSonarr.map((sonarrItem) => (
           <MediaReleaseItem
-            key={`${sonarrItem.seriesId}${sonarrItem.seasonNumber}${sonarrItem.episodeNumber}`}
+            key={`${sonarrItem.series.title}-S${sonarrItem.seasonNumber}-E${sonarrItem.episodeNumber}`}
             mediaItemDate={new Date(sonarrItem.airDateUtc)}
             mediaItemDesc={`S${sonarrItem.seasonNumber} E${sonarrItem.episodeNumber} - ${sonarrItem.title}`}
             mediaItemTitle={sonarrItem.series.title}
@@ -55,12 +59,11 @@ function MediaReleaseInfo({ sonarrReleases, radarrReleases, selectedDay }: IMedi
             mediaItemType="sonarr"
           />
         ))}
-
-        {filteredRadarr.map((radarrItem) => {
+        {filteredRadarr.map((radarrItem, index) => {
           const movieDate = getMovieDate(radarrItem.digitalRelease, radarrItem.physicalRelease);
           return (
             <MediaReleaseItem
-              key={radarrItem.id}
+              key={`${radarrItem.title}-${index}`}
               mediaItemDate={movieDate ? movieDate.mediaItemDate : new Date(selectedDay)}
               mediaItemDesc={movieDate ? movieDate.mediaReleaseType : 'Unknown release'}
               mediaItemTitle={radarrItem.title}
@@ -71,7 +74,7 @@ function MediaReleaseInfo({ sonarrReleases, radarrReleases, selectedDay }: IMedi
           );
         })}
       </AnimatePresence>
-    </div>
+    </motion.div>
   );
 }
 

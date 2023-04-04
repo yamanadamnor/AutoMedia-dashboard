@@ -8,7 +8,7 @@ module.exports = {
   theme: {
     extend: {
       maxWidth: {
-        '8xl': '90rem'
+        '8xl': '90rem',
       },
       aspectRatio: {
         '2/3': '2 / 3',
@@ -36,8 +36,12 @@ module.exports = {
         background: '#111019',
       },
       boxShadow: ({ theme }) => ({
-        'service': `-8px -8px 30px ${theme('colors.light-shadow')}, 8px 8px 30px ${theme('colors.dark-shadow')}, inset 0 0 0 2px ${theme('colors.light-shadow')};`,
-        'service-sm': `-6px -6px 20px ${theme('colors.light-shadow')}, 6px 6px 20px ${theme('colors.dark-shadow')}, inset 0 0 0 1px ${theme('colors.light-shadow')};`,
+        service: `-8px -8px 30px ${theme('colors.light-shadow')}, 8px 8px 30px ${theme(
+          'colors.dark-shadow',
+        )}, inset 0 0 0 2px ${theme('colors.light-shadow')};`,
+        'service-sm': `-6px -6px 20px ${theme('colors.light-shadow')}, 6px 6px 20px ${theme(
+          'colors.dark-shadow',
+        )}, inset 0 0 0 1px ${theme('colors.light-shadow')};`,
       }),
       fontFamily: {
         'gt-walsheim-pro': ['GT Walsheim Pro'],
@@ -55,6 +59,9 @@ module.exports = {
       animation: {
         move: 'move 2s ease-in-out infinite',
       },
+    },
+    debugScreens: {
+      position: ['bottom', 'right'],
     },
   },
   plugins: [require('@tailwindcss/container-queries')],
