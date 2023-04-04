@@ -19,7 +19,6 @@ export interface IServiceCard extends Prisma.ServiceCreateInput {
 }
 
 export interface IServiceShelf {
-  services: Service[];
   inEdit: boolean;
 }
 
