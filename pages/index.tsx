@@ -11,7 +11,7 @@ import Header from '../components/Header';
 import Footer from '../components/Footer';
 import ServiceShelf from '../components/ServiceShelf/ServiceShelf';
 
-import { classNames } from '../components/utils';
+import { classNames, fetcher } from '../components/utils';
 import CalendarWidget from '../components/CalendarWidget/CalendarWidget';
 
 import { AddServiceModalAtom, editServiceIdAtom } from '../components/states';

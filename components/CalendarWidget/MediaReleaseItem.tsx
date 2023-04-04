@@ -13,41 +13,56 @@ function MediaReleaseItem({
   mediaHasFile,
 }: IMediaReleaseItem) {
 
-  const releaseItemVariant = {
-    hidden: {
-      opacity: 0,
-      height: 0,
 
+  const variants = {
+    hideItem: {
+      height: 0,
+      opacity: 0,
+      marginBottom: 0,
+      transition: {
+        staggerChildren: 1,
+        delayChildren: 1,
+      }
     },
-    show: {
+    showItem: {
+      height: "auto",
+      marginBottom: 20,
       opacity: 1,
-      height: 'auto',
-    },
+      transition: {
+        staggerChildren: 1,
+        delayChildren: 1,
+      }
+    }
   }
-  const transition = { opacity: { duration: 0.4 } }
 
   return (
-    <motion.div variants={releaseItemVariant} initial="hidden" animate="show" transition={transition}>
-      < div className="grid grid-cols-mediaItem gap-x-4" >
-        {
-          mediaImages.map((image) => {
-            if (image.coverType === 'poster') {
-              return (
-                <div key={image.coverType} className="aspect-2/3 w-12 md:w-20 relative ">
-                  <Image
-                    src={image.url}
-                    fill
-                    alt="Media poster"
-                    placeholder="blur"
-                    blurDataURL={image.url}
-                  />
-                </div>
-              );
-            }
-          })
-        }
+    <div
+      className="overflow-hidden"
+    >
+      <motion.div
+        layout
+        variants={variants}
+        initial="hideItem"
+        animate="showItem"
+        exit="hideItem"
+        className="grid grid-cols-mediaItem gap-x-4">
+        {mediaImages.map((image) => {
+          if (image.coverType === 'poster') {
+            return (
+              <div key={image.coverType} className="aspect-2/3 w-12 md:w-20 relative overflow-hidden">
+                <Image
+                  src={image.url}
+                  fill
+                  alt="Media poster"
+                  placeholder="blur"
+                  blurDataURL={image.url}
+                />
+              </div>
+            );
+          }
+        })}
 
-        < div >
+        <div>
           <h2 className="font-bold text-md md:text-xl">{mediaItemTitle}</h2>
           <h3
             className={classNames(
@@ -59,26 +74,27 @@ function MediaReleaseItem({
             {mediaItemDesc}
           </h3>
 
-          {
-            mediaHasFile && (
-              <div
-                className={classNames(
-                  'inline-block px-2 py-1 my-2 rounded-full',
-                  mediaItemType === 'sonarr' ? 'bg-blue-400' : '',
-                  mediaItemType === 'radarr' ? 'bg-orange-400' : '',
-                )}
-              >
-                <p className={classNames('text-[10px]')}>Downloaded</p>
-              </div>
-            )
-          }
+          {mediaHasFile && (
+            <div
+              className={classNames(
+                'inline-block px-2 py-1 my-2 rounded-full',
+                mediaItemType === 'sonarr' ? 'bg-blue-400' : '',
+                mediaItemType === 'radarr' ? 'bg-orange-400' : '',
+              )}
+            >
+              <p className={classNames('text-[10px]')}>Downloaded</p>
+            </div>
+          )}
 
-          <time dateTime={formatISO(mediaItemDate)} className="block text-gray-400 text-xs md:text-sm">
+          <time
+            dateTime={formatISO(mediaItemDate)}
+            className="block text-gray-400 text-xs md:text-sm"
+          >
             {format(mediaItemDate, 'EE, MMM dd')} at {format(mediaItemDate, 'p')}
           </time>
-        </div >
-      </div >
-    </motion.div >
+        </div>
+      </motion.div>
+    </div >
   );
 }
 
