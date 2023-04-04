@@ -1,5 +1,6 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useAtom, useAtomValue } from 'jotai';
+import { AnimatePresence, motion, Variants } from 'framer-motion';
 import {
   endOfMonth,
   format,
@@ -14,7 +15,6 @@ import {
   isSameWeek,
   add,
   startOfDay,
-  getMonth,
 } from 'date-fns';
 import { CalendarIcon, ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/24/outline';
 
@@ -23,7 +23,6 @@ import { sonarrMedias, radarrMedias, selectedDate } from '../states';
 import type { IRadarrReleases, ISonarrReleases } from '../interfaces';
 import DayComponent from './DayComponent';
 import MediaReleaseInfo from './MediaReleaseInfo';
-import { AnimatePresence, motion } from 'framer-motion';
 
 setDefaultOptions({
   weekStartsOn: 1,
@@ -35,7 +34,6 @@ function CalendarWidget() {
   const [todaysSonarrReleases, setTodaysSonarr] = useState<ISonarrReleases[]>([]);
   const [todaysRadarrReleases, setTodaysRadarr] = useState<IRadarrReleases[]>([]);
   const [selectedDay, setSelectedDay] = useAtom(selectedDate);
-  const [[currentMonth, direction], setCurrentMonth] = useState([getMonth(selectedDay), 0]);
 
   const weekDays = eachDayOfInterval({
     start: startOfWeek(selectedDay),
@@ -98,33 +96,9 @@ function CalendarWidget() {
         months: newDirection,
       }),
     );
-    setCurrentMonth([getMonth(selectedDay), newDirection]);
   };
 
-  const calendarRef = useRef(null);
-
-  const variants = {
-    enter: (direction: number) => {
-      return {
-        x: direction > 0 ? 10000 : -10000,
-        opacity: 0,
-      };
-    },
-    center: {
-      zIndex: 1,
-      x: 0,
-      opacity: 1,
-    },
-    exit: (direction: number) => {
-      return {
-        zIndex: 0,
-        x: direction < 0 ? 1000 : -1000,
-        opacity: 0,
-      };
-    },
-  };
-
-  const mediaReleaseInfoVariants = {
+  const mediaReleaseInfoVariants: Variants = {
     populated: {
       opacity: 1,
       height: 'auto',

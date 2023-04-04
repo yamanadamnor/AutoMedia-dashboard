@@ -6,17 +6,6 @@ import { calendarFetcher, classNames } from '../utils';
 function DayComponent({ day, sonarrMedia, radarrMedia, selectedDay, onClick }: IDayComponent) {
   if (!sonarrMedia && !radarrMedia) return <h2 className="font-bold">No releases</h2>;
 
-  // const { data: sonarrReleases, mutate: mutateSonarrReleases } = useSWR('/api/modules/', (url) =>
-  //   calendarFetcher(url, selectedDay, 'sonarr'),
-  // );
-  // mutateSonarrReleases(() => {
-  //   const sonarrReleases = sonarrMedia.filter((media) => {
-  //     const mediaDate = startOfDay(new Date(media.airDateUtc));
-  //     return isEqual(mediaDate, startOfDay(day));
-  //   });
-  //   return sonarrReleases;
-  // });
-
   const sonarrReleases = sonarrMedia.filter((media) => {
     const mediaDate = startOfDay(new Date(media.airDateUtc));
     return isEqual(mediaDate, startOfDay(day));
