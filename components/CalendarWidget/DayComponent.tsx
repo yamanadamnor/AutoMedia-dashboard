@@ -1,16 +1,23 @@
 import { format, isEqual, startOfDay, isSameMonth, isToday, isSameDay } from 'date-fns';
 import { motion } from 'framer-motion';
-import { IDayComponent } from '../interfaces';
-import { classNames } from '../utils';
 
-function DayComponent({
-  day,
-  sonarrMedia,
-  radarrMedia,
-  selectedDay,
-  onClick,
-}: IDayComponent) {
+import { IDayComponent } from '../interfaces';
+import { calendarFetcher, classNames } from '../utils';
+
+function DayComponent({ day, sonarrMedia, radarrMedia, selectedDay, onClick }: IDayComponent) {
   if (!sonarrMedia && !radarrMedia) return <h2 className="font-bold">No releases</h2>;
+
+  // const { data: sonarrReleases, mutate: mutateSonarrReleases } = useSWR('/api/modules/', (url) =>
+  //   calendarFetcher(url, selectedDay, 'sonarr'),
+  // );
+  // mutateSonarrReleases(() => {
+  //   const sonarrReleases = sonarrMedia.filter((media) => {
+  //     const mediaDate = startOfDay(new Date(media.airDateUtc));
+  //     return isEqual(mediaDate, startOfDay(day));
+  //   });
+  //   return sonarrReleases;
+  // });
+
 
   const sonarrReleases = sonarrMedia.filter((media) => {
     const mediaDate = startOfDay(new Date(media.airDateUtc));
@@ -29,7 +36,8 @@ function DayComponent({
   return (
     <motion.div
       className={classNames(
-        'w-8 h-12 transition ease-in-out duration-300 flex flex-col justify-center align-center',
+        'w-8 h-12 transition ease-in-out duration-300',
+        'flex flex-col justify-center align-center',
         'justify-self-center self-center text-center rounded select-none',
         'hover:bg-[#272731] hover:shadow-service-sm',
         isSameMonth(day, selectedDay) ? '' : 'text-gray-600',
