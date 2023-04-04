@@ -1,8 +1,6 @@
 import React from 'react';
 import { NextPage } from 'next';
 import { Toaster } from 'react-hot-toast';
-import useSWR from 'swr';
-import { Service } from '@prisma/client';
 import { useSession } from 'next-auth/react';
 import { useAtom, useSetAtom } from 'jotai';
 

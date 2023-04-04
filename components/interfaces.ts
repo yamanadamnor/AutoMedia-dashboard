@@ -1,4 +1,4 @@
-import { Prisma, Service } from '@prisma/client';
+import { Prisma } from '@prisma/client';
 import { SignInResponse } from 'next-auth/react';
 import { StaticImageData } from 'next/image';
 
