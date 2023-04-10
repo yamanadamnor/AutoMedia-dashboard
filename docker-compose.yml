@@ -10,4 +10,4 @@ services:
         - ARG_DATABASE_URL=$DATABASE_URL
         - ARG_NEXTAUTH_URL=$NEXTAUTH_URL
     ports:
-      - 3344:3344
+      - "3344:3000"
