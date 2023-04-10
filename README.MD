@@ -1,7 +1,7 @@
 # AutoMedia Dashboard
 [![Create and publish image](https://github.com/yamanadamnor/AutoMedia-dashboard/actions/workflows/container_build.yml/badge.svg?branch=main)](https://github.com/yamanadamnor/AutoMedia-dashboard/actions/workflows/container_build.yml)
 
-The official dashboard for [AutoMedia](https://github.com/yamanadamnor/AutoMedia)
+![982shots_so](https://user-images.githubusercontent.com/32465405/230900002-129cdecf-1699-4eeb-b0c0-6ccd5363b189.png)
 
 ## Dependencies
 - node v16+
