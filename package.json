@@ -17,7 +17,7 @@
   "dependencies": {
     "@headlessui/react": "^1.7.7",
     "@heroicons/react": "^2.0.13",
-    "@prisma/client": "^4.6.1",
+    "@prisma/client": "^4.13.0",
     "date-fns": "^2.29.3",
     "framer-motion": "^10.10.0",
     "jotai": "^1.8.6",
