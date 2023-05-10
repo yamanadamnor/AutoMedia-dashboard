@@ -20,7 +20,7 @@
     "@prisma/client": "^4.13.0",
     "date-fns": "^2.29.3",
     "framer-motion": "^10.10.0",
-    "jotai": "^1.8.6",
+    "jotai": "^2.1.0",
     "next": "^13.2.3",
     "next-auth": "^4.18.7",
     "react": "^18.2.0",
