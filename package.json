@@ -19,7 +19,7 @@
     "@heroicons/react": "^2.0.13",
     "@prisma/client": "^4.13.0",
     "date-fns": "^2.29.3",
-    "framer-motion": "^10.10.0",
+    "framer-motion": "^10.12.12",
     "jotai": "^1.8.6",
     "next": "^13.2.3",
     "next-auth": "^4.18.7",
