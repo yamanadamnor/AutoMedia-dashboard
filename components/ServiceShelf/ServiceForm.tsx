@@ -1,14 +1,16 @@
-import { useState, Fragment, useEffect, FormEvent } from 'react';
+import { useState, Fragment, useEffect } from 'react';
+import type { FormEvent } from 'react';
 import { motion } from 'framer-motion';
 import { Dialog, Transition } from '@headlessui/react';
 import Image from 'next/image';
-import { Prisma } from '@prisma/client';
+import type { Prisma, Service } from '@prisma/client';
 
-import { useDebounce, fetcher, putter, poster } from '../utils';
-import { AddServiceModalAtom, editServiceIdAtom } from '../states';
 import { useAtom } from 'jotai';
 import useSWR, { useSWRConfig } from 'swr';
 import toast from 'react-hot-toast';
+
+import { useDebounce, fetcher, putter, poster } from '../utils';
+import { AddServiceModalAtom, editServiceIdAtom } from '../states';
 
 const ServiceForm = () => {
   const { mutate } = useSWRConfig();
@@ -21,7 +23,7 @@ const ServiceForm = () => {
     image: '',
   });
 
-  const { data, error } = useSWR(() => {
+  const { data, error } = useSWR<Prisma.ServiceCreateInput, Error>(() => {
     if (editServiceId != 0) {
       return `/api/service/${editServiceId}`;
     }
@@ -42,11 +44,14 @@ const ServiceForm = () => {
 
   const saveService = async (service: Prisma.ServiceCreateInput) => {
     if (editServiceId != 0) {
-      putter(`/api/service/${editServiceId}`, newService);
-      mutate('/api/services');
+      putter(`/api/service/${editServiceId}`, newService).catch((err) => {
+        // eslint-disable-next-line no-console
+        console.error(err);
+      });
+      await mutate('/api/services');
     } else {
       await mutate('/api/services', poster('/api/services', service), {
-        populateCache: (newServ, services) => {
+        populateCache: (newServ: Service, services: Service[]) => {
           return [...services, newServ];
         },
         revalidate: false,
@@ -66,11 +71,16 @@ const ServiceForm = () => {
         .replace(/\s+/g, '-')
         .toLowerCase()
         .replace(/^dash\.$/, 'dashdot')}.png`,
-    ).then((res) => {
-      if (res.ok) {
-        setNewService({ ...newService, image: res.url });
-      }
-    });
+    )
+      .then((res) => {
+        if (res.ok) {
+          setNewService({ ...newService, image: res.url });
+        }
+      })
+      .catch((err) => {
+        // eslint-disable-next-line no-console
+        console.error(err);
+      });
 
     return false;
   };
@@ -92,10 +102,10 @@ const ServiceForm = () => {
     y: 0,
   };
 
-  const submitHandler = (e: FormEvent) => {
+  const submitHandler = async (e: FormEvent) => {
     try {
       e.preventDefault();
-      saveService(newService);
+      await saveService(newService);
       setModalOpen(false);
     } catch (error) {
       toast.error('Could not save the service');

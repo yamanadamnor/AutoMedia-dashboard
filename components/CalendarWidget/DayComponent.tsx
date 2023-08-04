@@ -1,5 +1,5 @@
 import { format, isEqual, startOfToday, startOfDay, isSameMonth } from 'date-fns';
-import { IDayComponent } from '../interfaces';
+import type { IDayComponent } from '../interfaces';
 import { classNames } from '../utils';
 
 function DayComponent({ day, sonarrMedia, radarrMedia, selectedDay, onClick }: IDayComponent) {
@@ -21,11 +21,9 @@ function DayComponent({ day, sonarrMedia, radarrMedia, selectedDay, onClick }: I
   });
 
   return (
-    <div
+    <button
       className={classNames(
-        'w-8 h-12 transition ease-in-out duration-300 flex flex-col justify-center align-center',
-        'justify-self-center self-center text-center rounded select-none',
-        'hover:bg-[#272731] hover:shadow-lg',
+        'w-8 h-12 transition ease-in-out duration-300 flex flex-col justify-center items-center rounded select-none hover:bg-[#272731] hover:shadow-lg',
         isSameMonth(day, selectedDay) ? '' : 'text-gray-600',
         isEqual(startOfDay(day), startOfDay(selectedDay)) ? 'bg-[#272731]' : '',
         isEqual(startOfDay(day), startOfDay(today)) ? 'border border-gray-500' : '',
@@ -41,7 +39,7 @@ function DayComponent({ day, sonarrMedia, radarrMedia, selectedDay, onClick }: I
           <div className="w-1.5 h-1.5 rounded-full bg-blue-400"></div>
         )}
       </div>
-    </div>
+    </button>
   );
 }
 
