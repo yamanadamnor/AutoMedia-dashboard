@@ -2,7 +2,7 @@
 # https://github.com/vercel/next.js/blob/canary/examples/with-docker/Dockerfile
 # https://github.dev/kachar/yadi
 
-ARG BASE=node:18-alpine
+ARG BASE=node:20-alpine
 
 #------ target dependencies
 
