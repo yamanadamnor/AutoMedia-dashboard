@@ -64,5 +64,5 @@ module.exports = {
       position: ['bottom', 'right'],
     },
   },
-  plugins: [require('@tailwindcss/container-queries')],
+  plugins: [require('@tailwindcss/container-queries'), require('tailwindcss-debug-screens')],
 };
