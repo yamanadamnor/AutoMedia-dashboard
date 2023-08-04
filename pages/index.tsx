@@ -1,8 +1,8 @@
 import React from 'react';
-import { NextPage } from 'next';
+import type { NextPage } from 'next';
 import { Toaster } from 'react-hot-toast';
 import useSWR from 'swr';
-import { Service } from '@prisma/client';
+import type { Service } from '@prisma/client';
 import { useAtom, useSetAtom } from 'jotai';
 
 import Hero from '../components/Hero';
@@ -18,7 +18,7 @@ import { AddServiceModalAtom, editServiceIdAtom } from '../components/states';
 const App: NextPage = () => {
   const [isAddServiceModalOpen, setAddServiceModal] = useAtom(AddServiceModalAtom);
   const setEditServiceId = useSetAtom(editServiceIdAtom);
-  const { data, error } = useSWR<Service[]>('/api/services', fetcher);
+  const { data, error } = useSWR<Service[], Error>('/api/services', fetcher);
 
   return (
     <div

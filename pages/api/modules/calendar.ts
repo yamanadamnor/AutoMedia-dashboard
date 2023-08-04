@@ -1,10 +1,12 @@
-import { NextApiRequest, NextApiResponse } from 'next';
+import type { NextApiRequest, NextApiResponse } from 'next';
 import { fetcher } from '../../../components/utils';
 
 async function handlePost(req: NextApiRequest, res: NextApiResponse) {
-  const {
-    body: { startDate, endDate, type },
-  }: { body: { startDate: string; endDate: string; type: 'sonarr' | 'radarr' } } = req;
+  const { startDate, endDate, type } = req.body as {
+    startDate: string;
+    endDate: string;
+    type: 'sonarr' | 'radarr';
+  };
 
   const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
 
@@ -35,7 +37,10 @@ async function handlePost(req: NextApiRequest, res: NextApiResponse) {
 
   const requestUrl = `${baseUrl}:${port}${url}?apikey=${apiKey}&start=${startDate}&end=${endDate}`;
 
+  // TODO: Fix type
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
   const mediaData = await fetcher(requestUrl);
+
   return res.json(mediaData);
 }
 

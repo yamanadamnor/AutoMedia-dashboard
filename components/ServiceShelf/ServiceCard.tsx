@@ -1,7 +1,8 @@
 import Image from 'next/image';
-import { useState, MouseEvent } from 'react';
+import { useState } from 'react';
+import type { MouseEvent } from 'react';
 import { motion } from 'framer-motion';
-import { Service } from '@prisma/client';
+import type { Service } from '@prisma/client';
 import { useSWRConfig } from 'swr';
 import toast from 'react-hot-toast';
 import { Menu } from '@headlessui/react';
@@ -9,7 +10,7 @@ import { useSetAtom } from 'jotai';
 
 import { EllipsisVerticalIcon, PencilIcon, TrashIcon } from '@heroicons/react/24/solid';
 
-import { IMenuItem, IServiceCard } from '../interfaces';
+import type { IMenuItem, IServiceCard } from '../interfaces';
 import { classNames, deleter } from '../utils';
 import { AddServiceModalAtom, editServiceIdAtom } from '../states';
 
@@ -92,10 +93,10 @@ function EditDropdown({ cardId, cardTitle }: IEditDropdown) {
   const setAddServiceModal = useSetAtom(AddServiceModalAtom);
   const setEditServiceId = useSetAtom(editServiceIdAtom);
 
-  const handleDelete = (e: MouseEvent) => {
+  const handleDelete = async (e: MouseEvent) => {
     e.preventDefault();
     try {
-      mutate('/api/services', deleter(`/api/service/${cardId}`), {
+      await mutate('/api/services', deleter(`/api/service/${cardId}`), {
         populateCache: (deletedService: Service, services: Service[]) => {
           const filteredServices = services.filter((serv) => serv.id !== deletedService.id);
           return filteredServices;
@@ -138,7 +139,7 @@ function MenuItem({ buttonText, Icon, onClick }: IMenuItem) {
   return (
     <Menu.Item>
       {({ active }) => (
-        <div
+        <button
           onClick={onClick}
           className={classNames(
             'group flex w-full items-center rounded-md px-2 py-2 text-sm',
@@ -148,7 +149,7 @@ function MenuItem({ buttonText, Icon, onClick }: IMenuItem) {
           <Icon className="text-white mr-2 h-4 w-4" />
 
           {buttonText}
-        </div>
+        </button>
       )}
     </Menu.Item>
   );
