@@ -1,61 +1,23 @@
----
-#################################
-#################################
-## Super Linter GitHub Actions ##
-#################################
-#################################
-name: Lint Code Base
-
-#
-# Documentation:
-# https://docs.github.com/en/actions/learn-github-actions/workflow-syntax-for-github-actions
-#
-
-#############################
-# Start the job on all push #
-#############################
+name: Lint code
 on:
   push:
-    branches-ignore: [main]
-    # Remove the line above to run when pushing to master
+    branches: [main, develop]
+
   pull_request:
-    branches: [main]
+    branches: [main, develop]
 
-###############
-# Set the Job #
-###############
 jobs:
-  lint:
-    # Name the Job
-    name: Lint Code Base
-    # Set the agent to run on
+  lint_files:
+    name: Lint files
     runs-on: ubuntu-latest
-
-    ##################
-    # Load all steps #
-    ##################
     steps:
-      ##########################
-      # Checkout the code base #
-      ##########################
-      - name: Checkout Code
-        uses: actions/checkout@v3
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
         with:
-          # Full git history is needed to get a proper list of changed files within `super-linter`
-          fetch-depth: 0
+          node-version: "18"
+          cache: "npm"
+      - name: Install packages
+        run: npm ci
 
-      ################################
-      # Run Linter against code base #
-      ################################
-      - name: Lint Code Base
-        uses: github/super-linter/slim@v4
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          DEFAULT_BRANCH: main
-          VALIDATE_ALL_CODEBASE: false
-
-          LINTER_RULES_PATH: /
-          CSS_FILE_NAME: .stylelintrc.json
-          TYPESCRIPT_ES_CONFIG_FILE: .eslintrc.js
-          VALIDATE_CSS: true
-          VALIDATE_TYPESCRIPT_ES: true
+      - name: Run the linter
+        run: npm run lint
