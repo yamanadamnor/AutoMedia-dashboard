@@ -1,11 +1,12 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import NextAuth, { DefaultSession } from 'next-auth';
+import NextAuth from 'next-auth';
+import type { DefaultSession } from 'next-auth';
 import { JWT } from 'next-auth/jwt';
-/* eslint-enable @typescript-eslint/no-unused-vars */
 
 declare module 'next-auth' {
   interface Profile {
     groups: string[];
+    email_verified: boolean;
   }
 
   interface Session {
