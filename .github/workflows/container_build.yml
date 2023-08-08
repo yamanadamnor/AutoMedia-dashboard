@@ -4,6 +4,8 @@ name: Create and publish image
 on:
   push:
     branches: [ 'main', 'develop' ]
+    tags:
+      - 'v*.*.*'
   release:
     types: [ 'published' ]
 
