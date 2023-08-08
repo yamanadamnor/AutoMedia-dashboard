@@ -26,7 +26,7 @@ export default function LoginBtn() {
   }
   return (
     <>
-      <Btn type="signin" message="Sign in" clickHandler={() => signIn()} />
+      <Btn type="signin" message="Sign in" clickHandler={() => signIn("authelia")} />
     </>
   );
 }
