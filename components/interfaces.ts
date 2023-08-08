@@ -1,4 +1,4 @@
-import type { Prisma, Service } from '@prisma/client';
+import type { Prisma } from '@prisma/client';
 import type { SignInResponse } from 'next-auth/react';
 import type { StaticImageData } from 'next/image';
 
@@ -76,12 +76,13 @@ export interface IBtnKind {
 }
 
 // https://github.com/tailwindlabs/heroicons/issues/64#issuecomment-1659901474
-type IconSVGProps = React.PropsWithoutRef<React.SVGProps<SVGSVGElement>> & React.RefAttributes<SVGSVGElement>
+type IconSVGProps = React.PropsWithoutRef<React.SVGProps<SVGSVGElement>> &
+  React.RefAttributes<SVGSVGElement>;
 type IconProps = IconSVGProps & {
-  title?: string
-  titleId?: string
-}
-type HeroIcon = React.FC<IconProps>
+  title?: string;
+  titleId?: string;
+};
+type HeroIcon = React.FC<IconProps>;
 
 export interface IMenuItem {
   buttonText: string;

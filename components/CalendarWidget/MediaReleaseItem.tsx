@@ -3,6 +3,7 @@ import Image from 'next/image';
 import { motion } from 'framer-motion';
 
 import type { IMediaReleaseItem } from '../interfaces';
+import { classNames } from '../utils';
 
 function MediaReleaseItem({
   mediaItemTitle,

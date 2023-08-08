@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useAtom, useAtomValue } from 'jotai';
-import { AnimatePresence, motion, Variants } from 'framer-motion';
+import { AnimatePresence, motion } from 'framer-motion';
+import type { Variants } from 'framer-motion';
 import {
   endOfMonth,
   format,
@@ -169,7 +170,7 @@ function CalendarWidget() {
           />
         </div>
 
-        <h3
+        <button
           className={classNames(
             'px-4 py-2 text-center cursor-pointer select-none place-self-center',
             'border rounded border-gray-700',
@@ -180,7 +181,7 @@ function CalendarWidget() {
         >
           <CalendarIcon className="w-4 inline-block mr-3" />
           today
-        </h3>
+        </button>
 
         <motion.div className="flex justify-center">
           <div className="w-full grid grid-cols-8 gap-y-2">

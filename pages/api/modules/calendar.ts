@@ -1,8 +1,8 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { fetcher } from '../../../components/utils';
 
-async function handlePost(req: NextApiRequest, res: NextApiResponse) {
-  const { startDate, endDate, type } = req.body as {
+async function handleGet(req: NextApiRequest, res: NextApiResponse) {
+  const { startDate, endDate, type } = req.query as {
     startDate: string;
     endDate: string;
     type: 'sonarr' | 'radarr';

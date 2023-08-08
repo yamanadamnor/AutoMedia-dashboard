@@ -1,8 +1,6 @@
 import React from 'react';
 import type { NextPage } from 'next';
 import { Toaster } from 'react-hot-toast';
-import useSWR from 'swr';
-import type { Service } from '@prisma/client';
 import { useSession } from 'next-auth/react';
 import { useAtom, useSetAtom } from 'jotai';
 
@@ -11,7 +9,7 @@ import Header from '../components/Header';
 import Footer from '../components/Footer';
 import ServiceShelf from '../components/ServiceShelf/ServiceShelf';
 
-import { classNames, fetcher } from '../components/utils';
+import { classNames } from '../components/utils';
 import CalendarWidget from '../components/CalendarWidget/CalendarWidget';
 
 import { AddServiceModalAtom, editServiceIdAtom } from '../components/states';
@@ -19,7 +17,6 @@ import { AddServiceModalAtom, editServiceIdAtom } from '../components/states';
 const App: NextPage = () => {
   const [isAddServiceModalOpen, setAddServiceModal] = useAtom(AddServiceModalAtom);
   const setEditServiceId = useSetAtom(editServiceIdAtom);
-  const { data, error } = useSWR<Service[], Error>('/api/services', fetcher);
   const { data: session } = useSession();
 
   return (

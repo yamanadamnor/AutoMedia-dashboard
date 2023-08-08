@@ -2,6 +2,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 import NextAuth from 'next-auth';
+import type { NextAuthOptions } from 'next-auth';
 
 export const authOptions: NextAuthOptions = {
   secret: process.env.NEXT_PUBLIC_SECRET,
@@ -27,10 +28,12 @@ export const authOptions: NextAuthOptions = {
     },
   ],
   callbacks: {
+    // eslint-disable-next-line @typescript-eslint/require-await
     async session({ session, token }) {
       session.user.isAdmin = token.isAdmin;
       return session;
     },
+    // eslint-disable-next-line @typescript-eslint/require-await
     async jwt({ token, profile }) {
       if (profile) {
         token.isAdmin = profile.groups.includes('admin');
