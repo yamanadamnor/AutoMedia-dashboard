@@ -16,6 +16,7 @@ module.exports = {
     node: true,
   },
   rules: {
+    '@next/next/no-html-link-for-pages': 'off',
     'no-console': ['error'],
     '@typescript-eslint/no-unused-vars': [
       'error',
@@ -28,6 +29,18 @@ module.exports = {
     ],
     '@typescript-eslint/no-misused-promises': [2, { checksVoidReturn: { attributes: false } }],
     'import/consistent-type-specifier-style': ['error', 'prefer-top-level'],
+    'react/prop-types': 'off',
+  },
+  globals: {
+    React: 'writable',
+  },
+  env: {
+    browser: true,
+  },
+  settings: {
+    react: {
+      version: 'detect',
+    },
   },
   parser: '@typescript-eslint/parser',
   plugins: ['@typescript-eslint', 'import'],
