@@ -7,7 +7,7 @@ import { classNames } from './utils';
 const Hero = () => {
   const { data: session } = useSession();
 
-  const welcome = session?.user?.name || '';
+  const welcome = session?.user?.name ?? '';
 
   return (
     <motion.div

@@ -1,6 +1,6 @@
 import { isEqual, startOfDay } from 'date-fns';
 import { AnimatePresence } from 'framer-motion';
-import { IMediaReleaseInfo } from '../interfaces';
+import type { IMediaReleaseInfo } from '../interfaces';
 import MediaReleaseItem from './MediaReleaseItem';
 
 function MediaReleaseInfo({ sonarrReleases, radarrReleases, selectedDay }: IMediaReleaseInfo) {
