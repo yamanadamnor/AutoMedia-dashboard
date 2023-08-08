@@ -1,5 +1,4 @@
 import type { Prisma } from '@prisma/client';
-import type { SignInResponse } from 'next-auth/react';
 import type { StaticImageData } from 'next/image';
 
 export interface IService {
@@ -70,8 +69,7 @@ export interface IDayComponent {
 }
 
 export interface IBtnKind {
-  type: 'signin' | 'signout';
-  clickHandler: () => Promise<SignInResponse> | Promise<undefined>;
+  onClick: React.MouseEventHandler<HTMLButtonElement>;
   message: string;
 }
 
