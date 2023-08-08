@@ -76,6 +76,7 @@ COPY --from=builder /app/prisma ./prisma
 
 RUN mkdir -p config
 
+ENV PORT 3344
 EXPOSE 3344
 
 # only for SSG pages
