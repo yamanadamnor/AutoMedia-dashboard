@@ -12,7 +12,7 @@ import { useSession } from 'next-auth/react';
 import { EllipsisVerticalIcon, PencilIcon, TrashIcon } from '@heroicons/react/24/solid';
 
 import type { IMenuItem, IServiceCard } from '../interfaces';
-import { classNames, deleter } from '../utils';
+import { cn, deleter } from '../utils';
 import { AddServiceModalAtom, editServiceIdAtom } from '../states';
 
 const ServiceCard = ({ id, title, image, href, description, inEdit }: IServiceCard) => {
@@ -33,7 +33,7 @@ const ServiceCard = ({ id, title, image, href, description, inEdit }: IServiceCa
   };
 
   const whileTap = {
-    boxShadow: "none",
+    boxShadow: 'none',
     transition: { duration: 0.05 },
   };
 
@@ -120,14 +120,14 @@ function EditDropdown({ cardId, cardTitle }: IEditDropdown) {
   return (
     <Menu>
       <Menu.Button
-        className={classNames(
+        className={cn(
           'absolute top-0 right-0 mr-3 mt-3 py-2 rounded-lg transition ease-in-out bg-service-card-solid',
           'hover:bg-[#272731] hover:shadow-lg',
         )}
       >
         <EllipsisVerticalIcon className="w-7" />
       </Menu.Button>
-      <Menu.Items className="absolute right-0 mt-2 w-56 origin-top-right divide-y divide-gray-100 rounded-md bg-service-card-solid  shadow-2xl ring-1 ring-black ring-opacity-5 focus:outline-none">
+      <Menu.Items className="absolute right-0 mt-2 w-56 origin-top-right divide-y divide-gray-100 rounded-md bg-service-card-solid shadow-2xl ring-1 ring-black ring-opacity-5 focus:outline-none">
         <div className="p-1">
           <MenuItem buttonText="Edit" Icon={PencilIcon} onClick={handleEdit} />
           <MenuItem buttonText="Delete" Icon={TrashIcon} onClick={handleDelete} />
@@ -143,7 +143,7 @@ function MenuItem({ buttonText, Icon, onClick }: IMenuItem) {
       {({ active }) => (
         <button
           onClick={onClick}
-          className={classNames(
+          className={cn(
             'group flex w-full items-center rounded-md px-2 py-2 text-sm',
             active ? 'bg-[#2a2c3c] text-white' : 'text-white',
           )}

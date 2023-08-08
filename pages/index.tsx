@@ -9,7 +9,7 @@ import Header from '../components/Header';
 import Footer from '../components/Footer';
 import ServiceShelf from '../components/ServiceShelf/ServiceShelf';
 
-import { classNames } from '../components/utils';
+import { cn } from '../components/utils';
 import CalendarWidget from '../components/CalendarWidget/CalendarWidget';
 
 import { AddServiceModalAtom, editServiceIdAtom } from '../components/states';
@@ -36,9 +36,8 @@ const App: NextPage = () => {
 
       <div>
         <div
-          className={classNames(
-            'relative min-h-screen max-w-8xl mx-auto center grid grid-cols-app z-auto',
-            'grid-rows-app gap-y-8 gap-x-2 justify-items-centerr',
+          className={cn(
+            'relative min-h-screen max-w-8xl mx-auto center grid-cols-app grid z-auto grid-rows-app gap-y-8 gap-x-2 justify-items-centerr',
             'place-content-start h-full text-white',
             'lg:gap-x-8',
           )}
@@ -63,7 +62,7 @@ const App: NextPage = () => {
             }}
           />
           <div
-            className={classNames(
+            className={cn(
               'col-start-2 col-span-7 row-start-1 row-end-2 h-24',
               'py-6 flex justify-between items-center w-full ',
             )}
@@ -72,7 +71,7 @@ const App: NextPage = () => {
           </div>
 
           <div
-            className={classNames(
+            className={cn(
               'hidden w-full col-start-4 col-span-5 row-start-2',
               'lg:block',
               'xl:col-start-3 xl:col-span-6',
@@ -83,7 +82,7 @@ const App: NextPage = () => {
 
           {/* <---- Sidebar ----> */}
           <div
-            className={classNames(
+            className={cn(
               'w-full col-start-2 col-end-[-2] row-start-2',
               'lg:col-end-4 lg:row-end-[-1]',
               'xl:col-end-3',
@@ -96,7 +95,7 @@ const App: NextPage = () => {
 
           {/* <---- Services ----> */}
           <div
-            className={classNames(
+            className={cn(
               'w-full col-start-2 col-end-[-2]',
               'lg:col-start-4 lg:row-start-3 lg:col-span-5',
               'xl:col-start-3 xl:col-span-6',
@@ -111,7 +110,7 @@ const App: NextPage = () => {
                       setAddServiceModal(true);
                       setEditServiceId(0);
                     }}
-                    className={classNames(
+                    className={cn(
                       'box-border py-2 px-8 border-2 h-12 rounded-md hover:bg-white',
                       'hover:text-black transition-all duration-150 ease-in-out',
                     )}
@@ -124,9 +123,7 @@ const App: NextPage = () => {
             <ServiceShelf inEdit={isAddServiceModalOpen} />
           </div>
 
-          <div
-            className={classNames('relative', 'w-full bottom-0 col-start-1 col-end-[-1] grid p-8')}
-          >
+          <div className={cn('relative', 'w-full bottom-0 col-start-1 col-end-[-1] grid p-8')}>
             <div className="absolute w-full bottom-0 left-0 bg-service-card rounded-t-2xl"></div>
             <Footer />
           </div>

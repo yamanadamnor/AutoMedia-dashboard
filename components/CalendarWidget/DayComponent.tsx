@@ -1,6 +1,6 @@
 import { format, isEqual, startOfDay, isSameMonth, isToday, isSameDay } from 'date-fns';
 import type { IDayComponent } from '../interfaces';
-import { classNames } from '../utils';
+import { cn } from '../utils';
 
 function DayComponent({ day, sonarrMedia, radarrMedia, selectedDay, onClick }: IDayComponent) {
   if (!sonarrMedia && !radarrMedia) return <h2 className="font-bold">No releases</h2>;
@@ -21,11 +21,8 @@ function DayComponent({ day, sonarrMedia, radarrMedia, selectedDay, onClick }: I
 
   return (
     <button
-      className={classNames(
-        'w-8 h-12 transition ease-in-out duration-300',
-        'flex flex-col justify-center align-center',
-        'justify-self-center self-center text-center rounded select-none',
-        'hover:bg-[#272731] hover:shadow-service-sm',
+      className={cn(
+        'w-8 h-12 transition ease-in-out duration-300 flex flex-col justify-center align-center justify-self-center self-center text-center rounded select-none hover:bg-[#272731] hover:shadow-service-sm',
         isSameMonth(day, selectedDay) ? '' : 'text-gray-600',
         isSameDay(day, selectedDay) ? 'bg-[#272731] shadow-lg' : '',
         isToday(day) ? 'border border-gray-700' : '',

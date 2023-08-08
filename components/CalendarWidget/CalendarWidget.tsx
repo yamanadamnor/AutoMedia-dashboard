@@ -19,7 +19,7 @@ import {
 } from 'date-fns';
 import { CalendarIcon, ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/24/outline';
 
-import { calendarFetcher, classNames } from '../utils';
+import { calendarFetcher, cn } from '../utils';
 import { sonarrMedias, radarrMedias, selectedDate } from '../states';
 import type { IRadarrReleases, ISonarrReleases } from '../interfaces';
 import DayComponent from './DayComponent';
@@ -112,7 +112,7 @@ function CalendarWidget() {
 
   return (
     <motion.div
-      className={classNames(
+      className={cn(
         '@container',
         'w-full group:border bg-service-card rounded-xl p-3 py-8',
         'border border-gray-700 backdrop-blur-sm',
@@ -128,7 +128,7 @@ function CalendarWidget() {
          w-full md:w-3/5 lg:w-full
         @container flex flex-col gap-y-4"
       >
-        <div className={classNames('flex justify-center gap-x-2 @sm:gap-x-8 w-full items-center')}>
+        <div className={cn('flex justify-center gap-x-2 @sm:gap-x-8 w-full items-center')}>
           <ChevronLeftIcon
             onClick={
               () => paginate(-1)
@@ -138,13 +138,13 @@ function CalendarWidget() {
               //   }),
               // )
             }
-            className={classNames(
+            className={cn(
               'p-1 h-12 rounded-md select-none transition ease-in-out',
               'duration-300 border-gray-700 hover:bg-[#272731] hover:shadow-lg border',
             )}
           />
 
-          <div className={classNames('flex justify-center items-center max-w-56 sm:w-60')}>
+          <div className={cn('flex justify-center items-center max-w-56 sm:w-60')}>
             <div className="text-7xl self-center">
               <h2 className="select-none leading-none">{format(selectedDay, 'dd')}</h2>
             </div>
@@ -163,7 +163,7 @@ function CalendarWidget() {
               //   }),
               // )
             }
-            className={classNames(
+            className={cn(
               'p-1 h-12 rounded-md select-none transition ease-in-out',
               'duration-300 hover:bg-[#272731] hover:shadow-lg border border-gray-700',
             )}
@@ -171,7 +171,7 @@ function CalendarWidget() {
         </div>
 
         <button
-          className={classNames(
+          className={cn(
             'px-4 py-2 text-center cursor-pointer select-none place-self-center',
             'border rounded border-gray-700',
             'transition duration-300 ease-in-out',
@@ -189,7 +189,7 @@ function CalendarWidget() {
             {weekDays.map((weekday) => (
               <motion.div
                 key={format(weekday, 'EEEE')}
-                className={classNames(
+                className={cn(
                   'select-none',
                   isEqual(selectedDay, weekday) ? 'text-gray-300' : 'text-gray-600',
                   'text-center font-bold',
@@ -209,7 +209,7 @@ function CalendarWidget() {
       </div>
 
       <div
-        className={classNames(
+        className={cn(
           todaysRadarrReleases.length > 0 || todaysSonarrReleases.length > 0 ? '' : 'hidden',
           'w-auto h-0.5 rounded-full bg-service-card',
           'md:w-0.5 md:h-auto md:block',
@@ -254,7 +254,7 @@ function RenderCalendarCells({ daysOfSelectedMonth }: { daysOfSelectedMonth: Dat
             return (
               <div
                 key={`${format(cell, 'yyyy-MM-dd')}-${index}`}
-                className={classNames(
+                className={cn(
                   'justify-self-center text-center mt-1 pt-1 text-sm select-none h-2/3 rounded w-2/4',
                   isSameWeek(cell, selectedDay) ? 'text-gray-300 ' : 'text-gray-600',
                   isSameWeek(startOfToday(), cell) ? 'border border-gray-700' : '',

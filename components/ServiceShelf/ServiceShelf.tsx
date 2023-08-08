@@ -2,7 +2,7 @@ import { AnimatePresence, motion } from 'framer-motion';
 import type { Service } from '@prisma/client';
 import useSWR from 'swr';
 
-import { classNames, fetcher } from '../utils';
+import { cn, fetcher } from '../utils';
 import type { IServiceShelf } from '../interfaces';
 
 import ServiceCard from './ServiceCard';
@@ -29,7 +29,7 @@ const ServiceShelf = ({ inEdit }: IServiceShelf) => {
           variants={serviceContainer}
           initial="hidden"
           animate="show"
-          className={classNames(
+          className={cn(
             'grid grid-cols-1 gap-6',
             'sm:grid-cols-2 sm:gap-4',
             'lg:grid-cols-2 lg:gap-6',

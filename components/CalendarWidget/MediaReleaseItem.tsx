@@ -3,7 +3,7 @@ import Image from 'next/image';
 import { motion } from 'framer-motion';
 
 import type { IMediaReleaseItem } from '../interfaces';
-import { classNames } from '../utils';
+import { cn } from '../utils';
 
 function MediaReleaseItem({
   mediaItemTitle,
@@ -66,7 +66,7 @@ function MediaReleaseItem({
         <div>
           <h2 className="font-bold text-md md:text-xl">{mediaItemTitle}</h2>
           <h3
-            className={classNames(
+            className={cn(
               'text-xs md:text-sm font-bold ',
               mediaItemType === 'sonarr' ? 'text-blue-400' : '',
               mediaItemType === 'radarr' ? 'text-orange-400' : '',
@@ -77,13 +77,13 @@ function MediaReleaseItem({
 
           {mediaHasFile && (
             <div
-              className={classNames(
+              className={cn(
                 'inline-block px-2 py-1 my-2 rounded-full',
                 mediaItemType === 'sonarr' ? 'bg-blue-400' : '',
                 mediaItemType === 'radarr' ? 'bg-orange-400' : '',
               )}
             >
-              <p className={classNames('text-[10px]')}>Downloaded</p>
+              <p className={cn('text-[10px]')}>Downloaded</p>
             </div>
           )}
 

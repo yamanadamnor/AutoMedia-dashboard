@@ -1,7 +1,7 @@
 import { isEqual, startOfDay } from 'date-fns';
 import { AnimatePresence, motion } from 'framer-motion';
 import type { IMediaReleaseInfo } from '../interfaces';
-import { classNames } from '../utils';
+import { cn } from '../utils';
 import MediaReleaseItem from './MediaReleaseItem';
 
 function MediaReleaseInfo({ sonarrReleases, radarrReleases, selectedDay }: IMediaReleaseInfo) {
@@ -43,7 +43,7 @@ function MediaReleaseInfo({ sonarrReleases, radarrReleases, selectedDay }: IMedi
   };
 
   return (
-    <motion.div className={classNames('flex flex-col')}>
+    <motion.div className={cn('flex flex-col')}>
       <AnimatePresence mode="popLayout">
         {filteredSonarr.map((sonarrItem) => (
           <MediaReleaseItem

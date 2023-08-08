@@ -1,5 +1,8 @@
 import { endOfMonth, format, startOfMonth } from 'date-fns';
 import { useEffect, useState } from 'react';
+import { clsx } from 'clsx';
+import type { ClassValue } from 'clsx';
+import { twMerge } from 'tailwind-merge';
 
 // Function used for sending GET requests
 export function fetcher(url: string) {
@@ -46,8 +49,8 @@ export function deleter(url: string) {
   }).then((res) => res.json());
 }
 
-export function classNames(...classes: string[]) {
-  return classes.filter(Boolean).join(' ');
+export function cn(...inputs: ClassValue[]) {
+  return twMerge(clsx(inputs));
 }
 
 // Credit: https://usehooks.com/useDebounce/

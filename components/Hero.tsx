@@ -2,7 +2,7 @@ import { motion } from 'framer-motion';
 import { useSession } from 'next-auth/react';
 
 import CompanyTag from './CompanyTag';
-import { classNames } from './utils';
+import { cn } from './utils';
 
 const Hero = () => {
   const { data: session } = useSession();
@@ -24,9 +24,7 @@ const Hero = () => {
       }}
     >
       <div className="w-full">
-        <h1
-          className={classNames('text-2xl font-bold leading-relaxed', 'sm:text-4xl sm:leading-20')}
-        >
+        <h1 className={cn('text-2xl font-bold leading-relaxed', 'sm:text-4xl sm:leading-20')}>
           Welcome {welcome} to
           <br />
           <CompanyTag />
