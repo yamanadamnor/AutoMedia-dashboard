@@ -1,7 +1,7 @@
 import { AnimatePresence, motion } from 'framer-motion';
 
 import { classNames } from '../utils';
-import type { IServiceShelf } from '../interfaces';
+import { IServiceShelf } from '../interfaces';
 
 import ServiceCard from './ServiceCard';
 import ServiceForm from './ServiceForm';

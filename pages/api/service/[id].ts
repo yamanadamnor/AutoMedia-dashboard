@@ -1,7 +1,6 @@
-import type { NextApiRequest, NextApiResponse } from 'next';
+import { NextApiRequest, NextApiResponse } from 'next';
 
 import { prisma } from '../../../server/prisma';
-import type { Prisma } from '@prisma/client';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   const {
@@ -39,7 +38,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     // Update Service
   } else if (method === 'PUT') {
     try {
-      const data = req.body as Prisma.ServiceCreateInput;
+      const data = req.body;
       const updatedUser = await prisma.service.update({
         data,
         where: {

@@ -2,7 +2,7 @@ import { format } from 'date-fns';
 import Image from 'next/image';
 import { motion } from 'framer-motion';
 
-import type { IMediaReleaseItem } from '../interfaces';
+import { IMediaReleaseItem } from '../interfaces';
 
 function MediaReleaseItem({
   mediaItemTitle,

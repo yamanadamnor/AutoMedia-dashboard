@@ -1,6 +1,3 @@
-// TODO: Fix profile type
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
 import NextAuth from 'next-auth';
 
 export default NextAuth({
@@ -9,10 +6,10 @@ export default NextAuth({
     {
       id: 'authelia',
       name: 'Authelia',
-      clientId: process.env.AUTHELIA_OIDC_CLIENT_ID ?? '',
-      clientSecret: process.env.AUTHELIA_OIDC_CLIENT_SECRET ?? '',
+      clientId: process.env.AUTHELIA_OIDC_CLIENT_ID || '',
+      clientSecret: process.env.AUTHELIA_OIDC_CLIENT_SECRET || '',
       type: 'oauth',
-      wellKnown: process.env.AUTHELIA_OIDC_WELLKNOWN ?? '',
+      wellKnown: 'https://auth.adamnor.com/.well-known/openid-configuration',
       idToken: true,
       authorization: { params: { scope: 'openid profile groups email' } },
       profile(profile) {

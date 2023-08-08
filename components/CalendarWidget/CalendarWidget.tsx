@@ -18,7 +18,7 @@ import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/24/outline';
 
 import { classNames, poster } from '../utils';
 import { sonarrMedias, radarrMedias, selectedDate, isThisMonth } from '../states';
-import type { IRadarrReleases, ISonarrReleases } from '../interfaces';
+import { IRadarrReleases, ISonarrReleases } from '../interfaces';
 import DayComponent from './DayComponent';
 import MediaReleaseInfo from './MediaReleaseInfo';
 
@@ -57,38 +57,29 @@ const CalendarWidget = () => {
     const startDate = format(startOfMonth(selectedDay), 'yyyy-MM-dd');
     const endDate = format(endOfMonth(selectedDay), 'yyyy-MM-dd');
 
-    getMedias('sonarr', startDate, endDate)
-      .then((data: ISonarrReleases[]) => {
-        setSonarrMedia(data);
-        const sonarrReleases = data.filter((media) => {
-          const mediaDate = startOfDay(new Date(media.airDateUtc));
-          return isEqual(mediaDate, startOfDay(selectedDay));
-        });
-        setTodaysSonarr(sonarrReleases);
-      })
-      .catch((err) => {
-        // eslint-disable-next-line no-console
-        console.error(err);
+    getMedias('sonarr', startDate, endDate).then((data) => {
+      setSonarrMedia(data);
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const sonarrReleases = data.filter((media: any) => {
+        const mediaDate = startOfDay(new Date(media.airDateUtc));
+        return isEqual(mediaDate, startOfDay(selectedDay));
       });
+      setTodaysSonarr(sonarrReleases);
+    });
 
-    getMedias('radarr', startDate, endDate)
-      .then((data: IRadarrReleases[]) => {
-        setRadarrMedia(data);
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        const radarrReleases = data.filter((media) => {
-          const digitalRelease = new Date(media.digitalRelease);
-          const physicalRelease = new Date(media.physicalRelease);
-          return (
-            isEqual(startOfDay(digitalRelease), startOfDay(selectedDay)) ||
-            isEqual(startOfDay(physicalRelease), startOfDay(selectedDay))
-          );
-        });
-        setTodaysRadarr(radarrReleases);
-      })
-      .catch((err) => {
-        // eslint-disable-next-line no-console
-        console.error(err);
+    getMedias('radarr', startDate, endDate).then((data) => {
+      setRadarrMedia(data);
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const radarrReleases = data.filter((media: any) => {
+        const digitalRelease = new Date(media.digitalRelease);
+        const physicalRelease = new Date(media.physicalRelease);
+        return (
+          isEqual(startOfDay(digitalRelease), startOfDay(selectedDay)) ||
+          isEqual(startOfDay(physicalRelease), startOfDay(selectedDay))
+        );
       });
+      setTodaysRadarr(radarrReleases);
+    });
 
     setIsCurrentMonth(isEqual(startOfMonth(selectedDay), startOfMonth(today)));
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -138,12 +129,12 @@ const CalendarWidget = () => {
         </div>
 
         {!isCurrentMonth && (
-          <button
-            className="py-4 text-center cursor-pointer select-none w-full"
+          <h3
+            className="py-4 text-center cursor-pointer select-none"
             onClick={() => setSelectedDay(today)}
           >
             today
-          </button>
+          </h3>
         )}
         <div className="flex justify-center">
           <div className="grid gap-y-2">
