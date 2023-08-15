@@ -2,7 +2,6 @@ import Image from 'next/image';
 import { useState } from 'react';
 import type { MouseEvent } from 'react';
 import { motion } from 'framer-motion';
-import type { Service } from '@prisma/client';
 import { useSWRConfig } from 'swr';
 import toast from 'react-hot-toast';
 import { Menu } from '@headlessui/react';
@@ -98,16 +97,20 @@ function EditDropdown({ cardId, cardTitle }: IEditDropdown) {
   const handleDelete = async (e: MouseEvent) => {
     e.preventDefault();
     try {
-      await mutate('/api/services', deleter(`/api/service/${cardId}`), {
-        populateCache: (deletedService: Service, services: Service[]) => {
-          const filteredServices = services.filter((serv) => serv.id !== deletedService.id);
-          return filteredServices;
+      const response = await fetch(`/api/service/${cardId}`, {
+        method: 'DELETE',
+        headers: {
+          'content-type': 'application/json',
         },
-        revalidate: false,
       });
-      toast.success(`${cardTitle} was deleted`);
+      if (response.ok) {
+        void mutate('/api/services');
+        toast.success(`${cardTitle} was deleted`);
+      }
     } catch (error) {
       toast.error('Could not delete service');
+      // eslint-disable-next-line no-console
+      console.error(error);
     }
   };
 
