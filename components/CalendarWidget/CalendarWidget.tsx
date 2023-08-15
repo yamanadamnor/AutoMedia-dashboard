@@ -201,9 +201,7 @@ function CalendarWidget() {
               </motion.div>
             ))}
 
-            <AnimatePresence>
-              <RenderCalendarCells daysOfSelectedMonth={daysOfSelectedMonth} />
-            </AnimatePresence>
+            <RenderCalendarCells daysOfSelectedMonth={daysOfSelectedMonth} />
           </div>
         </motion.div>
       </div>

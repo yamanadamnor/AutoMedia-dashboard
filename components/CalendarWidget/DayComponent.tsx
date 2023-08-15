@@ -22,7 +22,7 @@ function DayComponent({ day, sonarrMedia, radarrMedia, selectedDay, onClick }: I
   return (
     <button
       className={cn(
-        'w-8 h-12 transition ease-in-out duration-300 flex flex-col justify-center align-center justify-self-center self-center text-center rounded select-none hover:bg-[#272731] hover:shadow-service-sm',
+        'w-9 h-12 transition ease-in-out duration-300 rounded select-none hover:bg-[#272731] hover:shadow-service-sm flex flex-col justify-around items-center justify-self-center leading-none',
         isSameMonth(day, selectedDay) ? '' : 'text-gray-600',
         isSameDay(day, selectedDay) ? 'bg-[#272731] shadow-lg' : '',
         isToday(day) ? 'border border-gray-700' : '',
@@ -30,7 +30,7 @@ function DayComponent({ day, sonarrMedia, radarrMedia, selectedDay, onClick }: I
       onClick={onClick}
     >
       {format(day, 'd')}
-      <div className="flex justify-around pt-1 px-1 h-full">
+      <div className="flex justify-around w-full px-2">
         {radarrReleases && radarrReleases.length > 0 && (
           <div className="w-1.5 h-1.5 rounded-full bg-orange-400"></div>
         )}
