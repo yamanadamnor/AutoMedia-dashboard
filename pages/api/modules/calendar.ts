@@ -34,7 +34,8 @@ async function handleGet(req: NextApiRequest, res: NextApiResponse) {
 
     const serviceConfig = mediaServiceUrls.find((service) => service.service === type);
 
-    if (!serviceConfig) return;
+    if (!serviceConfig)
+      return res.status(400).json({ message: "Not allowed type, 'sonarr' or 'radarr'" });
     const { port, url, apiKey } = serviceConfig;
 
     let requestUrl = `${baseUrl}:${port}${url}?apikey=${apiKey}&start=${startDate}&end=${endDate}`;
@@ -46,8 +47,10 @@ async function handleGet(req: NextApiRequest, res: NextApiResponse) {
     const mediaData = await fetcher(requestUrl);
 
     return res.json(mediaData);
-  } catch {
-    return res.status(500).json({ message: 'Internal Server Error' });
+  } catch (error) {
+    // eslint-disable-next-line no-console
+    console.error(error);
+    return res.status(400).json({ message: 'Bad request' });
   }
 }
 
