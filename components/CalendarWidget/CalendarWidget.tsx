@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useAtom, useAtomValue } from 'jotai';
-import { AnimatePresence, motion } from 'framer-motion';
+import { motion } from 'framer-motion';
 import type { Variants } from 'framer-motion';
 import {
   endOfMonth,
@@ -114,7 +114,7 @@ function CalendarWidget() {
     <motion.div
       className={cn(
         '@container',
-        'w-full group:border bg-service-card rounded-xl p-3 py-8',
+        'w-full group:border bg-service-card rounded-xl p-3 py-8 text-white',
         'border border-gray-700 backdrop-blur-sm',
         'flex flex-col',
         todaysRadarrReleases.length > 0 || todaysSonarrReleases.length > 0 ? 'gap-4' : '',

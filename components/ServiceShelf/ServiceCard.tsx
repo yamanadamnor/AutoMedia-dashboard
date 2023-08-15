@@ -12,7 +12,7 @@ import { useSession } from 'next-auth/react';
 import { EllipsisVerticalIcon, PencilIcon, TrashIcon } from '@heroicons/react/24/solid';
 
 import type { IMenuItem, IServiceCard } from '../interfaces';
-import { cn, deleter } from '../utils';
+import { cn } from '../utils';
 import { AddServiceModalAtom, editServiceIdAtom } from '../states';
 
 const ServiceCard = ({ id, title, image, href, description, inEdit }: IServiceCard) => {
@@ -53,7 +53,7 @@ const ServiceCard = ({ id, title, image, href, description, inEdit }: IServiceCa
       onMouseOver={() => setIsHovered(true)}
       onMouseOut={() => setIsHovered(false)}
       className="relative group select-none flex flex-col justify-between items-start transition ease-in-out
-        duration-300 bg-service-card rounded-xl py-2 px-5 backdrop-blur-sm hover:shadow-service"
+        duration-300 bg-service-card rounded-xl py-2 px-5 backdrop-blur-sm hover:shadow-service text-white"
       href={href}
       onClick={(e) => {
         if (inEdit) {
@@ -127,7 +127,10 @@ function EditDropdown({ cardId, cardTitle }: IEditDropdown) {
       >
         <EllipsisVerticalIcon className="w-7" />
       </Menu.Button>
-      <Menu.Items className="absolute right-0 mt-2 w-56 origin-top-right divide-y divide-gray-100 rounded-md bg-service-card-solid shadow-2xl ring-1 ring-black ring-opacity-5 focus:outline-none">
+      <Menu.Items
+        className="absolute right-0 mt-2 w-56 origin-top-right divide-y divide-gray-100 rounded-md
+        bg-service-card-solid shadow-2xl ring-1 ring-black ring-opacity-5 focus:outline-none"
+      >
         <div className="p-1">
           <MenuItem buttonText="Edit" Icon={PencilIcon} onClick={handleEdit} />
           <MenuItem buttonText="Delete" Icon={TrashIcon} onClick={handleDelete} />

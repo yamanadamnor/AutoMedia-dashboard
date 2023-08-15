@@ -21,12 +21,8 @@ const App: NextPage = () => {
 
   return (
     <>
-      <div
-        className="
-        absolute top-0 left-0 w-full inset-x-0 flex justify-center
-        overflow-hidden pointer-events-none select-none"
-      >
-        <div className="w-[108rem] flex-none flex justify-end">
+      <div className="pointer-events-none absolute inset-x-0 top-0 left-0 flex w-full select-none justify-center overflow-hidden">
+        <div className="flex w-[108rem] flex-none justify-end">
           <picture>
             <source srcSet="/img/background-gradient.avif" type="image/avif" />
             <img src="" alt="" />
@@ -35,13 +31,7 @@ const App: NextPage = () => {
       </div>
 
       <div>
-        <div
-          className={cn(
-            'relative min-h-screen max-w-8xl mx-auto center grid-cols-app grid z-auto grid-rows-app gap-y-8 gap-x-2 justify-items-centerr',
-            'place-content-start h-full text-white',
-            'lg:gap-x-8',
-          )}
-        >
+        <div className="relative min-h-screen max-w-8xl mx-auto center grid-cols-app grid z-auto grid-rows-app gap-y-8 gap-x-2 justify-items-centerr place-content-start h-full text-whitelg:gap-x-8">
           <Toaster
             position="top-right"
             toastOptions={{
@@ -61,33 +51,16 @@ const App: NextPage = () => {
               },
             }}
           />
-          <div
-            className={cn(
-              'col-start-2 col-span-7 row-start-1 row-end-2 h-24',
-              'py-6 flex justify-between items-center w-full ',
-            )}
-          >
+          <div className="col-start-2 col-span-7 row-start-1 row-end-2 h-24 py-6 flex justify-between items-center w-full">
             <Header />
           </div>
 
-          <div
-            className={cn(
-              'hidden w-full col-start-4 col-span-5 row-start-2',
-              'lg:block',
-              'xl:col-start-3 xl:col-span-6',
-            )}
-          >
+          <div className="hidden w-full col-start-4 col-span-5 row-start-2 lg:block xl:col-span-6 xl:col-start-3 text-white">
             <Hero />
           </div>
 
           {/* <---- Sidebar ----> */}
-          <div
-            className={cn(
-              'w-full col-start-2 col-end-[-2] row-start-2',
-              'lg:col-end-4 lg:row-end-[-1]',
-              'xl:col-end-3',
-            )}
-          >
+          <div className="w-full col-start-2 col-end-[-2] row-start-2 lg:col-end-4 lg:row-end-[-1] xl:col-end-3">
             <div className="w-full">
               <CalendarWidget />
             </div>
@@ -111,7 +84,7 @@ const App: NextPage = () => {
                       setEditServiceId(0);
                     }}
                     className={cn(
-                      'box-border py-2 px-8 border-2 h-12 rounded-md hover:bg-white',
+                      'box-border py-2 px-8 border-2 h-12 rounded-md hover:bg-white text-white',
                       'hover:text-black transition-all duration-150 ease-in-out',
                     )}
                   >

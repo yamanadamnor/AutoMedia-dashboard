@@ -7,8 +7,7 @@ export default function LoginBtn() {
   const Btn = ({ message, onClick }: IBtnKind) => {
     return (
       <button
-        className={`box-border py-0 px-8 border-2 h-12 rounded-md hover:bg-white hover:text-black transition-all 
-          duration-150 ease-in-out`}
+        className="box-border py-0 px-8 border-2 h-12 rounded-md hover:bg-white hover:text-black transition-all text-white duration-150 ease-in-out"
         onClick={onClick}
       >
         {message}
