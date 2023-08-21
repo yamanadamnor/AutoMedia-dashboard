@@ -15,6 +15,7 @@ RUN \
   elif [ -f pnpm-lock.yaml ]; then yarn global add pnpm && pnpm i --frozen-lockfile; \
   else echo "Lockfile not found." && exit 1; \
   fi \
+  && npm install sharp \
   && npx prisma generate \
   && rm -rf prisma
 
