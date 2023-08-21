@@ -31,7 +31,7 @@ const App: NextPage = () => {
       </div>
 
       <div>
-        <div className="relative min-h-screen max-w-8xl mx-auto center grid-cols-app grid z-auto grid-rows-app gap-y-8 gap-x-2 justify-items-centerr place-content-start h-full text-whitelg:gap-x-8">
+        <div className="relative min-h-screen max-w-8xl mx-auto center grid-cols-app grid z-auto grid-rows-app gap-y-8 gap-x-6 justify-items-centerr place-content-start h-full text-whitelg:gap-x-8">
           <Toaster
             position="top-right"
             toastOptions={{
