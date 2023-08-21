@@ -52,7 +52,7 @@ const ServiceCard = ({ id, title, image, href, description, inEdit }: IServiceCa
       onMouseOver={() => setIsHovered(true)}
       onMouseOut={() => setIsHovered(false)}
       className="relative group select-none flex flex-col justify-between items-start transition ease-in-out
-        duration-300 bg-service-card rounded-xl py-2 px-5 backdrop-blur-sm hover:shadow-service text-white"
+        duration-300 bg-service-card rounded-xl py-2 px-5 backdrop-blur-sm hover:shadow-service text-white border border-gray-700"
       href={href}
       onClick={(e) => {
         if (inEdit) {
