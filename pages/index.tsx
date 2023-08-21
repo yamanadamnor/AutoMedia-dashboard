@@ -5,7 +5,7 @@ import { useSession } from 'next-auth/react';
 import { useAtom, useSetAtom } from 'jotai';
 
 import Hero from '../components/Hero';
-import Header from '../components/Header';
+import { Header } from '../components/Header';
 import Footer from '../components/Footer';
 import ServiceShelf from '../components/ServiceShelf/ServiceShelf';
 
@@ -24,7 +24,7 @@ const App: NextPage = () => {
       <div className="pointer-events-none absolute inset-x-0 top-0 left-0 flex w-full select-none justify-center overflow-hidden">
         <div className="flex w-[108rem] flex-none justify-end">
           <picture>
-            <source srcSet="/img/background-gradient.avif" type="image/avif" />
+            <source srcSet="/img/1-dark.png" type="image/png" />
             <img src="" alt="" />
           </picture>
         </div>
