@@ -24,7 +24,7 @@ export default function LoginBtn() {
   }
   return (
     <>
-      <Btn message="Sign in" onClick={() => signIn('authelia')} />
+      <Btn message="Sign in" onClick={() => signIn('custom')} />
     </>
   );
 }

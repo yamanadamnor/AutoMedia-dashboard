@@ -8,12 +8,12 @@ export const authOptions: NextAuthOptions = {
   secret: process.env.NEXT_PUBLIC_SECRET,
   providers: [
     {
-      id: 'authelia',
-      name: 'Authelia',
-      clientId: process.env.AUTHELIA_OIDC_CLIENT_ID ?? '',
-      clientSecret: process.env.AUTHELIA_OIDC_CLIENT_SECRET ?? '',
+      id: 'custom',
+      name: 'custom',
+      clientId: process.env.CUSTOM_OIDC_CLIENT_ID ?? '',
+      clientSecret: process.env.CUSTOM_OIDC_CLIENT_SECRET ?? '',
       type: 'oauth',
-      wellKnown: process.env.AUTHELIA_OIDC_WELLKNOWN ?? '',
+      wellKnown: process.env.CUSTOM_OIDC_WELLKNOWN ?? '',
       idToken: true,
       authorization: { params: { scope: 'openid profile groups email' } },
       profile(profile) {
