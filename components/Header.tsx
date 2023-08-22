@@ -1,14 +1,14 @@
 import Image from 'next/image';
 import LoginBtn from './loginBtn';
 import { signOut, useSession } from 'next-auth/react';
-import { Avatar, AvatarFallback } from '@/components/Avatar';
+import { Avatar, AvatarFallback } from '@/ui/Avatar';
 import {
   DropdownMenu,
   DropdownMenuItem,
   DropdownMenuPortal,
   DropdownMenuContent,
   DropdownMenuTrigger,
-} from '@/components/DropdownMenu';
+} from '@/ui/DropdownMenu';
 import { ArrowLeftOnRectangleIcon, Cog6ToothIcon } from '@heroicons/react/24/outline';
 
 export const getInitials = (name: string, limit = 3) => {
