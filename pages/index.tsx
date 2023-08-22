@@ -13,6 +13,7 @@ import { cn } from '../components/utils';
 import CalendarWidget from '../components/CalendarWidget/CalendarWidget';
 
 import { AddServiceModalAtom, editServiceIdAtom } from '../components/states';
+import { CommandMenu } from '../components/CommandMenu';
 
 const App: NextPage = () => {
   const [isAddServiceModalOpen, setAddServiceModal] = useAtom(AddServiceModalAtom);
@@ -23,6 +24,7 @@ const App: NextPage = () => {
     <>
       <div className="pointer-events-none absolute inset-x-0 top-0 left-0 flex w-full select-none justify-center overflow-hidden">
         <div className="flex w-[108rem] flex-none justify-end">
+      <CommandMenu />
           <picture>
             <source srcSet="/img/1-dark.png" type="image/png" />
             <img src="" alt="" />
