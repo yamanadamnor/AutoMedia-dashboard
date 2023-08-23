@@ -8,7 +8,8 @@
       "@/components/*": ["components/*"],
       "@/ui/*": ["ui/*"],
       "@/utils/*": ["utils/*"],
-      "@/styles/*": ["styles/*"]
+      "@/styles/*": ["styles/*"],
+      "@/server/*": ["server/*"]
     },
     "composite": false,
     "declaration": true,
@@ -29,7 +30,6 @@
     "noUnusedLocals": false,
     "noUnusedParameters": false,
     "noEmit": true,
-    "plugins": [{ "name": "next" }],
     "preserveWatchOutput": true,
     "resolveJsonModule": true,
     "isolatedModules": true,
