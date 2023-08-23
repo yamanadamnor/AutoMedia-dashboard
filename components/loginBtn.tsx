@@ -1,5 +1,5 @@
-import { useSession, signIn, signOut } from 'next-auth/react';
-import type { IBtnKind } from './interfaces';
+import { useSession, signIn, signOut } from "next-auth/react";
+import type { IBtnKind } from "./interfaces";
 
 export default function LoginBtn() {
   const { data: session, status } = useSession();
@@ -7,7 +7,8 @@ export default function LoginBtn() {
   const Btn = ({ message, onClick }: IBtnKind) => {
     return (
       <button
-        className="box-border py-0 px-8 border-2 h-12 rounded-md hover:bg-white hover:text-black transition-all text-white duration-150 ease-in-out"
+        className="mt-5 box-border rounded-md border-2 px-6 py-1 text-white 
+          transition-all duration-150 ease-in-out hover:bg-white hover:text-black"
         onClick={onClick}
       >
         {message}
@@ -15,7 +16,7 @@ export default function LoginBtn() {
     );
   };
 
-  if (session && status === 'authenticated') {
+  if (session && status === "authenticated") {
     return (
       <>
         <Btn message="Sign out" onClick={() => signOut()} />
@@ -24,7 +25,7 @@ export default function LoginBtn() {
   }
   return (
     <>
-      <Btn message="Sign in" onClick={() => signIn('custom')} />
+      <Btn message="Sign in" onClick={() => signIn("custom")} />
     </>
   );
 }
