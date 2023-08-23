@@ -19,3 +19,8 @@ model Service {
   href        String
   createdAt   DateTime @default(now())
 }
+
+model Setting {
+  key   String @id @unique
+  value String
+}
