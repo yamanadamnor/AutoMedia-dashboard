@@ -53,7 +53,7 @@ const App: NextPage = () => {
               },
             }}
           />
-          <div className="col-start-2 col-span-7 row-start-1 row-end-2 h-24 py-6 flex justify-between items-center w-full">
+          <div className="col-span-7 col-start-2 row-start-1 row-end-2 flex h-24 w-full items-center justify-between py-6">
             <Header />
           </div>
 
