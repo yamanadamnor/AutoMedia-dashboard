@@ -14,20 +14,25 @@ import type { Service } from "@prisma/client";
 import useSWR from "swr";
 import Image from "next/image";
 import { Cog6ToothIcon } from "@heroicons/react/24/outline";
+import { commandMenuAtom, settingsModalAtom } from "./states";
+import { useAtom, useSetAtom } from "jotai";
+import { cn } from "@/utils/cn";
 
 export const CommandMenu = () => {
-  const [open, setOpen] = React.useState(false);
-  const { data, error, isLoading } = useSWR<Service[], Error>(
-    "/api/services",
-    fetcher,
-  );
+  const [commandMenuOpen, setCommandMenuOpen] = useAtom(commandMenuAtom);
+  const setSettingsModalOpen = useSetAtom(settingsModalAtom);
+  const {
+    data: services,
+    error: servicesError,
+    isLoading: isServicesLoading,
+  } = useSWR<Service[], Error>("/api/services", fetcher);
 
   // Toggle the menu when ⌘K is pressed
   React.useEffect(() => {
     const down = (e: KeyboardEvent) => {
       if (e.key === "k" && (e.metaKey || e.ctrlKey)) {
         e.preventDefault();
-        setOpen((open) => !open);
+        setCommandMenuOpen((open) => !open);
       }
     };
 
@@ -36,21 +41,21 @@ export const CommandMenu = () => {
   }, []);
 
   const runCommand = React.useCallback((command: () => unknown) => {
-    setOpen(false);
+    setCommandMenuOpen(false);
     command();
   }, []);
 
   return (
-    <CommandDialog open={open} onOpenChange={setOpen}>
+    <CommandDialog open={commandMenuOpen} onOpenChange={setCommandMenuOpen}>
       <CommandInput className="py-7 text-white" placeholder="Search services" />
       <CommandList className="text-white">
         <CommandEmpty>No results found.</CommandEmpty>
 
-        {error && <div>failed to load</div>}
-        {isLoading && <CommandLoading>Hang on…</CommandLoading>}
+        {servicesError && <div>failed to load</div>}
+        {isServicesLoading && <CommandLoading>Hang on…</CommandLoading>}
 
         <CommandGroup heading="Services">
-          {data?.map((service) => (
+          {services?.map((service) => (
             <CommandItem
               key={service.href}
               className="group flex w-full justify-between rounded-xl"
@@ -73,11 +78,15 @@ export const CommandMenu = () => {
             </CommandItem>
           ))}
         </CommandGroup>
+
         <CommandGroup heading="Settings">
-          <CommandItem className="group flex w-full justify-between rounded-xl">
+          <CommandItem
+            className="group flex w-full justify-between rounded-xl"
+            onSelect={() => runCommand(() => setSettingsModalOpen(true))}
+          >
             <div className="flex items-center gap-x-4 ">
               <Cog6ToothIcon className="text-gray-300" />
-              Coming soon
+              Settings
             </div>
             <p className="text-gray-500">Setting</p>
           </CommandItem>
@@ -102,9 +111,20 @@ export const CommandMenu = () => {
   );
 };
 
-export const Kbd = ({ children }: { children: React.ReactNode }) => {
+export const Kbd = ({
+  className,
+  children,
+}: {
+  className?: string;
+  children: React.ReactNode;
+}) => {
   return (
-    <kbd className="flex h-5 w-5 items-center justify-center rounded bg-gray-700 px-3 py-3 text-gray-400">
+    <kbd
+      className={cn(
+        "flex h-5 w-5 items-center justify-center rounded bg-gray-700 px-3 py-3 text-gray-400",
+        className,
+      )}
+    >
       {children}
     </kbd>
   );
