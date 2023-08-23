@@ -78,7 +78,7 @@ const App: NextPage = () => {
               "xl:col-span-6 xl:col-start-3",
             )}
           >
-            <div className="flex-gap-48 flex items-center text-white">
+            <div className="flex-gap-48 flex items-center">
               <Settings />
               {session?.user.isAdmin && (
                 <div className="my-4 text-white">
