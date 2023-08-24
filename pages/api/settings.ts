@@ -2,6 +2,7 @@ import type { NextApiRequest, NextApiResponse } from "next";
 
 import { prisma } from "@/server/prisma";
 import type { SettingsFormValues } from "@/components/SettingsForm";
+import { parseSettings } from "@/utils/parseSettings";
 
 export default async function handler(
   req: NextApiRequest,
@@ -25,14 +26,7 @@ export default async function handler(
     return res.status(201).json(settings);
   } else if (req.method === "GET") {
     const settings = await prisma.setting.findMany();
-    const parsedSettings = Object.fromEntries(
-      structuredClone(settings).map((item) => [
-        item.key,
-        item.value === "true" || item.value === "false"
-          ? JSON.parse(item.value)
-          : item.value,
-      ]),
-    ) as SettingsFormValues;
+    const parsedSettings = parseSettings(settings);
     res.status(200).json(parsedSettings);
   } else {
     res.status(405).send({ message: "Method not allowed" });
