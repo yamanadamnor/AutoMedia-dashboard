@@ -1,5 +1,5 @@
 import Image from "next/image";
-import LoginBtn from "./loginBtn";
+import { AuthButton } from "@/components/AuthButton";
 import { signOut, useSession } from "next-auth/react";
 import { Avatar, AvatarFallback } from "@/ui/Avatar";
 import {
@@ -16,6 +16,7 @@ import {
 import { useSetAtom } from "jotai";
 import { commandMenuAtom, settingsModalAtom } from "./states";
 import { Kbd } from "@/components/CommandMenu";
+import { Button } from "@/ui/Button";
 
 export const getInitials = (name: string, limit = 3) => {
   const initials = name
@@ -33,7 +34,7 @@ export const Header = () => {
       <div className="w-12">
         <Image src="/img/logo-white.svg" width={400} height={400} alt="logo" />
       </div>
-      <button
+      <Button
         className="ml-auto mr-10 hidden items-center gap-x-2 rounded-full border border-zinc-700 bg-service-card
           px-5 py-2  text-zinc-500 transition-all duration-200
           ease-in-out hover:border-gray-500 hover:text-gray-200 md:flex"
@@ -41,8 +42,8 @@ export const Header = () => {
       >
         Press <Kbd className="bg-zinc-700">⌘</Kbd>
         <Kbd className="bg-zinc-700">K</Kbd> to search
-      </button>
-      {session?.user ? <ProfileButton /> : <LoginBtn />}
+      </Button>
+      {session?.user ? <ProfileButton /> : <AuthButton />}
     </nav>
   );
 };
