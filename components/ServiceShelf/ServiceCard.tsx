@@ -2,20 +2,21 @@ import Image from 'next/image';
 import { useState } from 'react';
 import type { MouseEvent } from 'react';
 import { motion } from 'framer-motion';
-import type { Service } from '@prisma/client';
 import { useSWRConfig } from 'swr';
 import toast from 'react-hot-toast';
 import { Menu } from '@headlessui/react';
 import { useSetAtom } from 'jotai';
+import { useSession } from 'next-auth/react';
 
 import { EllipsisVerticalIcon, PencilIcon, TrashIcon } from '@heroicons/react/24/solid';
 
 import type { IMenuItem, IServiceCard } from '../interfaces';
-import { classNames, deleter } from '../utils';
+import { cn } from '../utils';
 import { AddServiceModalAtom, editServiceIdAtom } from '../states';
 
 const ServiceCard = ({ id, title, image, href, description, inEdit }: IServiceCard) => {
   const [isHovered, setIsHovered] = useState(false);
+  const { data: session } = useSession();
 
   const initial = { opacity: 0, y: -40 };
 
@@ -26,12 +27,12 @@ const ServiceCard = ({ id, title, image, href, description, inEdit }: IServiceCa
   };
 
   const whileHover = {
-    x: 5,
+    y: 0,
     transition: { duration: 0.05 },
   };
 
   const whileTap = {
-    x: 5,
+    boxShadow: 'none',
     transition: { duration: 0.05 },
   };
 
@@ -51,7 +52,7 @@ const ServiceCard = ({ id, title, image, href, description, inEdit }: IServiceCa
       onMouseOver={() => setIsHovered(true)}
       onMouseOut={() => setIsHovered(false)}
       className="relative group select-none flex flex-col justify-between items-start transition ease-in-out
-        duration-300 bg-service-card rounded-xl py-2 px-5 backdrop-blur-sm hover:shadow-service"
+        duration-300 bg-service-card rounded-xl py-2 px-5 backdrop-blur-sm hover:shadow-service text-white border border-gray-700"
       href={href}
       onClick={(e) => {
         if (inEdit) {
@@ -64,11 +65,11 @@ const ServiceCard = ({ id, title, image, href, description, inEdit }: IServiceCa
           <div className="flex w-7 p-0 mr-4 grayscale transition ease-in-out duration-300 group-hover:grayscale-0">
             <Image width={200} height={200} className="object-contain" src={image} alt="" />
           </div>
-          <h2 className="my-4 text-service-desc-light text-2xl font-bold overflow-x-hidden">
+          <h2 className="my-4 truncate text-service-desc-light text-xl font-bold overflow-x-hidden">
             {title}
           </h2>
         </div>
-        {isHovered && <EditDropdown cardId={id} cardTitle={title} />}
+        {session?.user.isAdmin && isHovered && <EditDropdown cardId={id} cardTitle={title} />}
       </div>
 
       <p
@@ -96,16 +97,20 @@ function EditDropdown({ cardId, cardTitle }: IEditDropdown) {
   const handleDelete = async (e: MouseEvent) => {
     e.preventDefault();
     try {
-      await mutate('/api/services', deleter(`/api/service/${cardId}`), {
-        populateCache: (deletedService: Service, services: Service[]) => {
-          const filteredServices = services.filter((serv) => serv.id !== deletedService.id);
-          return filteredServices;
+      const response = await fetch(`/api/service/${cardId}`, {
+        method: 'DELETE',
+        headers: {
+          'content-type': 'application/json',
         },
-        revalidate: false,
       });
-      toast.success(`${cardTitle} was deleted`);
+      if (response.ok) {
+        void mutate('/api/services');
+        toast.success(`${cardTitle} was deleted`);
+      }
     } catch (error) {
       toast.error('Could not delete service');
+      // eslint-disable-next-line no-console
+      console.error(error);
     }
   };
 
@@ -118,14 +123,17 @@ function EditDropdown({ cardId, cardTitle }: IEditDropdown) {
   return (
     <Menu>
       <Menu.Button
-        className={classNames(
-          'py-2 rounded-lg transition ease-in-out',
+        className={cn(
+          'absolute top-0 right-0 mr-3 mt-3 py-2 rounded-lg transition ease-in-out bg-service-card-solid',
           'hover:bg-[#272731] hover:shadow-lg',
         )}
       >
         <EllipsisVerticalIcon className="w-7" />
       </Menu.Button>
-      <Menu.Items className="absolute right-0 mt-2 w-56 origin-top-right divide-y divide-gray-100 rounded-md bg-service-card-solid  shadow-2xl ring-1 ring-black ring-opacity-5 focus:outline-none">
+      <Menu.Items
+        className="absolute right-0 mt-2 w-56 origin-top-right divide-y divide-gray-100 rounded-md
+        bg-service-card-solid shadow-2xl ring-1 ring-black ring-opacity-5 focus:outline-none"
+      >
         <div className="p-1">
           <MenuItem buttonText="Edit" Icon={PencilIcon} onClick={handleEdit} />
           <MenuItem buttonText="Delete" Icon={TrashIcon} onClick={handleDelete} />
@@ -141,7 +149,7 @@ function MenuItem({ buttonText, Icon, onClick }: IMenuItem) {
       {({ active }) => (
         <button
           onClick={onClick}
-          className={classNames(
+          className={cn(
             'group flex w-full items-center rounded-md px-2 py-2 text-sm',
             active ? 'bg-[#2a2c3c] text-white' : 'text-white',
           )}

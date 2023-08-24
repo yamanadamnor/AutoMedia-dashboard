@@ -3,13 +3,13 @@ import type { FormEvent } from 'react';
 import { motion } from 'framer-motion';
 import { Dialog, Transition } from '@headlessui/react';
 import Image from 'next/image';
-import type { Prisma, Service } from '@prisma/client';
+import type { Prisma } from '@prisma/client';
 
 import { useAtom } from 'jotai';
 import useSWR, { useSWRConfig } from 'swr';
 import toast from 'react-hot-toast';
 
-import { useDebounce, fetcher, putter, poster } from '../utils';
+import { useDebounce, fetcher, putter } from '../utils';
 import { AddServiceModalAtom, editServiceIdAtom } from '../states';
 
 const ServiceForm = () => {
@@ -48,17 +48,16 @@ const ServiceForm = () => {
         // eslint-disable-next-line no-console
         console.error(err);
       });
-      await mutate('/api/services');
+      void mutate('/api/services');
     } else {
-      await mutate('/api/services', poster('/api/services', service), {
-        populateCache: (newServ: Service, services: Service[]) => {
-          return [...services, newServ];
-        },
-        revalidate: false,
+      const response = await fetch('/api/services', {
+        method: 'POST',
+        body: JSON.stringify(service),
+        headers: { 'content-type': 'application/json' },
       });
-
+      if (!response.ok) toast.error('Could not update service');
+      void mutate('/api/services');
       setEditServiceId(0);
-
       toast.success(`${service.title} was added`);
     }
   };

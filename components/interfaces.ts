@@ -1,5 +1,4 @@
-import type { Prisma, Service } from '@prisma/client';
-import type { SignInResponse } from 'next-auth/react';
+import type { Prisma } from '@prisma/client';
 import type { StaticImageData } from 'next/image';
 
 export interface IService {
@@ -19,7 +18,6 @@ export interface IServiceCard extends Prisma.ServiceCreateInput {
 }
 
 export interface IServiceShelf {
-  services: Service[];
   inEdit: boolean;
 }
 
@@ -29,6 +27,7 @@ export interface ISonarrReleases {
   seriesId: number;
   seasonNumber: number;
   episodeNumber: number;
+  hasFile: boolean;
   series: { title: string; images: { coverType: string; url: string }[] };
 }
 
@@ -37,6 +36,7 @@ export interface IRadarrReleases {
   title: string;
   digitalRelease: Date;
   physicalRelease: Date;
+  hasFile: boolean;
   images: { coverType: string; url: string }[];
 }
 
@@ -52,6 +52,7 @@ export interface IMediaReleaseItem {
   mediaImages: { coverType: string; url: string }[];
   mediaItemDate: Date;
   mediaItemType: 'sonarr' | 'radarr';
+  mediaHasFile: boolean;
 }
 
 export interface IDayComponent {
@@ -68,22 +69,21 @@ export interface IDayComponent {
 }
 
 export interface IBtnKind {
-  type: 'signin' | 'signout';
-  clickHandler: () => Promise<SignInResponse> | Promise<undefined>;
+  onClick: React.MouseEventHandler<HTMLButtonElement>;
   message: string;
 }
 
 // https://github.com/tailwindlabs/heroicons/issues/64#issuecomment-1659901474
-type IconSVGProps = React.PropsWithoutRef<React.SVGProps<SVGSVGElement>> & React.RefAttributes<SVGSVGElement>
+type IconSVGProps = React.PropsWithoutRef<React.SVGProps<SVGSVGElement>> &
+  React.RefAttributes<SVGSVGElement>;
 type IconProps = IconSVGProps & {
-  title?: string
-  titleId?: string
-}
-type HeroIcon = React.FC<IconProps>
+  title?: string;
+  titleId?: string;
+};
+type HeroIcon = React.FC<IconProps>;
 
 export interface IMenuItem {
   buttonText: string;
   Icon: HeroIcon;
   onClick: (e: React.MouseEvent) => void;
 }
-

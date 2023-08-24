@@ -1,9 +1,8 @@
-import { format, isEqual, startOfToday, startOfDay, isSameMonth } from 'date-fns';
+import { format, isEqual, startOfDay, isSameMonth, isToday, isSameDay } from 'date-fns';
 import type { IDayComponent } from '../interfaces';
-import { classNames } from '../utils';
+import { cn } from '../utils';
 
 function DayComponent({ day, sonarrMedia, radarrMedia, selectedDay, onClick }: IDayComponent) {
-  const today = startOfToday();
   if (!sonarrMedia && !radarrMedia) return <h2 className="font-bold">No releases</h2>;
 
   const sonarrReleases = sonarrMedia.filter((media) => {
@@ -22,16 +21,16 @@ function DayComponent({ day, sonarrMedia, radarrMedia, selectedDay, onClick }: I
 
   return (
     <button
-      className={classNames(
-        'w-8 h-12 transition ease-in-out duration-300 flex flex-col justify-center items-center rounded select-none hover:bg-[#272731] hover:shadow-lg',
+      className={cn(
+        'w-9 h-12 transition ease-in-out duration-300 rounded select-none hover:bg-[#272731] hover:shadow-service-sm flex flex-col justify-around items-center justify-self-center leading-none',
         isSameMonth(day, selectedDay) ? '' : 'text-gray-600',
-        isEqual(startOfDay(day), startOfDay(selectedDay)) ? 'bg-[#272731]' : '',
-        isEqual(startOfDay(day), startOfDay(today)) ? 'border border-gray-500' : '',
+        isSameDay(day, selectedDay) ? 'bg-[#272731] shadow-lg' : '',
+        isToday(day) ? 'border border-gray-700' : '',
       )}
       onClick={onClick}
     >
       {format(day, 'd')}
-      <div className="flex justify-around pt-1 px-1">
+      <div className="flex justify-around w-full px-2">
         {radarrReleases && radarrReleases.length > 0 && (
           <div className="w-1.5 h-1.5 rounded-full bg-orange-400"></div>
         )}

@@ -2,6 +2,15 @@
   "$schema": "https://json.schemastore.org/tsconfig",
   "display": "Default",
   "compilerOptions": {
+    "baseUrl": ".",
+    "plugins": [{ "name": "next" }],
+    "paths": {
+      "@/components/*": ["components/*"],
+      "@/ui/*": ["ui/*"],
+      "@/utils/*": ["utils/*"],
+      "@/styles/*": ["styles/*"],
+      "@/server/*": ["server/*"]
+    },
     "composite": false,
     "declaration": true,
     "declarationMap": true,
@@ -21,7 +30,6 @@
     "noUnusedLocals": false,
     "noUnusedParameters": false,
     "noEmit": true,
-    "plugins": [{ "name": "next" }],
     "preserveWatchOutput": true,
     "resolveJsonModule": true,
     "isolatedModules": true,
