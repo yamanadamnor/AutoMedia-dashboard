@@ -13,14 +13,19 @@ import { fetcher } from "./utils";
 import type { Service } from "@prisma/client";
 import useSWR from "swr";
 import Image from "next/image";
-import { Cog6ToothIcon } from "@heroicons/react/24/outline";
-import { commandMenuAtom, settingsModalAtom } from "./states";
+import { Cog6ToothIcon, PlusCircleIcon } from "@heroicons/react/24/outline";
+import {
+  AddServiceModalAtom,
+  commandMenuAtom,
+  settingsModalAtom,
+} from "./states";
 import { useAtom, useSetAtom } from "jotai";
 import { cn } from "@/utils/cn";
 
 export const CommandMenu = () => {
   const [commandMenuOpen, setCommandMenuOpen] = useAtom(commandMenuAtom);
   const setSettingsModalOpen = useSetAtom(settingsModalAtom);
+  const setAddServiceModal = useSetAtom(AddServiceModalAtom);
   const {
     data: services,
     error: servicesError,
@@ -77,6 +82,16 @@ export const CommandMenu = () => {
               <p className="text-gray-500">Service</p>
             </CommandItem>
           ))}
+          <CommandItem
+            className="group flex w-full justify-between rounded-xl"
+            onSelect={() => runCommand(() => setAddServiceModal(true))}
+          >
+            <div className="flex items-center gap-x-4 ">
+              <PlusCircleIcon className="text-gray-300" />
+              Add Service
+            </div>
+            <p className="text-gray-500">Service</p>
+          </CommandItem>
         </CommandGroup>
 
         <CommandGroup heading="Settings">

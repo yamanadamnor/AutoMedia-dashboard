@@ -1,7 +1,7 @@
-import { useEffect, useState } from 'react';
-import { useAtom, useAtomValue } from 'jotai';
-import { motion } from 'framer-motion';
-import type { Variants } from 'framer-motion';
+import { useEffect, useState } from "react";
+import { useAtom, useAtomValue } from "jotai";
+import { motion } from "framer-motion";
+import type { Variants } from "framer-motion";
 import {
   endOfMonth,
   format,
@@ -16,14 +16,19 @@ import {
   isSameWeek,
   add,
   startOfDay,
-} from 'date-fns';
-import { CalendarIcon, ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/24/outline';
+} from "date-fns";
+import {
+  CalendarIcon,
+  ChevronLeftIcon,
+  ChevronRightIcon,
+} from "@heroicons/react/24/outline";
 
-import { calendarFetcher, cn } from '../utils';
-import { sonarrMedias, radarrMedias, selectedDate } from '../states';
-import type { IRadarrReleases, ISonarrReleases } from '../interfaces';
-import DayComponent from './DayComponent';
-import MediaReleaseInfo from './MediaReleaseInfo';
+import { calendarFetcher, cn } from "../utils";
+import { sonarrMedias, radarrMedias, selectedDate } from "../states";
+import type { IRadarrReleases, ISonarrReleases } from "../interfaces";
+import DayComponent from "./DayComponent";
+import MediaReleaseInfo from "./MediaReleaseInfo";
+import { Button } from "@/ui/Button";
 
 setDefaultOptions({
   weekStartsOn: 1,
@@ -32,8 +37,12 @@ setDefaultOptions({
 function CalendarWidget() {
   const today = startOfToday();
 
-  const [todaysSonarrReleases, setTodaysSonarr] = useState<ISonarrReleases[]>([]);
-  const [todaysRadarrReleases, setTodaysRadarr] = useState<IRadarrReleases[]>([]);
+  const [todaysSonarrReleases, setTodaysSonarr] = useState<ISonarrReleases[]>(
+    [],
+  );
+  const [todaysRadarrReleases, setTodaysRadarr] = useState<IRadarrReleases[]>(
+    [],
+  );
   const [selectedDay, setSelectedDay] = useAtom(selectedDate);
 
   const weekDays = eachDayOfInterval({
@@ -45,7 +54,7 @@ function CalendarWidget() {
   const [radarrMedia, setRadarrMedia] = useAtom(radarrMedias);
 
   useEffect(() => {
-    calendarFetcher('/api/modules/calendar', selectedDay, 'sonarr')
+    calendarFetcher("/api/modules/calendar", selectedDay, "sonarr")
       .then((data: ISonarrReleases[]) => {
         setSonarrMedia(data);
         const sonarrReleases = data.filter((media) => {
@@ -57,7 +66,7 @@ function CalendarWidget() {
       // eslint-disable-next-line no-console
       .catch((err) => console.error(err));
 
-    calendarFetcher('/api/modules/calendar', selectedDay, 'radarr')
+    calendarFetcher("/api/modules/calendar", selectedDay, "radarr")
       .then((data: IRadarrReleases[]) => {
         setRadarrMedia(data);
         const radarrReleases = data.filter((media) => {
@@ -102,7 +111,7 @@ function CalendarWidget() {
   const mediaReleaseInfoVariants: Variants = {
     populated: {
       opacity: 1,
-      height: 'auto',
+      height: "auto",
     },
     empty: {
       opacity: 0,
@@ -113,91 +122,89 @@ function CalendarWidget() {
   return (
     <motion.div
       className={cn(
-        '@container',
-        'w-full group:border bg-service-card rounded-xl p-3 py-8 text-white',
-        'border border-gray-700 backdrop-blur-sm',
-        'flex flex-col',
-        todaysRadarrReleases.length > 0 || todaysSonarrReleases.length > 0 ? 'gap-4' : '',
-        'md:flex-row',
-        'lg:flex-col',
+        "@container",
+        "group:border w-full rounded-xl bg-service-card p-3 py-8 text-white",
+        "border border-gray-700 backdrop-blur-sm",
+        "flex flex-col",
+        todaysRadarrReleases.length > 0 || todaysSonarrReleases.length > 0
+          ? "gap-4"
+          : "",
+        "md:flex-row",
+        "lg:flex-col",
       )}
     >
-      {/* w-full md:w-3/5 lg:w-full */}
       <div
         className="
-         w-full md:w-3/5 lg:w-full
-        @container flex flex-col gap-y-4"
+         flex w-full flex-col
+        gap-y-4 @container md:w-3/5 lg:w-full"
       >
-        <div className={cn('flex justify-center gap-x-2 @sm:gap-x-8 w-full items-center')}>
+        <div
+          className={cn(
+            "flex w-full items-center justify-center gap-x-2 @sm:gap-x-8",
+          )}
+        >
           <ChevronLeftIcon
-            onClick={
-              () => paginate(-1)
-              // setSelectedDay(
-              //   add(selectedDay, {
-              //     months: -1,
-              //   }),
-              // )
-            }
+            onClick={() => paginate(-1)}
             className={cn(
-              'p-1 h-12 rounded-md select-none transition ease-in-out',
-              'duration-300 border-gray-700 hover:bg-[#272731] hover:shadow-lg border',
+              "h-12 select-none rounded-md p-1 transition ease-in-out",
+              "border border-gray-700 duration-300 hover:bg-[#272731] hover:shadow-lg",
             )}
           />
 
-          <div className={cn('flex justify-center items-center max-w-56 sm:w-60')}>
-            <div className="text-7xl self-center">
-              <h2 className="select-none leading-none">{format(selectedDay, 'dd')}</h2>
+          <div
+            className={cn("max-w-56 flex items-center justify-center sm:w-60")}
+          >
+            <div className="self-center text-7xl">
+              <h2 className="select-none leading-none">
+                {format(selectedDay, "dd")}
+              </h2>
             </div>
             <div className="flex flex-col justify-between">
-              <h2 className="select-none font-thin">{format(selectedDay, 'yyyy')}</h2>
-              <h2 className="select-none text-3xl leading-0">{format(selectedDay, 'MMMM')}</h2>
+              <h2 className="select-none font-thin">
+                {format(selectedDay, "yyyy")}
+              </h2>
+              <h2 className="leading-0 select-none text-3xl">
+                {format(selectedDay, "MMMM")}
+              </h2>
             </div>
           </div>
 
           <ChevronRightIcon
-            onClick={
-              () => paginate(1)
-              // setSelectedDay(
-              //   add(selectedDay, {
-              //     months: 1,
-              //   }),
-              // )
-            }
+            onClick={() => paginate(1)}
             className={cn(
-              'p-1 h-12 rounded-md select-none transition ease-in-out',
-              'duration-300 hover:bg-[#272731] hover:shadow-lg border border-gray-700',
+              "h-12 select-none rounded-md p-1 transition ease-in-out",
+              "border border-gray-700 duration-300 hover:bg-[#272731] hover:shadow-lg",
             )}
           />
         </div>
 
-        <button
-          className={cn(
-            'px-4 py-2 text-center cursor-pointer select-none place-self-center',
-            'border rounded border-gray-700',
-            'transition duration-300 ease-in-out',
-            'hover:shadow-lg hover:bg-[#272731]',
-          )}
+        <Button
           onClick={() => setSelectedDay(today)}
+          className="mx-auto rounded-full border-zinc-700 text-zinc-400 transition-all duration-200 ease-in-out hover:text-gray-200"
         >
-          <CalendarIcon className="w-4 inline-block mr-3" />
+          <CalendarIcon className="mr-3 inline-block w-4" />
           today
-        </button>
+        </Button>
 
         <motion.div className="flex justify-center">
-          <div className="w-full grid grid-cols-8 gap-y-2">
+          <div className="grid w-full grid-cols-8 gap-y-2">
             <div className="text-center font-bold text-gray-600"></div>
             {weekDays.map((weekday) => (
               <motion.div
-                key={format(weekday, 'EEEE')}
+                key={format(weekday, "EEEE")}
                 className={cn(
-                  'select-none',
-                  isEqual(selectedDay, weekday) ? 'text-gray-300' : 'text-gray-600',
-                  'text-center font-bold',
+                  "select-none",
+                  isEqual(selectedDay, weekday)
+                    ? "text-gray-300"
+                    : "text-gray-600",
+                  "text-center font-bold",
                 )}
               >
-                <span className="hidden @sm:block">{format(weekday, 'EE')}</span>
+                <span className="hidden @sm:block">
+                  {format(weekday, "EE")}
+                </span>
 
-                <span className="@sm:hidden">{format(weekday, 'EEEEE')}</span>
+                <span className="@sm:hidden">{format(weekday, "EEEEE")}</span>
               </motion.div>
             ))}
 
@@ -208,27 +215,35 @@ function CalendarWidget() {
 
       <div
         className={cn(
-          todaysRadarrReleases.length > 0 || todaysSonarrReleases.length > 0 ? '' : 'hidden',
-          'w-auto h-0.5 rounded-full bg-service-card',
-          'md:w-0.5 md:h-auto md:block',
           todaysRadarrReleases.length > 0 || todaysSonarrReleases.length > 0
-            ? 'lg:w-auto lg:h-0.5'
-            : '',
+            ? ""
+            : "hidden",
+          "h-0.5 w-auto rounded-full bg-service-card",
+          "md:block md:h-auto md:w-0.5",
+          todaysRadarrReleases.length > 0 || todaysSonarrReleases.length > 0
+            ? "lg:h-0.5 lg:w-auto"
+            : "",
         )}
       ></div>
 
       <motion.div
         key={
-          todaysRadarrReleases.length > 0 || todaysSonarrReleases.length > 0 ? 'populated' : 'empty'
+          todaysRadarrReleases.length > 0 || todaysSonarrReleases.length > 0
+            ? "populated"
+            : "empty"
         }
         variants={mediaReleaseInfoVariants}
         initial={
-          todaysRadarrReleases.length > 0 || todaysSonarrReleases.length > 0 ? 'populated' : 'empty'
+          todaysRadarrReleases.length > 0 || todaysSonarrReleases.length > 0
+            ? "populated"
+            : "empty"
         }
         animate={
-          todaysRadarrReleases.length > 0 || todaysSonarrReleases.length > 0 ? 'populated' : 'empty'
+          todaysRadarrReleases.length > 0 || todaysSonarrReleases.length > 0
+            ? "populated"
+            : "empty"
         }
-        className="max-h-96 overflow-y-auto scrollbar"
+        className="scrollbar max-h-96 overflow-y-auto"
       >
         <MediaReleaseInfo
           selectedDay={selectedDay}
@@ -239,7 +254,11 @@ function CalendarWidget() {
     </motion.div>
   );
 }
-function RenderCalendarCells({ daysOfSelectedMonth }: { daysOfSelectedMonth: Date[][] }) {
+function RenderCalendarCells({
+  daysOfSelectedMonth,
+}: {
+  daysOfSelectedMonth: Date[][];
+}) {
   const [selectedDay, setSelectedDay] = useAtom(selectedDate);
   const sonarrMedia = useAtomValue(sonarrMedias);
   const radarrMedia = useAtomValue(radarrMedias);
@@ -251,20 +270,24 @@ function RenderCalendarCells({ daysOfSelectedMonth }: { daysOfSelectedMonth: Dat
           if (index % 8 == 0) {
             return (
               <div
-                key={`${format(cell, 'yyyy-MM-dd')}-${index}`}
+                key={`${format(cell, "yyyy-MM-dd")}-${index}`}
                 className={cn(
-                  'justify-self-center text-center mt-1 pt-1 text-sm select-none h-2/3 rounded w-2/4',
-                  isSameWeek(cell, selectedDay) ? 'text-gray-300 ' : 'text-gray-600',
-                  isSameWeek(startOfToday(), cell) ? 'border border-gray-700' : '',
+                  "mt-1 h-2/3 w-2/4 select-none justify-self-center rounded pt-1 text-center text-sm",
+                  isSameWeek(cell, selectedDay)
+                    ? "text-gray-300 "
+                    : "text-gray-600",
+                  isSameWeek(startOfToday(), cell)
+                    ? "border border-gray-700"
+                    : "",
                 )}
               >
-                {format(cell, 'I')}
+                {format(cell, "I")}
               </div>
             );
           } else {
             return (
               <DayComponent
-                key={`${format(cell, 'yyyy-MM-dd')}-${index}`}
+                key={`${format(cell, "yyyy-MM-dd")}-${index}`}
                 day={cell}
                 selectedDay={selectedDay}
                 onClick={() => setSelectedDay(cell)}

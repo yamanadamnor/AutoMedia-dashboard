@@ -15,6 +15,7 @@ import CalendarWidget from "../components/CalendarWidget/CalendarWidget";
 import { AddServiceModalAtom, editServiceIdAtom } from "../components/states";
 import { CommandMenu } from "../components/CommandMenu";
 import { Settings } from "@/components/Settings";
+import { Button } from "@/ui/Button";
 
 const App: NextPage = () => {
   const [isAddServiceModalOpen, setAddServiceModal] =
@@ -82,17 +83,15 @@ const App: NextPage = () => {
               <Settings />
               {session?.user.isAdmin && (
                 <div className="my-4 text-white">
-                  <button
+                  <Button
                     type="button"
                     onClick={() => {
                       setAddServiceModal(true);
                       setEditServiceId(0);
                     }}
-                    className="mt-5 box-border rounded-md border-2 px-6 py-2 text-white 
-                      transition-all duration-150 ease-in-out hover:bg-white hover:text-black"
                   >
                     Add service
-                  </button>
+                  </Button>
                 </div>
               )}
             </div>
