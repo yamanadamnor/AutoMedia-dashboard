@@ -140,7 +140,7 @@ export const SettingsForm = ({
                   onBlur={field.onBlur}
                 />
               </FormControl>
-              <FormMessage />
+              <FormMessage className="text-red-400" />
             </FormItem>
           )}
         />
@@ -155,7 +155,7 @@ export const SettingsForm = ({
                   <FormControl>
                     <Input placeholder="Enter your Sonarr API key" {...field} />
                   </FormControl>
-                  <FormMessage />
+                  <FormMessage className="text-red-400" />
                 </FormItem>
               )}
             />
@@ -166,9 +166,9 @@ export const SettingsForm = ({
                 <FormItem>
                   <FormLabel>Sonarr url</FormLabel>
                   <FormControl>
-                    <Input placeholder="Enter you SONARR_URL" {...field} />
+                    <Input placeholder="Enter your Sonarr url" {...field} />
                   </FormControl>
-                  <FormMessage />
+                  <FormMessage className="text-red-400" />
                 </FormItem>
               )}
             />
@@ -192,7 +192,7 @@ export const SettingsForm = ({
                     onBlur={field.onBlur}
                   />
                 </FormControl>
-                <FormMessage />
+                <FormMessage className="text-red-400" />
               </FormItem>
             );
           }}
@@ -209,7 +209,7 @@ export const SettingsForm = ({
                   <FormControl>
                     <Input placeholder="Enter your Radarr API key" {...field} />
                   </FormControl>
-                  <FormMessage />
+                  <FormMessage className="text-red-400" />
                 </FormItem>
               )}
             />
@@ -223,7 +223,7 @@ export const SettingsForm = ({
                   <FormControl>
                     <Input placeholder="Enter your Radarr url" {...field} />
                   </FormControl>
-                  <FormMessage />
+                  <FormMessage className="text-red-400" />
                 </FormItem>
               )}
             />
