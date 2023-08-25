@@ -1,7 +1,5 @@
 import Image from "next/image";
-import { AuthButton } from "@/components/AuthButton";
 import { signOut, useSession } from "next-auth/react";
-import { Avatar, AvatarFallback } from "@/ui/Avatar";
 import {
   DropdownMenu,
   DropdownMenuItem,
@@ -14,7 +12,10 @@ import {
   Cog6ToothIcon,
 } from "@heroicons/react/24/outline";
 import { useSetAtom } from "jotai";
-import { commandMenuAtom, settingsModalAtom } from "./states";
+
+import { Avatar, AvatarFallback } from "@/ui/Avatar";
+import { AuthButton } from "@/components/AuthButton";
+import { commandMenuAtom, settingsModalAtom } from "@/components/states";
 import { Kbd } from "@/components/CommandMenu";
 import { Button } from "@/ui/Button";
 
@@ -31,9 +32,13 @@ export const Header = () => {
   const setCommandMenuModal = useSetAtom(commandMenuAtom);
   return (
     <nav className="flex w-full items-center justify-between">
-      <div className="w-12">
-        <Image src="/img/logo-white.svg" width={400} height={400} alt="logo" />
-      </div>
+      <Image
+        src="/img/logo-white.svg"
+        className="opacity-80"
+        width={35}
+        height={35}
+        alt="logo"
+      />
       <Button
         className="ml-auto mr-10 hidden items-center gap-x-2 rounded-full border border-zinc-700 bg-service-card
           px-5 py-2  text-zinc-500 transition-all duration-200
@@ -56,7 +61,7 @@ const ProfileButton = () => {
     <DropdownMenu>
       <DropdownMenuTrigger>
         <Avatar
-          className="h-14 w-14 bg-[#2f2038]
+          className="h-12 w-12 bg-[#2f2038]
             text-white transition-all duration-200 ease-in-out hover:bg-gray-700"
         >
           <AvatarFallback>
@@ -84,7 +89,7 @@ const ProfileButton = () => {
             Settings
           </DropdownMenuItem>
           <DropdownMenuItem
-            className="gap-x-4 text-red-400 hover:bg-[#2b2c3a]"
+            className="gap-x-4 text-red-300 hover:bg-[#2b2c3a]"
             onClick={() => signOut()}
           >
             <ArrowLeftOnRectangleIcon className="h-5 w-5" />
