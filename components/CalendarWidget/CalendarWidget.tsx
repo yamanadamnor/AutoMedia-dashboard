@@ -138,22 +138,8 @@ function CalendarWidget() {
          flex w-full flex-col
         gap-y-4 @container md:w-3/5 lg:w-full"
       >
-        <div
-          className={cn(
-            "flex w-full items-center justify-center gap-x-2 @sm:gap-x-8",
-          )}
-        >
-          <ChevronLeftIcon
-            onClick={() => paginate(-1)}
-            className={cn(
-              "h-12 select-none rounded-md p-1 transition ease-in-out",
-              "border border-gray-700 duration-300 hover:bg-[#272731] hover:shadow-lg",
-            )}
-          />
-
-          <div
-            className={cn("max-w-56 flex items-center justify-center sm:w-60")}
-          >
+        <div className="flex w-full items-center justify-center gap-x-2 @sm:gap-x-8">
+          <div className="max-w-56 flex items-center justify-center sm:w-60 ">
             <div className="self-center text-7xl">
               <h2 className="select-none leading-none">
                 {format(selectedDay, "dd")}
@@ -168,23 +154,30 @@ function CalendarWidget() {
               </h2>
             </div>
           </div>
-
-          <ChevronRightIcon
-            onClick={() => paginate(1)}
-            className={cn(
-              "h-12 select-none rounded-md p-1 transition ease-in-out",
-              "border border-gray-700 duration-300 hover:bg-[#272731] hover:shadow-lg",
-            )}
-          />
         </div>
 
-        <Button
-          onClick={() => setSelectedDay(today)}
-          className="mx-auto rounded-full border-zinc-700 text-zinc-400 transition-all duration-200 ease-in-out hover:text-gray-200"
-        >
-          <CalendarIcon className="mr-3 inline-block w-4" />
-          today
-        </Button>
+        <div className="flex items-center justify-around px-4">
+          <Button className="group px-2" onClick={() => paginate(-1)}>
+            <ChevronLeftIcon
+              className="h-6 w-6 select-none text-zinc-500 transition-all
+            duration-200 ease-in-out group-hover:text-gray-200"
+            />
+          </Button>
+          <Button
+            onClick={() => setSelectedDay(today)}
+            className="flex items-center gap-x-2"
+          >
+            <CalendarIcon className="w-4" />
+            today
+          </Button>
+
+          <Button className="group px-2" onClick={() => paginate(1)}>
+            <ChevronRightIcon
+              className="h-6 w-6 select-none text-zinc-500 transition-all 
+                duration-200 ease-in-out group-hover:text-gray-200"
+            />
+          </Button>
+        </div>
 
         <motion.div className="flex justify-center">
           <div className="grid w-full grid-cols-8 gap-y-2">
