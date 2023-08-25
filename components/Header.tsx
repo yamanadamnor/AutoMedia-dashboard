@@ -40,9 +40,7 @@ export const Header = () => {
         alt="logo"
       />
       <Button
-        className="ml-auto mr-10 hidden items-center gap-x-2 rounded-full border border-zinc-700 bg-service-card
-          px-5 py-2  text-zinc-500 transition-all duration-200
-          ease-in-out hover:border-gray-500 hover:text-gray-200 md:flex"
+        className="ml-auto mr-10 hidden gap-x-2 rounded-full border border-zinc-700 bg-service-card px-5 py-2 text-zinc-500 md:flex md:items-center"
         onClick={() => setCommandMenuModal(true)}
       >
         Press <Kbd className="bg-zinc-700">⌘</Kbd>
