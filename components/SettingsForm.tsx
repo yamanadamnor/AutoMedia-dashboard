@@ -1,5 +1,5 @@
 import { MoonIcon, SunIcon } from "@heroicons/react/24/outline";
-import { poster } from "./utils";
+import { poster } from "@/utils/poster";
 import toast from "react-hot-toast";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -69,7 +69,7 @@ export type SettingsFormValues = z.infer<typeof settingsFormSchema>;
 export const SettingsForm = ({
   settings,
 }: {
-  settings: SettingsFormValues | undefined;
+  settings?: SettingsFormValues;
 }) => {
   const form = useForm<SettingsFormValues>({
     resolver: zodResolver(settingsFormSchema),
