@@ -15,6 +15,7 @@ import {
 } from "@/ui/Dialog";
 import { useAtom } from "jotai";
 import { settingsModalAtom } from "./states";
+import { Button } from "@/ui/Button";
 
 export const Settings = () => {
   const [open, setOpen] = useAtom(settingsModalAtom);
@@ -37,13 +38,9 @@ export const Settings = () => {
           </DialogHeader>
           <SettingsForm settings={data} />
           <DialogFooter>
-            <button
-              form="settingsForm"
-              className="mt-5 box-border rounded-md border-2 px-6 py-1 text-white transition-all duration-150 ease-in-out hover:bg-white hover:text-black"
-              type="submit"
-            >
+            <Button form="settingsForm" type="submit">
               Submit
-            </button>
+            </Button>
           </DialogFooter>
         </DialogContent>
       </Dialog>
