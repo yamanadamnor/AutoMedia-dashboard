@@ -84,16 +84,18 @@ export const CommandMenu = () => {
               <p className="text-gray-500">Service</p>
             </CommandItem>
           ))}
-          <CommandItem
-            className="group flex w-full justify-between rounded-xl"
-            onSelect={() => runCommand(() => setAddServiceModal(true))}
-          >
-            <div className="flex items-center gap-x-4 ">
-              <PlusCircleIcon className="text-gray-300" />
-              Add Service
-            </div>
-            <p className="text-gray-500">Service</p>
-          </CommandItem>
+          {session?.user.isAdmin && (
+            <CommandItem
+              className="group flex w-full justify-between rounded-xl"
+              onSelect={() => runCommand(() => setAddServiceModal(true))}
+            >
+              <div className="flex items-center gap-x-4 ">
+                <PlusCircleIcon className="text-gray-300" />
+                Add Service
+              </div>
+              <p className="text-gray-500">Service</p>
+            </CommandItem>
+          )}
         </CommandGroup>
 
         {session?.user.isAdmin && (
