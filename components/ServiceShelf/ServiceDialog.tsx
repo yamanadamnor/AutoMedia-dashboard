@@ -19,7 +19,7 @@ export const ServiceDialog = ({
   trigger,
   service,
 }: {
-  trigger: React.ReactNode;
+  trigger?: React.ReactNode;
   service?: ServiceFormValues;
 }) => {
   const [open, setOpen] = useAtom(AddServiceModalAtom);
