@@ -21,8 +21,10 @@ import {
 } from "./states";
 import { useAtom, useSetAtom } from "jotai";
 import { cn } from "@/utils/cn";
+import { useSession } from "next-auth/react";
 
 export const CommandMenu = () => {
+  const { data: session } = useSession();
   const [commandMenuOpen, setCommandMenuOpen] = useAtom(commandMenuAtom);
   const setSettingsModalOpen = useSetAtom(settingsModalAtom);
   const setAddServiceModal = useSetAtom(AddServiceModalAtom);
@@ -94,18 +96,20 @@ export const CommandMenu = () => {
           </CommandItem>
         </CommandGroup>
 
-        <CommandGroup heading="Settings">
-          <CommandItem
-            className="group flex w-full justify-between rounded-xl"
-            onSelect={() => runCommand(() => setSettingsModalOpen(true))}
-          >
-            <div className="flex items-center gap-x-4 ">
-              <Cog6ToothIcon className="text-gray-300" />
-              Settings
-            </div>
-            <p className="text-gray-500">Setting</p>
-          </CommandItem>
-        </CommandGroup>
+        {session?.user.isAdmin && (
+          <CommandGroup heading="Settings">
+            <CommandItem
+              className="group flex w-full justify-between rounded-xl"
+              onSelect={() => runCommand(() => setSettingsModalOpen(true))}
+            >
+              <div className="flex items-center gap-x-4 ">
+                <Cog6ToothIcon className="text-gray-300" />
+                Settings
+              </div>
+              <p className="text-gray-500">Setting</p>
+            </CommandItem>
+          </CommandGroup>
+        )}
       </CommandList>
       <div className="mt-4 flex justify-between border-t border-t-gray-700 px-3 py-4">
         <div className="flex items-center gap-x-5">
