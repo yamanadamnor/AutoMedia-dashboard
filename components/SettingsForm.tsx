@@ -4,12 +4,14 @@ import toast from "react-hot-toast";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
+import Image from "next/image";
 
 import { Input } from "@/ui/Input";
 import { Switch } from "@/ui/Switch";
 import {
   Form,
   FormControl,
+  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -22,6 +24,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/ui/Select";
+import { AnimatePresence, motion } from "framer-motion";
 
 const apiKeyValue = z
   .string()
@@ -47,6 +50,10 @@ export const settingsFormSchema = z
     ENABLE_SONARR: z.boolean(),
     SONARR_API_KEY: apiKeyValue,
     SONARR_URL: urlValue,
+
+    ENABLE_JELLYFIN: z.boolean(),
+    JELLYFIN_API_KEY: apiKeyValue,
+    JELLYFIN_URL: urlValue,
   })
   .refine(
     (val) => {
@@ -57,6 +64,11 @@ export const settingsFormSchema = z
       // allows SONARR_API_KEY and SONARR_URL to be optional only when ENABLE_SONARR is false
       if (val.ENABLE_SONARR && (!val.SONARR_URL || !val.SONARR_API_KEY))
         return false;
+      
+      // allows JELLYFIN_API_KEY and JELLYFIN_URL to be optional only when ENABLE_JELLYFIN is false
+      if (val.ENABLE_JELLYFIN && (!val.JELLYFIN_URL || !val.JELLYFIN_API_KEY))
+        return false;
+
       return true;
     },
     {
@@ -85,12 +97,16 @@ export const SettingsForm = ({
     }
   };
 
+  const initial = { opacity: 0, height: 0 };
+  const animate = { opacity: 1, height: "auto" };
+  const exit = { opacity: 0, height: 0 };
+
   return (
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(handleSubmit)}
         id="settingsForm"
-        className="flex flex-col gap-y-5"
+        className="scrollbar flex max-h-[800px] flex-col gap-y-5 overflow-y-scroll"
       >
         <FormField
           control={form.control}
@@ -124,64 +140,25 @@ export const SettingsForm = ({
           )}
         />
 
-        <FormField
-          control={form.control}
-          name="ENABLE_SONARR"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Enable Sonarr integration</FormLabel>
-              <FormControl>
-                <Switch
-                  className="flex"
-                  checked={field.value}
-                  name={field.name}
-                  onCheckedChange={field.onChange}
-                  ref={field.ref}
-                  onBlur={field.onBlur}
+        <div className="space-y-10 rounded-md border border-zinc-700 px-4 py-3">
+          <FormField
+            control={form.control}
+            name="ENABLE_SONARR"
+            render={({ field }) => (
+              <FormItem className="flex items-center justify-between">
+                <Image
+                  src="/img/sonarr.svg"
+                  width={30}
+                  height={30}
+                  alt="Sonarr icon"
                 />
-              </FormControl>
-              <FormMessage className="text-red-400" />
-            </FormItem>
-          )}
-        />
-        {form.getValues("ENABLE_SONARR") && (
-          <>
-            <FormField
-              control={form.control}
-              name="SONARR_API_KEY"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Sonarr API key</FormLabel>
-                  <FormControl>
-                    <Input placeholder="Enter your Sonarr API key" {...field} />
-                  </FormControl>
-                  <FormMessage className="text-red-400" />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="SONARR_URL"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Sonarr url</FormLabel>
-                  <FormControl>
-                    <Input placeholder="Enter your Sonarr url" {...field} />
-                  </FormControl>
-                  <FormMessage className="text-red-400" />
-                </FormItem>
-              )}
-            />
-          </>
-        )}
+                <div>
+                  <FormLabel>Enable Sonarr</FormLabel>
+                  <FormDescription className="text-zinc-400">
+                    Enable Sonarr integration for the calendar widget
+                  </FormDescription>
+                </div>
 
-        <FormField
-          control={form.control}
-          name="ENABLE_RADARR"
-          render={({ field }) => {
-            return (
-              <FormItem>
-                <FormLabel>Enable Radarr integration</FormLabel>
                 <FormControl>
                   <Switch
                     className="flex"
@@ -194,41 +171,209 @@ export const SettingsForm = ({
                 </FormControl>
                 <FormMessage className="text-red-400" />
               </FormItem>
-            );
-          }}
-        />
+            )}
+          />
+          <AnimatePresence>
+            {form.getValues("ENABLE_SONARR") && (
+              <motion.div
+                className="space-y-4"
+                key="sonarr"
+                initial={initial}
+                animate={animate}
+                exit={exit}
+              >
+                <FormField
+                  control={form.control}
+                  name="SONARR_API_KEY"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Sonarr API key</FormLabel>
+                      <FormControl>
+                        <Input
+                          placeholder="Enter your Sonarr API key"
+                          {...field}
+                        />
+                      </FormControl>
+                      <FormMessage className="text-red-400" />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="SONARR_URL"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Sonarr url</FormLabel>
+                      <FormControl>
+                        <Input placeholder="Enter your Sonarr url" {...field} />
+                      </FormControl>
+                      <FormMessage className="text-red-400" />
+                    </FormItem>
+                  )}
+                />
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </div>
 
-        {form.getValues("ENABLE_RADARR") && (
-          <>
-            <FormField
-              control={form.control}
-              name="RADARR_API_KEY"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Radarr API key</FormLabel>
+        <div className="space-y-10 rounded-md border border-zinc-700 px-4 py-3">
+          <FormField
+            control={form.control}
+            name="ENABLE_RADARR"
+            render={({ field }) => (
+              <FormItem className="flex items-center justify-between">
+                <Image
+                  src="/img/radarr.svg"
+                  width={30}
+                  height={30}
+                  alt="Radarr icon"
+                />
+                <div>
+                  <FormLabel>Enable Radarr</FormLabel>
+                  <FormDescription className="text-zinc-400">
+                    Enable Radarr integration for the calendar widget
+                  </FormDescription>
+                </div>
+                <FormControl>
+                  <Switch
+                    className="flex"
+                    checked={field.value}
+                    name={field.name}
+                    onCheckedChange={field.onChange}
+                    ref={field.ref}
+                    onBlur={field.onBlur}
+                  />
+                </FormControl>
+                <FormMessage className="text-red-400" />
+              </FormItem>
+            )}
+          />
+
+          <AnimatePresence>
+            {form.getValues("ENABLE_RADARR") && (
+              <motion.div
+                className="space-y-4"
+                key="radarr"
+                initial={initial}
+                animate={animate}
+                exit={exit}
+              >
+                <FormField
+                  control={form.control}
+                  name="RADARR_API_KEY"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Radarr API key</FormLabel>
+                      <FormControl>
+                        <Input
+                          placeholder="Enter your Radarr API key"
+                          {...field}
+                        />
+                      </FormControl>
+                      <FormMessage className="text-red-400" />
+                    </FormItem>
+                  )}
+                />
+
+                <FormField
+                  control={form.control}
+                  name="RADARR_URL"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Radarr url</FormLabel>
+                      <FormControl>
+                        <Input placeholder="Enter your Radarr url" {...field} />
+                      </FormControl>
+                      <FormMessage className="text-red-400" />
+                    </FormItem>
+                  )}
+                />
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </div>
+
+        <div className="space-y-10 rounded-md border border-zinc-700 px-4 py-3">
+          <FormField
+            control={form.control}
+            name="ENABLE_JELLYFIN"
+            render={({ field }) => {
+              return (
+                <FormItem className="flex justify-between">
+                  <Image
+                    src="/img/jellyfin.svg"
+                    width={30}
+                    height={30}
+                    alt="Radarr icon"
+                  />
+                  <div>
+                    <FormLabel>Enable Jellyfin</FormLabel>
+                    <FormDescription className="text-zinc-400">
+                      Enable Jellyfin integration for the calendar widget
+                    </FormDescription>
+                  </div>
                   <FormControl>
-                    <Input placeholder="Enter your Radarr API key" {...field} />
+                    <Switch
+                      className="flex"
+                      checked={field.value}
+                      name={field.name}
+                      onCheckedChange={field.onChange}
+                      ref={field.ref}
+                      onBlur={field.onBlur}
+                    />
                   </FormControl>
                   <FormMessage className="text-red-400" />
                 </FormItem>
-              )}
-            />
+              );
+            }}
+          />
 
-            <FormField
-              control={form.control}
-              name="RADARR_URL"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Radarr url</FormLabel>
-                  <FormControl>
-                    <Input placeholder="Enter your Radarr url" {...field} />
-                  </FormControl>
-                  <FormMessage className="text-red-400" />
-                </FormItem>
-              )}
-            />
-          </>
-        )}
+          <AnimatePresence>
+            {form.getValues("ENABLE_JELLYFIN") && (
+              <motion.div
+                className="space-y-4"
+                key="jellyfin"
+                initial={initial}
+                animate={animate}
+                exit={exit}
+              >
+                <FormField
+                  control={form.control}
+                  name="JELLYFIN_API_KEY"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Jellyfin API key</FormLabel>
+                      <FormControl>
+                        <Input
+                          placeholder="Enter your Radarr API key"
+                          {...field}
+                        />
+                      </FormControl>
+                      <FormMessage className="text-red-400" />
+                    </FormItem>
+                  )}
+                />
+
+                <FormField
+                  control={form.control}
+                  name="JELLYFIN_URL"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Jellyfin url</FormLabel>
+                      <FormControl>
+                        <Input
+                          placeholder="Enter your Jellyfin url"
+                          {...field}
+                        />
+                      </FormControl>
+                      <FormMessage className="text-red-400" />
+                    </FormItem>
+                  )}
+                />
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </div>
       </form>
     </Form>
   );
