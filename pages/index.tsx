@@ -2,7 +2,6 @@ import React from "react";
 import type { NextPage } from "next";
 import { Toaster } from "react-hot-toast";
 import { useSession } from "next-auth/react";
-import { useAtom, useSetAtom } from "jotai";
 
 import Hero from "../components/Hero";
 import { Header } from "../components/Header";
@@ -12,15 +11,11 @@ import ServiceShelf from "../components/ServiceShelf/ServiceShelf";
 import { cn } from "../components/utils";
 import CalendarWidget from "../components/CalendarWidget/CalendarWidget";
 
-import { AddServiceModalAtom, editServiceIdAtom } from "../components/states";
 import { CommandMenu } from "../components/CommandMenu";
 import { Settings } from "@/components/Settings";
-import { Button } from "@/ui/Button";
+import { ServiceDialog } from "@/components/ServiceShelf/ServiceDialog";
 
 const App: NextPage = () => {
-  const [isAddServiceModalOpen, setAddServiceModal] =
-    useAtom(AddServiceModalAtom);
-  const setEditServiceId = useSetAtom(editServiceIdAtom);
   const { data: session } = useSession();
 
   return (
@@ -83,19 +78,11 @@ const App: NextPage = () => {
               <Settings />
               {session?.user.isAdmin && (
                 <div className="my-4 text-white">
-                  <Button
-                    type="button"
-                    onClick={() => {
-                      setAddServiceModal(true);
-                      setEditServiceId(0);
-                    }}
-                  >
-                    Add service
-                  </Button>
+                  <ServiceDialog />
                 </div>
               )}
             </div>
-            <ServiceShelf inEdit={isAddServiceModalOpen} />
+            <ServiceShelf />
           </div>
 
           <div

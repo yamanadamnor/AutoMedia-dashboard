@@ -1,5 +1,5 @@
-import type { Prisma } from '@prisma/client';
-import type { StaticImageData } from 'next/image';
+import type { Prisma } from "@prisma/client";
+import type { StaticImageData } from "next/image";
 
 export interface IService {
   id: string;
@@ -15,10 +15,6 @@ export interface IService {
 export interface IServiceCard extends Prisma.ServiceCreateInput {
   id: number;
   inEdit?: boolean;
-}
-
-export interface IServiceShelf {
-  inEdit: boolean;
 }
 
 export interface ISonarrReleases {
@@ -51,7 +47,7 @@ export interface IMediaReleaseItem {
   mediaItemDesc: string;
   mediaImages: { coverType: string; url: string }[];
   mediaItemDate: Date;
-  mediaItemType: 'sonarr' | 'radarr';
+  mediaItemType: "sonarr" | "radarr";
   mediaHasFile: boolean;
 }
 
@@ -80,7 +76,7 @@ type IconProps = IconSVGProps & {
   title?: string;
   titleId?: string;
 };
-type HeroIcon = React.FC<IconProps>;
+export type HeroIcon = React.FC<IconProps>;
 
 export interface IMenuItem {
   buttonText: string;
