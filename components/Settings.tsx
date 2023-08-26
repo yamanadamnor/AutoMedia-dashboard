@@ -38,8 +38,8 @@ export const Settings = () => {
           </DialogHeader>
           <SettingsForm settings={data} />
           <DialogFooter>
-            <Button form="settingsForm" type="submit">
-              Submit
+            <Button className="mt-4" form="settingsForm" type="submit">
+              Save
             </Button>
           </DialogFooter>
         </DialogContent>

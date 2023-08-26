@@ -12,6 +12,9 @@ describe("test settings config", () => {
         ENABLE_RADARR: false,
         RADARR_URL: undefined,
         RADARR_API_KEY: undefined,
+        ENABLE_JELLYFIN: false,
+        JELLYFIN_URL: undefined,
+        JELLYFIN_API_KEY: undefined,
       }).success,
     ).to.equal(true);
   });
@@ -26,6 +29,9 @@ describe("test settings config", () => {
         ENABLE_RADARR: false,
         RADARR_URL: undefined,
         RADARR_API_KEY: undefined,
+        ENABLE_JELLYFIN: false,
+        JELLYFIN_URL: undefined,
+        JELLYFIN_API_KEY: undefined,
       }).success,
     ).to.equal(false);
   });
@@ -40,6 +46,9 @@ describe("test settings config", () => {
         ENABLE_RADARR: false,
         RADARR_URL: undefined,
         RADARR_API_KEY: undefined,
+        ENABLE_JELLYFIN: false,
+        JELLYFIN_URL: undefined,
+        JELLYFIN_API_KEY: undefined,
       }).success,
     ).to.equal(true);
   });
@@ -54,6 +63,9 @@ describe("test settings config", () => {
         ENABLE_RADARR: true,
         RADARR_URL: "",
         RADARR_API_KEY: "",
+        ENABLE_JELLYFIN: false,
+        JELLYFIN_URL: undefined,
+        JELLYFIN_API_KEY: undefined,
       }).success,
     ).to.equal(false);
   });
@@ -67,6 +79,9 @@ describe("test settings config", () => {
         ENABLE_RADARR: false,
         RADARR_URL: undefined,
         RADARR_API_KEY: undefined,
+        ENABLE_JELLYFIN: false,
+        JELLYFIN_URL: undefined,
+        JELLYFIN_API_KEY: undefined,
       }).success,
     ).to.equal(true);
   });
@@ -81,6 +96,9 @@ describe("test settings config", () => {
         ENABLE_RADARR: true,
         RADARR_URL: undefined,
         RADARR_API_KEY: undefined,
+        ENABLE_JELLYFIN: false,
+        JELLYFIN_URL: undefined,
+        JELLYFIN_API_KEY: undefined,
       }).success,
     ).to.equal(false);
   });
