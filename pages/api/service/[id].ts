@@ -1,9 +1,12 @@
-import type { NextApiRequest, NextApiResponse } from 'next';
+import type { NextApiRequest, NextApiResponse } from "next";
 
-import { prisma } from '../../../server/prisma';
-import type { Prisma } from '@prisma/client';
+import { prisma } from "../../../server/prisma";
+import type { Prisma } from "@prisma/client";
 
-export default async function handler(req: NextApiRequest, res: NextApiResponse) {
+export default async function handler(
+  req: NextApiRequest,
+  res: NextApiResponse,
+) {
   const {
     query: { id },
     method,
@@ -12,7 +15,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   if (!id) return;
 
   // Get Service
-  if (method === 'GET') {
+  if (method === "GET") {
     try {
       const service = await prisma.service.findFirst({
         where: {
@@ -21,23 +24,23 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       });
       return res.status(200).send(service);
     } catch (error) {
-      return res.status(500).send('Could not delete service');
+      return res.status(500).send("Could not delete service");
     }
     // Delete Service
-  } else if (method === 'DELETE') {
+  } else if (method === "DELETE") {
     try {
-      const deletedService = await prisma.service.delete({
+      await prisma.service.delete({
         where: {
           id: Array.isArray(id) ? parseInt(id[0]) : parseInt(id),
         },
       });
-      return res.status(200).send(deletedService);
+      return res.status(204);
     } catch (error) {
-      return res.status(500).send('Could not delete service');
+      return res.status(500).send("Could not delete service");
     }
 
     // Update Service
-  } else if (method === 'PUT') {
+  } else if (method === "PUT") {
     try {
       const data = req.body as Prisma.ServiceCreateInput;
       const updatedUser = await prisma.service.update({
@@ -48,10 +51,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       });
       return res.json(updatedUser);
     } catch (error) {
-      return res.status(500).send('Could not edit service, try again');
+      return res.status(500).send("Could not edit service, try again");
     }
   }
 
-  res.setHeader('Allow', ['GET', 'PUT', 'DELETE']);
+  res.setHeader("Allow", ["GET", "PUT", "DELETE"]);
   res.status(405).end(`Method ${method} Not Allowed`);
 }
