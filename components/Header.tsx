@@ -34,13 +34,13 @@ export const Header = () => {
     <nav className="flex w-full items-center justify-between">
       <Image
         src="/img/logo-white.svg"
-        className="opacity-80"
+        className="select-none opacity-80"
         width={35}
         height={35}
         alt="logo"
       />
       <Button
-        className="ml-auto mr-10 hidden gap-x-2 rounded-full border border-zinc-700 bg-service-card px-5 py-2 text-zinc-500 md:flex md:items-center"
+        className="ml-auto mr-10 hidden gap-x-2 bg-service-card px-5 py-2 text-zinc-500 md:flex md:items-center"
         onClick={() => setCommandMenuModal(true)}
       >
         Press <Kbd className="bg-zinc-700">⌘</Kbd>
