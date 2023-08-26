@@ -10,6 +10,9 @@ const settingsMock = [
   { key: "ENABLE_SONARR", value: "false" },
   { key: "SONARR_API_KEY", value: "jjjjjjjjjjjj" },
   { key: "SONARR_URL", value: "http://kjkjkjkjkjk" },
+  { key: "ENABLE_JELLYFIN", value: "false" },
+  { key: "JELLYFIN_API_KEY", value: "jjjjjjjjjjjj" },
+  { key: "JELLYFIN_URL", value: "http://kjkjkjkjkjk" },
 ] as Setting[];
 
 const parsedSettingsMock = {
@@ -20,6 +23,9 @@ const parsedSettingsMock = {
   ENABLE_SONARR: false,
   SONARR_API_KEY: "jjjjjjjjjjjj",
   SONARR_URL: "http://kjkjkjkjkjk",
+  ENABLE_JELLYFIN: false,
+  JELLYFIN_API_KEY: "jjjjjjjjjjjj",
+  JELLYFIN_URL: "http://kjkjkjkjkjk",
 };
 
 describe("test settings utils", () => {
