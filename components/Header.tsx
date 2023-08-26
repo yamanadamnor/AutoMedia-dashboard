@@ -79,13 +79,15 @@ const ProfileButton = () => {
               data-[side=top]:animate-slideDownAndFade"
         >
           <h2 className="py-5 text-center text-xl">{session?.user?.name}</h2>
-          <DropdownMenuItem
-            className="gap-x-4 hover:bg-[#2b2c3a]"
-            onSelect={() => setSettingsModalOpen(true)}
-          >
-            <Cog6ToothIcon className="h-5 w-5" />
-            Settings
-          </DropdownMenuItem>
+          {session?.user?.isAdmin && (
+            <DropdownMenuItem
+              className="gap-x-4 hover:bg-[#2b2c3a]"
+              onSelect={() => setSettingsModalOpen(true)}
+            >
+              <Cog6ToothIcon className="h-5 w-5" />
+              Settings
+            </DropdownMenuItem>
+          )}
           <DropdownMenuItem
             className="gap-x-4 text-red-300 hover:bg-[#2b2c3a]"
             onClick={() => signOut()}
