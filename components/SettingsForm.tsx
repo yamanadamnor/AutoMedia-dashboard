@@ -1,4 +1,3 @@
-import { MoonIcon, SunIcon } from "@heroicons/react/24/outline";
 import { poster } from "@/utils/poster";
 import toast from "react-hot-toast";
 import { useForm } from "react-hook-form";
@@ -17,64 +16,118 @@ import {
   FormLabel,
   FormMessage,
 } from "@/ui/Form";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/ui/Select";
 import { AnimatePresence, motion } from "framer-motion";
-
-const apiKeyValue = z
-  .string()
-  .min(10)
-  .optional()
-  .transform((e) => (e === "" ? undefined : e));
-
-const urlValue = z
-  .string()
-  .url()
-  .optional()
-  .transform((e) => (e === "" ? undefined : e));
-
-export const themeValues = z.union([z.literal("light"), z.literal("dark")]);
 
 export const settingsFormSchema = z
   .object({
-    theme: themeValues,
     ENABLE_RADARR: z.boolean(),
-    RADARR_API_KEY: apiKeyValue,
-    RADARR_URL: urlValue,
+    RADARR_API_KEY: z.string().optional(),
+    RADARR_URL: z.string().optional(),
 
     ENABLE_SONARR: z.boolean(),
-    SONARR_API_KEY: apiKeyValue,
-    SONARR_URL: urlValue,
+    SONARR_API_KEY: z.string().optional(),
+    SONARR_URL: z.string().optional(),
 
     ENABLE_JELLYFIN: z.boolean(),
-    JELLYFIN_API_KEY: apiKeyValue,
-    JELLYFIN_URL: urlValue,
+    JELLYFIN_API_KEY: z.string().optional(),
+    JELLYFIN_URL: z.string().optional(),
   })
-  .refine(
-    (val) => {
-      // allows RADARR_API_KEY and RADARR_URL to be optional only when ENABLE_RADARR is false
-      if (val.ENABLE_RADARR && (!val.RADARR_URL || !val.RADARR_API_KEY))
-        return false;
+  .superRefine(
+    (
+      {
+        ENABLE_SONARR,
+        SONARR_URL,
+        SONARR_API_KEY,
+        ENABLE_RADARR,
+        RADARR_URL,
+        RADARR_API_KEY,
+        ENABLE_JELLYFIN,
+        JELLYFIN_URL,
+        JELLYFIN_API_KEY,
+      },
+      ctx,
+    ) => {
+      const apiKeyValidation = z.string().min(10);
+      const urlValidation = z.string().url();
 
-      // allows SONARR_API_KEY and SONARR_URL to be optional only when ENABLE_SONARR is false
-      if (val.ENABLE_SONARR && (!val.SONARR_URL || !val.SONARR_API_KEY))
-        return false;
-      
-      // allows JELLYFIN_API_KEY and JELLYFIN_URL to be optional only when ENABLE_JELLYFIN is false
-      if (val.ENABLE_JELLYFIN && (!val.JELLYFIN_URL || !val.JELLYFIN_API_KEY))
-        return false;
+      // Validate SONARR_URL and SONARR_API_KEY if ENABLE_SONARR is true
+      if (ENABLE_SONARR) {
+        const isSonarrUrlValid =
+          !!SONARR_URL && urlValidation.safeParse(SONARR_URL).success;
+        const isSonarrApiKeyValid =
+          !!SONARR_API_KEY &&
+          apiKeyValidation.safeParse(SONARR_API_KEY).success;
 
-      return true;
-    },
-    {
-      message: "URL and API key is missing",
+        if (!isSonarrUrlValid) {
+          ctx.addIssue({
+            code: z.ZodIssueCode.custom,
+            message: "Invalid url",
+            path: ["SONARR_URL"],
+          });
+        }
+
+        if (!isSonarrApiKeyValid) {
+          ctx.addIssue({
+            code: z.ZodIssueCode.custom,
+            message: "Invalid API key",
+            path: ["SONARR_API_KEY"],
+          });
+        }
+      }
+
+      // Validate RADARR_URL and RADARR_API_KEY if ENABLE_RADARR is true
+      if (ENABLE_RADARR) {
+        const isRadarrUrlValid =
+          !!RADARR_URL && urlValidation.safeParse(RADARR_URL).success;
+        const isRadarrApiKeyValid =
+          !!RADARR_API_KEY &&
+          apiKeyValidation.safeParse(RADARR_API_KEY).success;
+
+        if (!isRadarrUrlValid) {
+          ctx.addIssue({
+            code: z.ZodIssueCode.custom,
+            message: "Invalid url",
+            path: ["RADARR_URL"],
+          });
+        }
+
+        if (!isRadarrApiKeyValid) {
+          ctx.addIssue({
+            code: z.ZodIssueCode.custom,
+            message: "Invalid API key",
+            path: ["RADARR_API_KEY"],
+          });
+        }
+      }
+
+      // Validate JELLYFIN_URL and JELLYFIN_API_KEY if ENABLE_JELLYFIN is true
+      if (ENABLE_JELLYFIN) {
+        const isJellyfinUrlValid =
+          !!JELLYFIN_URL && urlValidation.safeParse(JELLYFIN_URL).success;
+        const isJellyfinApiKeyValid =
+          !!JELLYFIN_API_KEY &&
+          apiKeyValidation.safeParse(JELLYFIN_API_KEY).success;
+
+        if (!isJellyfinUrlValid) {
+          ctx.addIssue({
+            code: z.ZodIssueCode.custom,
+            message: "Invalid url",
+            path: ["JELLYFIN_URL"],
+          });
+        }
+
+        if (!isJellyfinApiKeyValid) {
+          ctx.addIssue({
+            code: z.ZodIssueCode.custom,
+            message: "Invalid API key",
+            path: ["JELLYFIN_API_KEY"],
+          });
+        }
+      }
     },
   );
+
+export const test = z.object({});
 
 export type SettingsFormValues = z.infer<typeof settingsFormSchema>;
 
@@ -83,10 +136,15 @@ export const SettingsForm = ({
 }: {
   settings?: SettingsFormValues;
 }) => {
+  const initial = { opacity: 0, height: 0 };
+  const animate = { opacity: 1, height: "auto" };
+  const exit = { opacity: 0, height: 0 };
   const form = useForm<SettingsFormValues>({
     resolver: zodResolver(settingsFormSchema),
-    defaultValues: { ...settings, theme: "dark" },
+    defaultValues: { ...settings },
   });
+
+  const watchAllFields = form.watch();
 
   const handleSubmit = async (values: SettingsFormValues) => {
     try {
@@ -97,10 +155,6 @@ export const SettingsForm = ({
     }
   };
 
-  const initial = { opacity: 0, height: 0 };
-  const animate = { opacity: 1, height: "auto" };
-  const exit = { opacity: 0, height: 0 };
-
   return (
     <Form {...form}>
       <form
@@ -108,38 +162,6 @@ export const SettingsForm = ({
         id="settingsForm"
         className="scrollbar flex max-h-[800px] flex-col gap-y-5 overflow-y-scroll"
       >
-        <FormField
-          control={form.control}
-          name="theme"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Theme</FormLabel>
-              <Select onValueChange={field.onChange} defaultValue={field.value}>
-                <FormControl>
-                  <SelectTrigger>
-                    <SelectValue placeholder="Select theme"></SelectValue>
-                  </SelectTrigger>
-                </FormControl>
-                <SelectContent>
-                  <SelectItem value="dark">
-                    <div className="flex items-center gap-x-4">
-                      <MoonIcon className="h-4 w-4" />
-                      <p>dark</p>
-                    </div>
-                  </SelectItem>
-                  <SelectItem value="light">
-                    <div className="flex items-center gap-x-4">
-                      <SunIcon className="h-4 w-4" />
-                      light
-                    </div>
-                  </SelectItem>
-                </SelectContent>
-              </Select>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-
         <div className="space-y-10 rounded-md border border-zinc-700 px-4 py-3">
           <FormField
             control={form.control}
@@ -174,7 +196,7 @@ export const SettingsForm = ({
             )}
           />
           <AnimatePresence>
-            {form.getValues("ENABLE_SONARR") && (
+            {watchAllFields.ENABLE_SONARR && (
               <motion.div
                 className="space-y-4"
                 key="sonarr"
@@ -250,7 +272,7 @@ export const SettingsForm = ({
           />
 
           <AnimatePresence>
-            {form.getValues("ENABLE_RADARR") && (
+            {watchAllFields.ENABLE_RADARR && (
               <motion.div
                 className="space-y-4"
                 key="radarr"
@@ -329,7 +351,7 @@ export const SettingsForm = ({
           />
 
           <AnimatePresence>
-            {form.getValues("ENABLE_JELLYFIN") && (
+            {watchAllFields.ENABLE_JELLYFIN && (
               <motion.div
                 className="space-y-4"
                 key="jellyfin"
