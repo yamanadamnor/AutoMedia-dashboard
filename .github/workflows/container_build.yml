@@ -3,11 +3,11 @@ name: Create and publish image
 
 on:
   push:
-    branches: [ 'main', 'develop' ]
+    branches: [main]
     tags:
-      - 'v*.*.*'
+      - "v*.*.*"
   release:
-    types: [ 'published' ]
+    types: [published]
 
 env:
   REGISTRY: ghcr.io
