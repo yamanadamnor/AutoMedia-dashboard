@@ -3,15 +3,15 @@ import type { NextPage } from "next";
 import { Toaster } from "react-hot-toast";
 import { useSession } from "next-auth/react";
 
-import Hero from "../components/Hero";
-import { Header } from "../components/Header";
-import Footer from "../components/Footer";
-import ServiceShelf from "../components/ServiceShelf/ServiceShelf";
+import Hero from "@/components/Hero";
+import { Header } from "@/components/Header";
+import Footer from "@/components/Footer";
+import ServiceShelf from "@/components/ServiceShelf/ServiceShelf";
 
-import CalendarWidget from "../components/CalendarWidget/CalendarWidget";
 import { cn } from "@/utils";
+import CalendarWidget from "@/components/CalendarWidget/CalendarWidget";
 
-import { CommandMenu } from "../components/CommandMenu";
+import { CommandMenu } from "@/components/CommandMenu";
 import { Settings } from "@/components/Settings";
 import { ServiceDialog } from "@/components/ServiceShelf/ServiceDialog";
 

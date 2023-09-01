@@ -1,5 +1,12 @@
-import { format, isEqual, startOfDay, isSameMonth, isToday, isSameDay } from 'date-fns';
-import type { IDayComponent } from '../interfaces';
+import {
+  format,
+  isEqual,
+  startOfDay,
+  isSameMonth,
+  isToday,
+  isSameDay,
+} from "date-fns";
+import type { IDayComponent } from "@/components/interfaces";
 import { cn } from "@/utils";
 
 function DayComponent({ day, sonarrMedia, radarrMedia, selectedDay, onClick }: IDayComponent) {

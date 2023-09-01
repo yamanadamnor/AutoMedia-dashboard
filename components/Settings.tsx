@@ -1,6 +1,7 @@
 "use client";
 import * as React from "react";
 import useSWR from "swr";
+import { useAtom } from "jotai";
 
 import { fetcher } from "@/utils";
 import { SettingsForm } from "@/components/SettingsForm";
@@ -13,8 +14,7 @@ import {
   DialogDescription,
   DialogFooter,
 } from "@/ui/Dialog";
-import { useAtom } from "jotai";
-import { settingsModalAtom } from "./states";
+import { settingsModalAtom } from "@/components/states";
 import { Button } from "@/ui/Button";
 
 export const Settings = () => {
