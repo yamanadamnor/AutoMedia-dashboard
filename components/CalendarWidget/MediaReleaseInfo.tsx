@@ -1,8 +1,7 @@
 import { isEqual, startOfDay } from 'date-fns';
 import { AnimatePresence, motion } from 'framer-motion';
-import type { IMediaReleaseInfo } from '../interfaces';
-import { cn } from '../utils';
-import MediaReleaseItem from './MediaReleaseItem';
+import type { IMediaReleaseInfo } from '@/components/interfaces';
+import MediaReleaseItem from '@/components/CalendarWidget/MediaReleaseItem';
 
 function MediaReleaseInfo({ sonarrReleases, radarrReleases, selectedDay }: IMediaReleaseInfo) {
   const filteredSonarr = sonarrReleases.filter((release) => {
@@ -43,7 +42,7 @@ function MediaReleaseInfo({ sonarrReleases, radarrReleases, selectedDay }: IMedi
   };
 
   return (
-    <motion.div className={cn('flex flex-col')}>
+    <motion.div className="flex flex-col">
       <AnimatePresence mode="popLayout">
         {filteredSonarr.map((sonarrItem) => (
           <MediaReleaseItem

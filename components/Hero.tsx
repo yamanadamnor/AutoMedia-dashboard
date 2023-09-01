@@ -1,7 +1,7 @@
 import { motion } from 'framer-motion';
 import { useSession } from 'next-auth/react';
 
-import { cn } from './utils';
+import { cn } from '@/utils';
 
 const Hero = () => {
   const { data: session } = useSession();

@@ -2,7 +2,7 @@ import type { NextApiRequest, NextApiResponse } from "next";
 
 import { prisma } from "@/server/prisma";
 import type { SettingsFormValues } from "@/components/SettingsForm";
-import { parseSettings } from "@/utils/parseSettings";
+import { parseSettings } from "@/utils";
 
 export default async function handler(
   req: NextApiRequest,

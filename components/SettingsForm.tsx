@@ -1,10 +1,10 @@
-import { poster } from "@/utils/poster";
 import toast from "react-hot-toast";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import Image from "next/image";
 
+import { poster } from "@/utils";
 import { Input } from "@/ui/Input";
 import { Switch } from "@/ui/Switch";
 import {
