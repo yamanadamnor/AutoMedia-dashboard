@@ -2,8 +2,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import type { Service } from "@prisma/client";
 import useSWR from "swr";
 
-import { cn } from "@/utils/cn";
-import { fetcher } from "@/utils/fetcher";
+import { cn, fetcher } from "@/utils";
 import ServiceCard from "@/components/ServiceShelf/ServiceCard";
 
 const ServiceShelf = () => {

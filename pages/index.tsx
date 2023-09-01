@@ -8,8 +8,8 @@ import { Header } from "../components/Header";
 import Footer from "../components/Footer";
 import ServiceShelf from "../components/ServiceShelf/ServiceShelf";
 
-import { cn } from "../components/utils";
 import CalendarWidget from "../components/CalendarWidget/CalendarWidget";
+import { cn } from "@/utils";
 
 import { CommandMenu } from "../components/CommandMenu";
 import { Settings } from "@/components/Settings";

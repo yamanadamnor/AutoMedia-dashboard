@@ -1,6 +1,6 @@
 import { format, isEqual, startOfDay, isSameMonth, isToday, isSameDay } from 'date-fns';
 import type { IDayComponent } from '../interfaces';
-import { cn } from '../utils';
+import { cn } from "@/utils";
 
 function DayComponent({ day, sonarrMedia, radarrMedia, selectedDay, onClick }: IDayComponent) {
   if (!sonarrMedia && !radarrMedia) return <h2 className="font-bold">No releases</h2>;

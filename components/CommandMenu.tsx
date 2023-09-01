@@ -9,7 +9,6 @@ import {
   CommandLoading,
 } from "@/ui/Command";
 
-import { fetcher } from "./utils";
 import type { Service } from "@prisma/client";
 import useSWR from "swr";
 import Image from "next/image";
@@ -20,8 +19,8 @@ import {
   settingsModalAtom,
 } from "./states";
 import { useAtom, useSetAtom } from "jotai";
-import { cn } from "@/utils/cn";
 import { useSession } from "next-auth/react";
+import { cn, fetcher } from "@/utils";
 
 export const CommandMenu = () => {
   const { data: session } = useSession();

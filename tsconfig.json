@@ -7,7 +7,7 @@
     "paths": {
       "@/components/*": ["components/*"],
       "@/ui/*": ["ui/*"],
-      "@/utils/*": ["utils/*"],
+      "@/utils": ["utils/index.ts"],
       "@/styles/*": ["styles/*"],
       "@/server/*": ["server/*"]
     },

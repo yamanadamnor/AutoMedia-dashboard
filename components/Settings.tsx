@@ -2,7 +2,7 @@
 import * as React from "react";
 import useSWR from "swr";
 
-import { fetcher } from "./utils";
+import { fetcher } from "@/utils";
 import { SettingsForm } from "@/components/SettingsForm";
 import type { SettingsFormValues } from "@/components/SettingsForm";
 import {

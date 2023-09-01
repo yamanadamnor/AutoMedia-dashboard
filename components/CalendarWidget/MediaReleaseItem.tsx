@@ -3,7 +3,7 @@ import Image from "next/image";
 import { motion } from "framer-motion";
 
 import type { IMediaReleaseItem } from "@/components/interfaces";
-import { cn } from "@/utils/cn";
+import { cn } from "@/utils";
 import { Button } from "@/ui/Button";
 import {
   Tooltip,
@@ -74,7 +74,7 @@ function MediaReleaseItem({
           <h2 className="text-md font-bold md:text-xl">{mediaItemTitle}</h2>
           <h3
             className={cn(
-              "text-xs font-bold md:text-sm ",
+              "text-xs font-bold md:text-sm",
               mediaItemType === "sonarr" ? "text-blue-400" : "",
               mediaItemType === "radarr" ? "text-orange-400" : "",
             )}
