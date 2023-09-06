@@ -14,12 +14,12 @@ import useSWR from "swr";
 import Image from "next/image";
 import { Cog6ToothIcon, PlusCircleIcon } from "@heroicons/react/24/outline";
 import {
-  AddServiceModalAtom,
+  serviceModalAtom,
   commandMenuAtom,
   settingsModalAtom,
-} from "./states";
 import { useAtom, useSetAtom } from "jotai";
 import { useSession } from "next-auth/react";
+} from "@/components/states";
 import { cn, fetcher } from "@/utils";
 
 export const CommandMenu = () => {
