@@ -34,7 +34,7 @@ export default async function handler(
           id: Array.isArray(id) ? parseInt(id[0]) : parseInt(id),
         },
       });
-      return res.status(204);
+      return res.status(204).end();
     } catch (error) {
       return res.status(500).send("Could not delete service");
     }
