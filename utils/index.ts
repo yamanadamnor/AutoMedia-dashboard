@@ -3,7 +3,7 @@ import { fetcher } from "./fetcher";
 import { poster } from "./poster";
 import { calendarFetcher } from "./calendarFetcher";
 
-import { getSettings } from "./getSettings";
+import { useSettings } from "./useSettings";
 import { parseSettings } from "./parseSettings";
 
 import { cn } from "./cn";
@@ -13,7 +13,7 @@ export {
   fetcher,
   poster,
   calendarFetcher,
-  getSettings,
+  useSettings,
   parseSettings,
   cn,
 };
