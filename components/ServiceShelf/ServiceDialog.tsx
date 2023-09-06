@@ -10,7 +10,7 @@ import {
   DialogFooter,
   DialogTrigger,
 } from "@/ui/Dialog";
-import { AddServiceModalAtom } from "@/components/states";
+import { serviceModalAtom } from "@/components/states";
 import { Button } from "@/ui/Button";
 import { ServiceForm } from "@/components/ServiceShelf/ServiceForm";
 import type { ServiceFormValues } from "@/components/ServiceShelf/ServiceForm";
@@ -22,7 +22,7 @@ export const ServiceDialog = ({
   trigger?: React.ReactNode;
   service?: ServiceFormValues;
 }) => {
-  const [open, setOpen] = useAtom(AddServiceModalAtom);
+  const [open, setOpen] = useAtom(serviceModalAtom);
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
