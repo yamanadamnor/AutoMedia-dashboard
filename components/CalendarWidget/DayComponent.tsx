@@ -9,8 +9,15 @@ import {
 import type { IDayComponent } from "@/components/interfaces";
 import { cn } from "@/utils";
 
-function DayComponent({ day, sonarrMedia, radarrMedia, selectedDay, onClick }: IDayComponent) {
-  if (!sonarrMedia && !radarrMedia) return <h2 className="font-bold">No releases</h2>;
+function DayComponent({
+  day,
+  sonarrMedia,
+  radarrMedia,
+  selectedDay,
+  onClick,
+}: IDayComponent) {
+  if (!sonarrMedia && !radarrMedia)
+    return <h2 className="font-bold">No releases</h2>;
 
   const sonarrReleases = sonarrMedia.filter((media) => {
     const mediaDate = startOfDay(new Date(media.airDateUtc));
@@ -29,20 +36,20 @@ function DayComponent({ day, sonarrMedia, radarrMedia, selectedDay, onClick }: I
   return (
     <button
       className={cn(
-        'w-9 h-12 transition ease-in-out duration-300 rounded select-none hover:bg-[#272731] hover:shadow-service-sm flex flex-col justify-around items-center justify-self-center leading-none',
-        isSameMonth(day, selectedDay) ? '' : 'text-gray-600',
-        isSameDay(day, selectedDay) ? 'bg-[#272731] shadow-lg' : '',
-        isToday(day) ? 'border border-gray-700' : '',
+        "flex h-12 w-9 select-none flex-col items-center justify-around justify-self-center rounded leading-none transition duration-300 ease-in-out hover:bg-[#272731] hover:shadow-service-sm",
+        isSameMonth(day, selectedDay) ? "" : "text-gray-600",
+        isSameDay(day, selectedDay) ? "bg-[#272731] shadow-lg" : "",
+        isToday(day) ? "border border-gray-700" : "",
       )}
       onClick={onClick}
     >
-      {format(day, 'd')}
-      <div className="flex justify-around w-full px-2">
+      {format(day, "d")}
+      <div className="flex w-full justify-around px-2">
         {radarrReleases && radarrReleases.length > 0 && (
-          <div className="w-1.5 h-1.5 rounded-full bg-orange-400"></div>
+          <div className="h-1.5 w-1.5 rounded-full bg-orange-400"></div>
         )}
         {sonarrReleases && sonarrReleases.length > 0 && (
-          <div className="w-1.5 h-1.5 rounded-full bg-blue-400"></div>
+          <div className="h-1.5 w-1.5 rounded-full bg-blue-400"></div>
         )}
       </div>
     </button>

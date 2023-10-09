@@ -1,12 +1,11 @@
-import { motion } from 'framer-motion';
-import { useSession } from 'next-auth/react';
+import { motion } from "framer-motion";
+import { useSession } from "next-auth/react";
 
-import { cn } from '@/utils';
 
 const Hero = () => {
   const { data: session } = useSession();
 
-  const firstName = session?.user?.name?.split(' ')[0] ?? '';
+  const firstName = session?.user?.name?.split(" ")[0] ?? "";
 
   return (
     <motion.div
@@ -23,8 +22,8 @@ const Hero = () => {
       }}
     >
       <div className="w-full">
-        <h1 className={cn('text-2xl font-ligh leading-relaxed', 'sm:text-4xl sm:leading-20')}>
-          Welcome <span className="italic font-bold">{firstName}</span>
+        <h1 className="font-ligh text-2xl leading-relaxed sm:text-4xl sm:leading-20">
+          Welcome <span className="font-bold italic">{firstName}</span>
         </h1>
       </div>
     </motion.div>
