@@ -1,4 +1,16 @@
 import * as React from "react";
+import { useAtom, useSetAtom } from "jotai";
+import { useSession } from "next-auth/react";
+import type { Service } from "@prisma/client";
+import useSWR from "swr";
+import Image from "next/image";
+import {
+  Cog6ToothIcon,
+  MoonIcon,
+  PlusCircleIcon,
+  SunIcon,
+} from "@heroicons/react/24/outline";
+
 import {
   CommandDialog,
   CommandList,
@@ -8,17 +20,10 @@ import {
   CommandItem,
   CommandLoading,
 } from "@/ui/Command";
-
-import type { Service } from "@prisma/client";
-import useSWR from "swr";
-import Image from "next/image";
-import { Cog6ToothIcon, PlusCircleIcon } from "@heroicons/react/24/outline";
 import {
   serviceModalAtom,
   commandMenuAtom,
   settingsModalAtom,
-import { useAtom, useSetAtom } from "jotai";
-import { useSession } from "next-auth/react";
 } from "@/components/states";
 import { cn, fetcher } from "@/utils";
 
@@ -26,7 +31,7 @@ export const CommandMenu = () => {
   const { data: session } = useSession();
   const [commandMenuOpen, setCommandMenuOpen] = useAtom(commandMenuAtom);
   const setSettingsModalOpen = useSetAtom(settingsModalAtom);
-  const setAddServiceModal = useSetAtom(AddServiceModalAtom);
+  const setAddServiceModal = useSetAtom(serviceModalAtom);
   const {
     data: services,
     error: servicesError,
@@ -64,7 +69,7 @@ export const CommandMenu = () => {
           {services?.map((service) => (
             <CommandItem
               key={service.href}
-              className="group flex w-full justify-between rounded-xl"
+              className="group flex w-full justify-between rounded-md"
               value={service.title}
               onSelect={() =>
                 runCommand(() => window.open(service.href, "_blank"))
@@ -85,7 +90,7 @@ export const CommandMenu = () => {
           ))}
           {session?.user.isAdmin && (
             <CommandItem
-              className="group flex w-full justify-between rounded-xl"
+              className="group flex w-full justify-between rounded-md"
               onSelect={() => runCommand(() => setAddServiceModal(true))}
             >
               <div className="flex items-center gap-x-4 ">
@@ -97,10 +102,34 @@ export const CommandMenu = () => {
           )}
         </CommandGroup>
 
+        <CommandGroup heading="Theme">
+          <CommandItem
+            className="group flex w-full justify-between rounded-md"
+            onSelect={() => runCommand(() => setSettingsModalOpen(true))}
+          >
+            <div className="flex items-center gap-x-4 ">
+              <MoonIcon className="text-gray-300" />
+              Dark
+            </div>
+            <p className="text-gray-500">Theme</p>
+          </CommandItem>
+
+          <CommandItem
+            className="group flex w-full justify-between rounded-md"
+            onSelect={() => runCommand(() => setSettingsModalOpen(true))}
+          >
+            <div className="flex items-center gap-x-4 ">
+              <SunIcon className="text-gray-300" />
+              Light
+            </div>
+            <p className="text-gray-500">Theme</p>
+          </CommandItem>
+        </CommandGroup>
+
         {session?.user.isAdmin && (
           <CommandGroup heading="Settings">
             <CommandItem
-              className="group flex w-full justify-between rounded-xl"
+              className="group flex w-full justify-between rounded-md"
               onSelect={() => runCommand(() => setSettingsModalOpen(true))}
             >
               <div className="flex items-center gap-x-4 ">
