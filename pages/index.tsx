@@ -13,7 +13,7 @@ import CalendarWidget from "@/components/CalendarWidget/CalendarWidget";
 
 import { CommandMenu } from "@/components/CommandMenu";
 import { Settings } from "@/components/Settings";
-import { ServiceDialog } from "@/components/ServiceShelf/ServiceDialog";
+import { ServiceAddDialog } from "@/components/ServiceShelf/ServiceAddDialog";
 
 const App: NextPage = () => {
   const { data: session } = useSession();
@@ -78,7 +78,7 @@ const App: NextPage = () => {
               <Settings />
               {session?.user.isAdmin && (
                 <div className="my-4 text-white">
-                  <ServiceDialog />
+                  <ServiceAddDialog />
                 </div>
               )}
             </div>
