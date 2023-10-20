@@ -1,8 +1,6 @@
 import Image from "next/image";
-import type { MouseEvent } from "react";
+import * as React from "react";
 import { motion } from "framer-motion";
-import { useSWRConfig } from "swr";
-import toast from "react-hot-toast";
 import { useSession } from "next-auth/react";
 
 import {
@@ -21,6 +19,18 @@ import {
   DropdownMenuContent,
 } from "@/ui/DropdownMenu";
 import { Button } from "@/ui/Button";
+import { deleter, putter } from "@/utils";
+import {
+  Dialog,
+  DialogContent,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/ui/Dialog";
+import { ServiceForm } from "@/components/ServiceShelf/ServiceForm";
+import type { ServiceFormValues } from "@/components/ServiceShelf/ServiceForm";
+import toast from "react-hot-toast";
 
 const ServiceCard = ({ id, title, image, href, description }: IServiceCard) => {
   const { data: session } = useSession();
@@ -109,34 +119,18 @@ function EditDropdown({
   image,
   href,
 }: EditDropdownProps) {
-  const { mutate } = useSWRConfig();
+  const [open, setOpen] = React.useState(false);
 
-  const handleDelete = async (e: MouseEvent) => {
+  const handleDelete = async (e: React.MouseEvent) => {
     e.preventDefault();
-    try {
-      const response = await fetch(`/api/service/${id}`, {
-        method: "DELETE",
-        headers: {
-          "content-type": "application/json",
-        },
-      });
-      if (response.ok) {
-        void mutate("/api/services");
-        toast.success(`${title} was deleted`);
-      }
-    } catch (error) {
-      toast.error("Could not delete service");
-      // eslint-disable-next-line no-console
-      console.error(error);
-    }
-  };
-
-  const handleEdit = (e: MouseEvent) => {
-    e.preventDefault();
+    await deleter(`/api/service/${id}`);
+    setOpen(false);
+    toast.success(`${title} was deleted`);
+    toast.success("Deleted");
   };
 
   return (
-    <DropdownMenu>
+    <DropdownMenu open={open} onOpenChange={setOpen}>
       <DropdownMenuTrigger className="group absolute right-0 top-0 mr-3 mt-3 rounded-lg border border-transparent py-2 transition-all ease-in-out hover:border-zinc-700 hover:border-zinc-700 hover:bg-[#2b2c3a] hover:shadow-lg">
         <EllipsisVerticalIcon className="w-7 text-zinc-500 group-hover:text-gray-200" />
       </DropdownMenuTrigger>
@@ -146,15 +140,10 @@ function EditDropdown({
           align="end"
           className="bg-service-card-solid text-white"
         >
-          <DropdownMenuItem onClick={handleEdit} asChild>
-            <ServiceDialog
-              trigger={
-                <Button className="flex w-full items-center gap-x-2 rounded-none border-none p-0 px-2 py-1">
-                  <PencilIcon className="h-3 w-3" />
-                  Edit
-                </Button>
-              }
+          <DropdownMenuItem asChild>
+            <ServiceUpdateDialog
               service={{
+                id,
                 title,
                 description,
                 image,
@@ -175,3 +164,38 @@ function EditDropdown({
     </DropdownMenu>
   );
 }
+
+const ServiceUpdateDialog = ({
+  service,
+}: {
+  service: ServiceFormValues & { id: number };
+}) => {
+  const handleSubmit = async (values: ServiceFormValues) => {
+    try {
+      await putter(`/api/service/${service.id}`, values);
+      toast.success("Updated settings");
+    } catch {
+      toast.error("Could not update settings");
+    }
+  };
+
+  return (
+    <Dialog>
+      <DialogTrigger className="flex w-full items-center gap-x-2 px-2 py-1 hover:bg-[#2b2c3a]">
+        <PencilIcon className="h-3 w-3" />
+        Edit
+      </DialogTrigger>
+      <DialogContent className="bg-service-card text-white backdrop-blur-lg">
+        <DialogHeader>
+          <DialogTitle>Service</DialogTitle>
+        </DialogHeader>
+        <ServiceForm service={service} onSubmit={handleSubmit} />
+        <DialogFooter className="mt-5">
+          <Button form="serviceForm" type="submit">
+            Update
+          </Button>
+        </DialogFooter>
+      </DialogContent>
+    </Dialog>
+  );
+};
