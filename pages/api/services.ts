@@ -15,7 +15,7 @@ export default async function handler(
       data: serviceData,
     });
 
-    return res.json(savedService);
+    res.json(savedService);
   } else if (req.method === "GET") {
     const services: Service[] = await prisma.service.findMany();
 
