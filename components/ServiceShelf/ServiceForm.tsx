@@ -1,10 +1,10 @@
-import toast from "react-hot-toast";
+import * as React from "react";
 import { useForm } from "react-hook-form";
+import type { SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import Image from "next/image";
 
-import { poster } from "@/utils";
 import { Input } from "@/ui/Input";
 import {
   Form,
@@ -25,7 +25,13 @@ export const serviceFormSchema = z.object({
 
 export type ServiceFormValues = z.infer<typeof serviceFormSchema>;
 
-export const ServiceForm = ({ service }: { service?: ServiceFormValues }) => {
+// eslint-disable-next-line @typescript-eslint/consistent-type-definitions
+export type ServiceFormProps = {
+  service?: ServiceFormValues;
+  onSubmit: SubmitHandler<ServiceFormValues>;
+};
+
+export const ServiceForm = ({ service, onSubmit }: ServiceFormProps) => {
   const form = useForm<ServiceFormValues>({
     resolver: zodResolver(serviceFormSchema),
     defaultValues: { image: "/img/logo-white-muted.svg", ...service },
@@ -55,16 +61,6 @@ export const ServiceForm = ({ service }: { service?: ServiceFormValues }) => {
     return false;
   };
 
-  const handleSubmit = async (values: ServiceFormValues) => {
-    try {
-      await poster("/api/services", values);
-
-      toast.success("Updated settings");
-    } catch {
-      toast.error("Could not update settings");
-    }
-  };
-
   return (
     <Form {...form}>
       <Popover>
@@ -88,7 +84,7 @@ export const ServiceForm = ({ service }: { service?: ServiceFormValues }) => {
       <form
         id="serviceForm"
         className="flex flex-col gap-y-5"
-        onSubmit={form.handleSubmit(handleSubmit)}
+        onSubmit={form.handleSubmit(onSubmit)}
       >
         <FormField
           control={form.control}
