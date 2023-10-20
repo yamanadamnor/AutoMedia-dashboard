@@ -1,6 +1,7 @@
 "use client";
 import * as React from "react";
 import { useAtom } from "jotai";
+import toast from "react-hot-toast";
 
 import {
   Dialog,
@@ -14,32 +15,38 @@ import { serviceModalAtom } from "@/components/states";
 import { Button } from "@/ui/Button";
 import { ServiceForm } from "@/components/ServiceShelf/ServiceForm";
 import type { ServiceFormValues } from "@/components/ServiceShelf/ServiceForm";
+import { poster } from "@/utils";
 
-export const ServiceDialog = ({
-  trigger,
-  service,
-}: {
-  trigger?: React.ReactNode;
-  service?: ServiceFormValues;
-}) => {
+export const ServiceAddDialog = () => {
   const [open, setOpen] = useAtom(serviceModalAtom);
+
+  const handleSubmit = async (values: ServiceFormValues) => {
+    try {
+      await poster("/api/services", values);
+      setOpen(false);
+      toast.success("Updated settings");
+    } catch {
+      toast.error("Could not update settings");
+    }
+  };
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        {trigger ? trigger : <Button type="button">Add service</Button>}
+        <Button type="button">Add service</Button>
       </DialogTrigger>
       <DialogContent className="bg-service-card text-white backdrop-blur-lg">
         <DialogHeader>
           <DialogTitle>Service</DialogTitle>
         </DialogHeader>
-        <ServiceForm service={service} />
+        <ServiceForm onSubmit={handleSubmit} />
         <DialogFooter className="mt-5">
           <Button form="serviceForm" type="submit">
-            {service ? "Update" : "Save"}
+            Save
           </Button>
         </DialogFooter>
       </DialogContent>
     </Dialog>
   );
 };
+ServiceAddDialog.displayName = "Dialog";

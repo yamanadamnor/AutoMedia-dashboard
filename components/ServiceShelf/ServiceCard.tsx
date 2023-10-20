@@ -12,7 +12,6 @@ import {
 } from "@heroicons/react/24/solid";
 
 import type { IServiceCard } from "@/components/interfaces";
-import { ServiceDialog } from "@/components/ServiceShelf/ServiceDialog";
 import type { Service } from "@prisma/client";
 import {
   DropdownMenu,
