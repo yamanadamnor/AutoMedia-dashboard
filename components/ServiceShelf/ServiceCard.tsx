@@ -170,9 +170,11 @@ const ServiceUpdateDialog = ({
 }: {
   service: ServiceFormValues & { id: number };
 }) => {
+  const [open, setOpen] = React.useState(false);
   const handleSubmit = async (values: ServiceFormValues) => {
     try {
       await putter(`/api/service/${service.id}`, values);
+      setOpen(false);
       toast.success("Updated settings");
     } catch {
       toast.error("Could not update settings");
@@ -180,7 +182,7 @@ const ServiceUpdateDialog = ({
   };
 
   return (
-    <Dialog>
+    <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger className="flex w-full items-center gap-x-2 px-2 py-1 hover:bg-[#2b2c3a]">
         <PencilIcon className="h-3 w-3" />
         Edit
