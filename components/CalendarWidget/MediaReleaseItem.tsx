@@ -59,11 +59,11 @@ function MediaReleaseItem({
                 className="relative aspect-2/3 w-12 overflow-hidden md:w-20"
               >
                 <Image
-                  src={image.url}
+                  src={image.remoteUrl ? image.remoteUrl : image.url}
                   fill
                   alt="Media poster"
                   placeholder="blur"
-                  blurDataURL={image.url}
+                  blurDataURL={image.remoteUrl ? image.remoteUrl : image.url}
                 />
               </div>
             );
