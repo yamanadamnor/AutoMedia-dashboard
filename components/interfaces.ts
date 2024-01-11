@@ -45,7 +45,7 @@ export interface IMediaReleaseInfo {
 export interface IMediaReleaseItem {
   mediaItemTitle: string;
   mediaItemDesc: string;
-  mediaImages: { coverType: string; url: string, remoteUrl: string }[];
+  mediaImages: { coverType: string; url: string }[];
   mediaItemDate: Date;
   mediaItemType: "sonarr" | "radarr";
   mediaHasFile: boolean;
