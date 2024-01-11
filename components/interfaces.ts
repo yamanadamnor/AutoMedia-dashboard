@@ -24,7 +24,10 @@ export interface ISonarrReleases {
   seasonNumber: number;
   episodeNumber: number;
   hasFile: boolean;
-  series: { title: string; images: { coverType: string; url: string }[] };
+  series: {
+    title: string;
+    images: { coverType: string; url: string; remoteUrl: string }[];
+  };
 }
 
 export interface IRadarrReleases {
@@ -33,7 +36,7 @@ export interface IRadarrReleases {
   digitalRelease: Date;
   physicalRelease: Date;
   hasFile: boolean;
-  images: { coverType: string; url: string }[];
+  images: { coverType: string; url: string; remoteUrl: string }[];
 }
 
 export interface IMediaReleaseInfo {
@@ -45,7 +48,7 @@ export interface IMediaReleaseInfo {
 export interface IMediaReleaseItem {
   mediaItemTitle: string;
   mediaItemDesc: string;
-  mediaImages: { coverType: string; url: string }[];
+  mediaImages: { coverType: string; url: string; remoteUrl: string }[];
   mediaItemDate: Date;
   mediaItemType: "sonarr" | "radarr";
   mediaHasFile: boolean;
