@@ -5,13 +5,21 @@
  **/
 const nextConfig = {
   reactStrictMode: true,
-  output: 'standalone',
+  output: "standalone",
   images: {
-    domains: [
-      'raw.githubusercontent.com',
-      'image.tmdb.org',
-      'artworks.thetvdb.com',
-      'cdn.jsdelivr.net',
+    remotePatterns: [
+      {
+        hostname: "raw.githubusercontent.com",
+      },
+      {
+        hostname: "image.tmdb.org",
+      },
+      {
+        hostname: "artworks.thetvdb.com",
+      },
+      {
+        hostname: "cdn.jsdelivr.net",
+      },
     ],
   },
 };
