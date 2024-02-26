@@ -19,7 +19,8 @@ import {
   DropdownMenuContent,
 } from "@/ui/DropdownMenu";
 import { Button } from "@/ui/Button";
-import { deleter, putter } from "@/utils";
+import { deleter } from "@/utils/deleter";
+import { putter } from "utils/putter";
 import {
   Dialog,
   DialogContent,

@@ -1,5 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { fetcher } from '@/utils';
+import { fetcher } from '@/utils/fetcher';
 
 async function handleGet(req: NextApiRequest, res: NextApiResponse) {
   try {

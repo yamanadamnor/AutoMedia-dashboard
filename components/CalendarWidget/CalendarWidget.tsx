@@ -23,7 +23,8 @@ import {
   ChevronRightIcon,
 } from "@heroicons/react/24/outline";
 
-import { calendarFetcher, cn } from "@/utils";
+import { cn } from "@/utils/cn";
+import { calendarFetcher } from "@/utils/calendarFetcher";
 import { sonarrMedias, radarrMedias, selectedDate } from "@/components/states";
 import type { IRadarrReleases, ISonarrReleases } from "@/components/interfaces";
 import DayComponent from "@/components/CalendarWidget/DayComponent";
@@ -139,7 +140,7 @@ function CalendarWidget() {
         gap-y-4 @container md:w-3/5 lg:w-full"
       >
         <div className="flex w-full items-center justify-center gap-x-2 @sm:gap-x-8">
-          <div className="max-w-56 flex items-center justify-center sm:w-60 ">
+          <div className="flex max-w-56 items-center justify-center sm:w-60 ">
             <div className="self-center text-7xl">
               <h2 className="select-none leading-none">
                 {format(selectedDay, "dd")}

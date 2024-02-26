@@ -15,7 +15,7 @@ import { serviceModalAtom } from "@/components/states";
 import { Button } from "@/ui/Button";
 import { ServiceForm } from "@/components/ServiceShelf/ServiceForm";
 import type { ServiceFormValues } from "@/components/ServiceShelf/ServiceForm";
-import { poster } from "@/utils";
+import { poster } from "@/utils/poster";
 
 export const ServiceAddDialog = () => {
   const [open, setOpen] = useAtom(serviceModalAtom);

@@ -8,7 +8,7 @@ import { Header } from "@/components/Header";
 import Footer from "@/components/Footer";
 import ServiceShelf from "@/components/ServiceShelf/ServiceShelf";
 
-import { cn } from "@/utils";
+import { cn } from "@/utils/cn";
 import CalendarWidget from "@/components/CalendarWidget/CalendarWidget";
 
 import { CommandMenu } from "@/components/CommandMenu";

@@ -7,7 +7,7 @@ import {
   isSameDay,
 } from "date-fns";
 import type { IDayComponent } from "@/components/interfaces";
-import { cn } from "@/utils";
+import { cn } from "@/utils/cn";
 
 function DayComponent({
   day,
