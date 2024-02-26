@@ -25,7 +25,8 @@ import {
   commandMenuAtom,
   settingsModalAtom,
 } from "@/components/states";
-import { cn, fetcher } from "@/utils";
+import { cn } from "@/utils/cn";
+import { fetcher } from "@/utils/fetcher";
 
 export const CommandMenu = () => {
   const { data: session } = useSession();

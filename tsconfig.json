@@ -3,11 +3,15 @@
   "display": "Default",
   "compilerOptions": {
     "baseUrl": ".",
-    "plugins": [{ "name": "next" }],
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ],
     "paths": {
       "@/components/*": ["components/*"],
       "@/ui/*": ["ui/*"],
-      "@/utils": ["utils/index.ts"],
+      "@/utils/*": ["utils/*"],
       "@/styles/*": ["styles/*"],
       "@/server/*": ["server/*"]
     },
@@ -16,7 +20,11 @@
     "declarationMap": true,
     "target": "es6",
     "useDefineForClassFields": true,
-    "lib": ["dom", "dom.iterable", "esnext"],
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
     "allowJs": true,
     "skipLibCheck": true,
     "esModuleInterop": true,
@@ -36,6 +44,13 @@
     "jsx": "preserve",
     "incremental": true
   },
-  "include": ["**/*.ts", "**/*.tsx", "next-env.d.ts"],
-  "exclude": ["node_modules"]
+  "include": [
+    "**/*.ts",
+    "**/*.tsx",
+    "next-env.d.ts",
+    ".next/types/**/*.ts"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
 }

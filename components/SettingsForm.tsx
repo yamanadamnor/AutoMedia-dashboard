@@ -4,7 +4,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import Image from "next/image";
 
-import { poster } from "@/utils";
+import { poster } from "@/utils/poster";
 import { Input } from "@/ui/Input";
 import { Switch } from "@/ui/Switch";
 import {
