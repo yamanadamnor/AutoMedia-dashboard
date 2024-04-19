@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { parseSettings } from "@/utils";
+import { parseSettings } from "@/utils/parseSettings";
 import type { Setting } from "@prisma/client";
 
 const settingsMock = [

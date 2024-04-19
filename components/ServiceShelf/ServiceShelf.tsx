@@ -1,3 +1,4 @@
+"use client"
 import { AnimatePresence, motion } from "framer-motion";
 import type { Service } from "@prisma/client";
 import useSWR from "swr";
