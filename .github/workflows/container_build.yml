@@ -22,7 +22,7 @@ jobs:
 
     steps:
       - name: Checkout github.repository
-        uses: actions/checkout@v4.1.1
+        uses: actions/checkout@v4.1.6
 
       - name: Extract metadata (tags, labels) for Docker
         id: meta
