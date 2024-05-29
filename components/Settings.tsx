@@ -3,7 +3,7 @@ import * as React from "react";
 import useSWR from "swr";
 import { useAtom } from "jotai";
 
-import { fetcher } from "@/utils";
+import { fetcher } from "@/utils/fetcher";
 import { SettingsForm } from "@/components/SettingsForm";
 import type { SettingsFormValues } from "@/components/SettingsForm";
 import {

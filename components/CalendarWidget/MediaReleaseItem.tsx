@@ -3,7 +3,7 @@ import Image from "next/image";
 import { motion } from "framer-motion";
 
 import type { IMediaReleaseItem } from "@/components/interfaces";
-import { cn } from "@/utils";
+import { cn } from "@/utils/cn";
 import { Button } from "@/ui/Button";
 import {
   Tooltip,
