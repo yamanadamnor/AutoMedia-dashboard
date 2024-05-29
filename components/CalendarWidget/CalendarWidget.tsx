@@ -269,9 +269,6 @@ function RenderCalendarCells({
                   isSameWeek(cell, selectedDay)
                     ? "text-gray-300 "
                     : "text-gray-600",
-                  isSameWeek(startOfToday(), cell)
-                    ? "border border-gray-700"
-                    : "",
                 )}
               >
                 {format(cell, "I")}
