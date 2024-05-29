@@ -1,6 +1,20 @@
 /* eslint-disable @typescript-eslint/consistent-type-definitions */
 import type { NextApiRequest, NextApiResponse } from "next";
 
+type MediaCoverTypes =
+  | "unknown"
+  | "poster"
+  | "banner"
+  | "fanart"
+  | "screenshot"
+  | "headshot"
+  | "clearlogo";
+
+type MediaCover = {
+  coverType: MediaCoverTypes;
+  url: string;
+  rmooteUrl: string;
+};
 type RatingType = "user" | "critic";
 
 type RatingChild = {
@@ -25,31 +39,51 @@ type SonarrAlternativeTitle = {
 
 type SeriesStatusType = "continuing" | "ended" | "upcoming" | "deleted";
 
-type SonarrResponse = {
+type Series = {
   id: number;
   title: string;
   alternateTitles: SonarrAlternativeTitle[];
   sortTitle: string;
   status: SeriesStatusType;
   ended: boolean;
+  profileName: string;
+  overview: string;
+  nextAiring: string;
+  previousAiring: string;
+  network: string;
+  airTime: string;
+  images: MediaCover[];
+  grabbed: boolean;
+  // TODO: Complete
+};
+
+type SonarrResponse = {
+  id: number;
   seriesId: number;
   tvdbId: number;
   episodeFileId: number;
   seasonNumber: number;
   episodeNumber: number;
+  title: string;
   airDate: string;
   airDateUtc: string;
   runtime: number;
+  finaleType: string;
   overview: string;
   hasFile: boolean;
   monitored: boolean;
   absoluteEpisodeNumber: number;
+  sceneAbsoluteEpisodeNumber: number;
+  sceneEpisodeNumber: number;
+  sceneSeasonNumber: number;
   unverifiedSceneNumbering: boolean;
+  endTime: string;
+  grabDate: string;
+  seriesTitle: string;
+  series: Series;
+  images: MediaCover[];
   grabbed: boolean;
-  series: {
-    title: string;
-    images: { coverType: string; url: string; remoteUrl: string }[];
-  };
+
   // TODO: Complete the type
 };
 
@@ -90,7 +124,7 @@ type RadarrResponse = {
   overview: string;
   inCinemas: string;
   digitalRelease: string;
-  images: { coverType: string; url: string; remoteUrl: string }[];
+  images: MediaCover[];
   website: string;
   year: number;
   youTubeTrailerId: string;
@@ -142,7 +176,7 @@ const SERVICES = {
 
 async function fetchSonarr(startDate: string, endDate: string) {
   const { port, apiKey, url } = SERVICES.sonarr;
-  const requestUrl = `${BASE_URL}:${port}${url}?apikey=${apiKey}&start=${startDate}&end=${endDate}`;
+  const requestUrl = `${BASE_URL}:${port}${url}?apikey=${apiKey}&start=${startDate}&end=${endDate}&includeSeries=true`;
   return fetch(requestUrl, {
     method: "GET",
     headers: { "content-type": "application/json" },
