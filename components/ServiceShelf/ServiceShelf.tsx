@@ -1,9 +1,9 @@
+"use client";
 import { AnimatePresence, motion } from "framer-motion";
 import type { Service } from "@prisma/client";
 import useSWR from "swr";
 
 import { fetcher } from "@/utils/fetcher";
-import { cn } from "@/utils/cn";
 import ServiceCard from "@/components/ServiceShelf/ServiceCard";
 
 const ServiceShelf = () => {
@@ -28,12 +28,7 @@ const ServiceShelf = () => {
           variants={serviceContainer}
           initial="hidden"
           animate="show"
-          className={cn(
-            "grid grid-cols-1 gap-6 text-white",
-            "sm:grid-cols-2 sm:gap-4",
-            "lg:grid-cols-2 lg:gap-6",
-            "xl:grid-cols-3",
-          )}
+          className="grid grid-cols-1 gap-6 text-white sm:grid-cols-2 sm:gap-4 lg:grid-cols-2 lg:gap-6 xl:grid-cols-3"
         >
           {error && <div>Failed to load</div>}
 
