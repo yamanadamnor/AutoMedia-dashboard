@@ -63,8 +63,9 @@ function CalendarWidget() {
         });
         setTodaysSonarr(sonarrReleases);
       })
-      // eslint-disable-next-line no-console
-      .catch((err) => console.error(err));
+      .catch(() => {
+        setTodaysSonarr([]);
+      });
 
     calendarFetcher("/api/modules/calendar", selectedDay, "radarr")
       .then((data: IRadarrReleases[]) => {
@@ -79,8 +80,9 @@ function CalendarWidget() {
         });
         setTodaysRadarr(radarrReleases);
       })
-      // eslint-disable-next-line no-console
-      .catch((err) => console.error(err));
+      .catch(() => {
+        setTodaysRadarr([]);
+      });
   }, [selectedDay, setRadarrMedia, setSonarrMedia]);
 
   const weeksOfSelectedMonth = eachWeekOfInterval({
