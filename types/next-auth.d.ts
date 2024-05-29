@@ -1,23 +1,29 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import NextAuth from 'next-auth';
-import type { DefaultSession } from 'next-auth';
-import { JWT } from 'next-auth/jwt';
+import NextAuth from "next-auth";
+import type { DefaultSession } from "next-auth";
+import { JWT } from "next-auth/jwt";
 
-declare module 'next-auth' {
+declare module "next-auth" {
   interface Profile {
-    groups: string[];
+    id: string;
+    name: string;
+    email: string;
     email_verified: boolean;
+    roles: string[];
   }
 
   interface Session {
     user: {
-      isAdmin?: bool;
-    } & DefaultSession['user'];
+      roles: string[];
+      isAdmin: boolean;
+      email_verified: boolean;
+    } & DefaultSession["user"];
   }
 }
 
-declare module 'next-auth/jwt' {
+declare module "next-auth/jwt" {
   interface JWT {
-    isAdmin?: bool;
+    roles: string[];
+    isAdmin: boolean;
   }
 }
