@@ -1,9 +1,13 @@
-import { isEqual, startOfDay } from 'date-fns';
-import { AnimatePresence, motion } from 'framer-motion';
-import type { IMediaReleaseInfo } from '@/components/interfaces';
-import MediaReleaseItem from '@/components/CalendarWidget/MediaReleaseItem';
+import { isEqual, startOfDay } from "date-fns";
+import { AnimatePresence, motion } from "framer-motion";
+import type { IMediaReleaseInfo } from "@/components/interfaces";
+import MediaReleaseItem from "@/components/CalendarWidget/MediaReleaseItem";
 
-function MediaReleaseInfo({ sonarrReleases, radarrReleases, selectedDay }: IMediaReleaseInfo) {
+function MediaReleaseInfo({
+  sonarrReleases,
+  radarrReleases,
+  selectedDay,
+}: IMediaReleaseInfo) {
   const filteredSonarr = sonarrReleases.filter((release) => {
     const mediaDate = startOfDay(new Date(release.airDateUtc));
     return isEqual(startOfDay(selectedDay), mediaDate);
@@ -20,22 +24,34 @@ function MediaReleaseInfo({ sonarrReleases, radarrReleases, selectedDay }: IMedi
 
   const getMovieDate = (digitalRelease?: Date, physicalRelease?: Date) => {
     if (!physicalRelease && digitalRelease) {
-      return { mediaItemDate: new Date(digitalRelease), mediaReleaseType: 'Digital release' };
+      return {
+        mediaItemDate: new Date(digitalRelease),
+        mediaReleaseType: "Digital release",
+      };
     }
 
     if (physicalRelease && !digitalRelease) {
-      return { mediaItemDate: new Date(physicalRelease), mediaReleaseType: 'Physical release' };
+      return {
+        mediaItemDate: new Date(physicalRelease),
+        mediaReleaseType: "Physical release",
+      };
     }
 
     if (digitalRelease && physicalRelease) {
       const digitalReleaseDate = new Date(digitalRelease);
 
-      const mediaItemDate = isEqual(startOfDay(digitalReleaseDate), startOfDay(selectedDay))
+      const mediaItemDate = isEqual(
+        startOfDay(digitalReleaseDate),
+        startOfDay(selectedDay),
+      )
         ? digitalReleaseDate
         : new Date(physicalRelease);
-      const mediaReleaseType = isEqual(startOfDay(digitalReleaseDate), startOfDay(selectedDay))
-        ? 'Digital release'
-        : 'Physical release';
+      const mediaReleaseType = isEqual(
+        startOfDay(digitalReleaseDate),
+        startOfDay(selectedDay),
+      )
+        ? "Digital release"
+        : "Physical release";
       return { mediaItemDate, mediaReleaseType };
     }
     return;
@@ -56,12 +72,19 @@ function MediaReleaseInfo({ sonarrReleases, radarrReleases, selectedDay }: IMedi
           />
         ))}
         {filteredRadarr.map((radarrItem, index) => {
-          const movieDate = getMovieDate(radarrItem.digitalRelease, radarrItem.physicalRelease);
+          const movieDate = getMovieDate(
+            radarrItem.digitalRelease,
+            radarrItem.physicalRelease,
+          );
           return (
             <MediaReleaseItem
               key={`${radarrItem.title}-${index}`}
-              mediaItemDate={movieDate ? movieDate.mediaItemDate : new Date(selectedDay)}
-              mediaItemDesc={movieDate ? movieDate.mediaReleaseType : 'Unknown release'}
+              mediaItemDate={
+                movieDate ? movieDate.mediaItemDate : new Date(selectedDay)
+              }
+              mediaItemDesc={
+                movieDate ? movieDate.mediaReleaseType : "Unknown release"
+              }
               mediaItemTitle={radarrItem.title}
               mediaImages={radarrItem.images}
               mediaHasFile={radarrItem.hasFile}

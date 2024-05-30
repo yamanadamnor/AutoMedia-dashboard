@@ -1,4 +1,4 @@
-version: '3.9'
+version: "3.9"
 services:
   dashboard:
     container_name: dashboard
@@ -10,4 +10,4 @@ services:
         - ARG_DATABASE_URL=$DATABASE_URL
         - ARG_NEXTAUTH_URL=$NEXTAUTH_URL
     ports:
-      - '3344:3344'
+      - "3344:3344"
