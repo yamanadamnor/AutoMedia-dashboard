@@ -1,9 +1,9 @@
-import { useSession } from 'next-auth/react';
+import { auth } from "@/auth";
 
-function Protected() {
-  const { status } = useSession();
+export default async function Protected() {
+  const session = await auth();
 
-  if (status === 'unauthenticated') {
+  if (!session) {
     return (
       <div>
         <h1 className="text-6xl text-white">Not authorized</h1>
@@ -16,7 +16,3 @@ function Protected() {
     </div>
   );
 }
-
-export default Protected;
-
-Protected.auth = true;

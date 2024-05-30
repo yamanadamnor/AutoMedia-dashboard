@@ -9,6 +9,7 @@
       }
     ],
     "paths": {
+      "@/auth": ["auth.ts"],
       "@/components/*": ["components/*"],
       "@/ui/*": ["ui/*"],
       "@/utils/*": ["utils/*"],
