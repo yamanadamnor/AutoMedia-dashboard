@@ -3,7 +3,7 @@
   "private": true,
   "scripts": {
     "start": "next start -p 3344",
-    "dev": "next dev -p 3344",
+    "dev": "next dev -p 3344 --turbo",
     "build": "next build",
     "lint": "next lint",
     "test": "vitest",
