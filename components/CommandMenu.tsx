@@ -81,7 +81,7 @@ export const CommandMenu = () => {
                   src={service.image}
                   height={18}
                   width={18}
-                  className="grayscale group-aria-[selected]:grayscale-0"
+                  className="grayscale group-aria-[selected=true]:grayscale-0"
                   alt="Service logo"
                 />
                 {service.title}
