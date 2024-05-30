@@ -54,36 +54,36 @@
 /* stylelint-disable-next-line at-rule-no-unknown */
 @tailwind variants;
 @font-face {
-  font-family: 'GT Walsheim Pro';
-  src: url('/fonts/GTWalsheimPro/GTWalsheimPro-Thin.woff2');
+  font-family: "GT Walsheim Pro";
+  src: url("/fonts/GTWalsheimPro/GTWalsheimPro-Thin.woff2");
   font-weight: 100;
   font-style: normal;
 }
 
 @font-face {
-  font-family: 'GT Walsheim Pro';
-  src: url('/fonts/GTWalsheimPro/GTWalsheimPro-Regular.woff2');
+  font-family: "GT Walsheim Pro";
+  src: url("/fonts/GTWalsheimPro/GTWalsheimPro-Regular.woff2");
   font-weight: normal;
   font-style: normal;
 }
 
 @font-face {
-  font-family: 'GT Walsheim Pro';
-  src: url('/fonts/GTWalsheimPro/GTWalsheimPro-Medium.woff2');
+  font-family: "GT Walsheim Pro";
+  src: url("/fonts/GTWalsheimPro/GTWalsheimPro-Medium.woff2");
   font-weight: 500;
   font-style: normal;
 }
 
 @font-face {
-  font-family: 'GT Walsheim Pro';
-  src: url('/fonts/GTWalsheimPro/GTWalsheimPro-Bold.woff2');
+  font-family: "GT Walsheim Pro";
+  src: url("/fonts/GTWalsheimPro/GTWalsheimPro-Bold.woff2");
   font-weight: bold;
   font-style: normal;
 }
 
 @font-face {
-  font-family: 'GT Walsheim Pro';
-  src: url('/fonts/GTWalsheimPro/GTWalsheimPro-Black.woff2');
+  font-family: "GT Walsheim Pro";
+  src: url("/fonts/GTWalsheimPro/GTWalsheimPro-Black.woff2");
   font-weight: 900;
   font-style: normal;
 }
