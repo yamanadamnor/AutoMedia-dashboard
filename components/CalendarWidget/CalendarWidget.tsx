@@ -125,22 +125,13 @@ function CalendarWidget() {
   return (
     <motion.div
       className={cn(
-        "@container",
-        "group:border w-full rounded-xl bg-service-card p-3 py-8 text-white",
-        "border border-gray-700 backdrop-blur-sm",
-        "flex flex-col",
+        "group:border flex w-full flex-col rounded-xl border border-gray-700 bg-service-card p-3 py-8 text-white backdrop-blur-sm @container md:flex-row lg:flex-col",
         todaysRadarrReleases.length > 0 || todaysSonarrReleases.length > 0
           ? "gap-4"
           : "",
-        "md:flex-row",
-        "lg:flex-col",
       )}
     >
-      <div
-        className="
-         flex w-full flex-col
-        gap-y-4 @container md:w-3/5 lg:w-full"
-      >
+      <div className=" flex w-full flex-col gap-y-4 @container md:w-3/5 lg:w-full">
         <div className="flex w-full items-center justify-center gap-x-2 @sm:gap-x-8">
           <div className="flex max-w-56 items-center justify-center sm:w-60 ">
             <div className="self-center text-7xl">
