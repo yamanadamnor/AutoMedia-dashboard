@@ -11,6 +11,7 @@
     "paths": {
       "@/auth": ["auth.ts"],
       "@/components/*": ["components/*"],
+      "@/data/*": ["data/*"],
       "@/ui/*": ["ui/*"],
       "@/utils/*": ["utils/*"],
       "@/styles/*": ["styles/*"],
