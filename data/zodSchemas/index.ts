@@ -69,8 +69,19 @@ export const ServiceOrderByWithRelationInputSchema: z.ZodType<Prisma.ServiceOrde
 }).strict();
 
 export const ServiceWhereUniqueInputSchema: z.ZodType<Prisma.ServiceWhereUniqueInput> = z.object({
-  id: z.number().optional()
-}).strict();
+  id: z.number()
+})
+.and(z.object({
+  id: z.number().optional(),
+  AND: z.union([ z.lazy(() => ServiceWhereInputSchema),z.lazy(() => ServiceWhereInputSchema).array() ]).optional(),
+  OR: z.lazy(() => ServiceWhereInputSchema).array().optional(),
+  NOT: z.union([ z.lazy(() => ServiceWhereInputSchema),z.lazy(() => ServiceWhereInputSchema).array() ]).optional(),
+  title: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
+  description: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
+  image: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
+  href: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
+  createdAt: z.union([ z.lazy(() => DateTimeFilterSchema),z.date() ]).optional(),
+}).strict());
 
 export const ServiceOrderByWithAggregationInputSchema: z.ZodType<Prisma.ServiceOrderByWithAggregationInput> = z.object({
   id: z.lazy(() => SortOrderSchema).optional(),
@@ -112,8 +123,15 @@ export const SettingOrderByWithRelationInputSchema: z.ZodType<Prisma.SettingOrde
 }).strict();
 
 export const SettingWhereUniqueInputSchema: z.ZodType<Prisma.SettingWhereUniqueInput> = z.object({
-  key: z.string().optional()
-}).strict();
+  key: z.string()
+})
+.and(z.object({
+  key: z.string().optional(),
+  AND: z.union([ z.lazy(() => SettingWhereInputSchema),z.lazy(() => SettingWhereInputSchema).array() ]).optional(),
+  OR: z.lazy(() => SettingWhereInputSchema).array().optional(),
+  NOT: z.union([ z.lazy(() => SettingWhereInputSchema),z.lazy(() => SettingWhereInputSchema).array() ]).optional(),
+  value: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
+}).strict());
 
 export const SettingOrderByWithAggregationInputSchema: z.ZodType<Prisma.SettingOrderByWithAggregationInput> = z.object({
   key: z.lazy(() => SortOrderSchema).optional(),
@@ -165,6 +183,15 @@ export const ServiceUncheckedUpdateInputSchema: z.ZodType<Prisma.ServiceUnchecke
   createdAt: z.union([ z.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
 }).strict();
 
+export const ServiceCreateManyInputSchema: z.ZodType<Prisma.ServiceCreateManyInput> = z.object({
+  id: z.number().optional(),
+  title: z.string(),
+  description: z.string(),
+  image: z.string(),
+  href: z.string(),
+  createdAt: z.date().optional()
+}).strict();
+
 export const ServiceUpdateManyMutationInputSchema: z.ZodType<Prisma.ServiceUpdateManyMutationInput> = z.object({
   title: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   description: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
@@ -202,6 +229,11 @@ export const SettingUncheckedUpdateInputSchema: z.ZodType<Prisma.SettingUnchecke
   value: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
 }).strict();
 
+export const SettingCreateManyInputSchema: z.ZodType<Prisma.SettingCreateManyInput> = z.object({
+  key: z.string(),
+  value: z.string()
+}).strict();
+
 export const SettingUpdateManyMutationInputSchema: z.ZodType<Prisma.SettingUpdateManyMutationInput> = z.object({
   key: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   value: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
@@ -214,8 +246,8 @@ export const SettingUncheckedUpdateManyInputSchema: z.ZodType<Prisma.SettingUnch
 
 export const IntFilterSchema: z.ZodType<Prisma.IntFilter> = z.object({
   equals: z.number().optional(),
-  in: z.union([ z.number().array(),z.number() ]).optional(),
-  notIn: z.union([ z.number().array(),z.number() ]).optional(),
+  in: z.number().array().optional(),
+  notIn: z.number().array().optional(),
   lt: z.number().optional(),
   lte: z.number().optional(),
   gt: z.number().optional(),
@@ -225,8 +257,8 @@ export const IntFilterSchema: z.ZodType<Prisma.IntFilter> = z.object({
 
 export const StringFilterSchema: z.ZodType<Prisma.StringFilter> = z.object({
   equals: z.string().optional(),
-  in: z.union([ z.string().array(),z.string() ]).optional(),
-  notIn: z.union([ z.string().array(),z.string() ]).optional(),
+  in: z.string().array().optional(),
+  notIn: z.string().array().optional(),
   lt: z.string().optional(),
   lte: z.string().optional(),
   gt: z.string().optional(),
@@ -239,8 +271,8 @@ export const StringFilterSchema: z.ZodType<Prisma.StringFilter> = z.object({
 
 export const DateTimeFilterSchema: z.ZodType<Prisma.DateTimeFilter> = z.object({
   equals: z.date().optional(),
-  in: z.union([ z.date().array(),z.date() ]).optional(),
-  notIn: z.union([ z.date().array(),z.date() ]).optional(),
+  in: z.date().array().optional(),
+  notIn: z.date().array().optional(),
   lt: z.date().optional(),
   lte: z.date().optional(),
   gt: z.date().optional(),
@@ -285,8 +317,8 @@ export const ServiceSumOrderByAggregateInputSchema: z.ZodType<Prisma.ServiceSumO
 
 export const IntWithAggregatesFilterSchema: z.ZodType<Prisma.IntWithAggregatesFilter> = z.object({
   equals: z.number().optional(),
-  in: z.union([ z.number().array(),z.number() ]).optional(),
-  notIn: z.union([ z.number().array(),z.number() ]).optional(),
+  in: z.number().array().optional(),
+  notIn: z.number().array().optional(),
   lt: z.number().optional(),
   lte: z.number().optional(),
   gt: z.number().optional(),
@@ -301,8 +333,8 @@ export const IntWithAggregatesFilterSchema: z.ZodType<Prisma.IntWithAggregatesFi
 
 export const StringWithAggregatesFilterSchema: z.ZodType<Prisma.StringWithAggregatesFilter> = z.object({
   equals: z.string().optional(),
-  in: z.union([ z.string().array(),z.string() ]).optional(),
-  notIn: z.union([ z.string().array(),z.string() ]).optional(),
+  in: z.string().array().optional(),
+  notIn: z.string().array().optional(),
   lt: z.string().optional(),
   lte: z.string().optional(),
   gt: z.string().optional(),
@@ -318,8 +350,8 @@ export const StringWithAggregatesFilterSchema: z.ZodType<Prisma.StringWithAggreg
 
 export const DateTimeWithAggregatesFilterSchema: z.ZodType<Prisma.DateTimeWithAggregatesFilter> = z.object({
   equals: z.date().optional(),
-  in: z.union([ z.date().array(),z.date() ]).optional(),
-  notIn: z.union([ z.date().array(),z.date() ]).optional(),
+  in: z.date().array().optional(),
+  notIn: z.date().array().optional(),
   lt: z.date().optional(),
   lte: z.date().optional(),
   gt: z.date().optional(),
@@ -363,8 +395,8 @@ export const IntFieldUpdateOperationsInputSchema: z.ZodType<Prisma.IntFieldUpdat
 
 export const NestedIntFilterSchema: z.ZodType<Prisma.NestedIntFilter> = z.object({
   equals: z.number().optional(),
-  in: z.union([ z.number().array(),z.number() ]).optional(),
-  notIn: z.union([ z.number().array(),z.number() ]).optional(),
+  in: z.number().array().optional(),
+  notIn: z.number().array().optional(),
   lt: z.number().optional(),
   lte: z.number().optional(),
   gt: z.number().optional(),
@@ -374,8 +406,8 @@ export const NestedIntFilterSchema: z.ZodType<Prisma.NestedIntFilter> = z.object
 
 export const NestedStringFilterSchema: z.ZodType<Prisma.NestedStringFilter> = z.object({
   equals: z.string().optional(),
-  in: z.union([ z.string().array(),z.string() ]).optional(),
-  notIn: z.union([ z.string().array(),z.string() ]).optional(),
+  in: z.string().array().optional(),
+  notIn: z.string().array().optional(),
   lt: z.string().optional(),
   lte: z.string().optional(),
   gt: z.string().optional(),
@@ -388,8 +420,8 @@ export const NestedStringFilterSchema: z.ZodType<Prisma.NestedStringFilter> = z.
 
 export const NestedDateTimeFilterSchema: z.ZodType<Prisma.NestedDateTimeFilter> = z.object({
   equals: z.date().optional(),
-  in: z.union([ z.date().array(),z.date() ]).optional(),
-  notIn: z.union([ z.date().array(),z.date() ]).optional(),
+  in: z.date().array().optional(),
+  notIn: z.date().array().optional(),
   lt: z.date().optional(),
   lte: z.date().optional(),
   gt: z.date().optional(),
@@ -399,8 +431,8 @@ export const NestedDateTimeFilterSchema: z.ZodType<Prisma.NestedDateTimeFilter> 
 
 export const NestedIntWithAggregatesFilterSchema: z.ZodType<Prisma.NestedIntWithAggregatesFilter> = z.object({
   equals: z.number().optional(),
-  in: z.union([ z.number().array(),z.number() ]).optional(),
-  notIn: z.union([ z.number().array(),z.number() ]).optional(),
+  in: z.number().array().optional(),
+  notIn: z.number().array().optional(),
   lt: z.number().optional(),
   lte: z.number().optional(),
   gt: z.number().optional(),
@@ -415,8 +447,8 @@ export const NestedIntWithAggregatesFilterSchema: z.ZodType<Prisma.NestedIntWith
 
 export const NestedFloatFilterSchema: z.ZodType<Prisma.NestedFloatFilter> = z.object({
   equals: z.number().optional(),
-  in: z.union([ z.number().array(),z.number() ]).optional(),
-  notIn: z.union([ z.number().array(),z.number() ]).optional(),
+  in: z.number().array().optional(),
+  notIn: z.number().array().optional(),
   lt: z.number().optional(),
   lte: z.number().optional(),
   gt: z.number().optional(),
@@ -426,8 +458,8 @@ export const NestedFloatFilterSchema: z.ZodType<Prisma.NestedFloatFilter> = z.ob
 
 export const NestedStringWithAggregatesFilterSchema: z.ZodType<Prisma.NestedStringWithAggregatesFilter> = z.object({
   equals: z.string().optional(),
-  in: z.union([ z.string().array(),z.string() ]).optional(),
-  notIn: z.union([ z.string().array(),z.string() ]).optional(),
+  in: z.string().array().optional(),
+  notIn: z.string().array().optional(),
   lt: z.string().optional(),
   lte: z.string().optional(),
   gt: z.string().optional(),
@@ -443,8 +475,8 @@ export const NestedStringWithAggregatesFilterSchema: z.ZodType<Prisma.NestedStri
 
 export const NestedDateTimeWithAggregatesFilterSchema: z.ZodType<Prisma.NestedDateTimeWithAggregatesFilter> = z.object({
   equals: z.date().optional(),
-  in: z.union([ z.date().array(),z.date() ]).optional(),
-  notIn: z.union([ z.date().array(),z.date() ]).optional(),
+  in: z.date().array().optional(),
+  notIn: z.date().array().optional(),
   lt: z.date().optional(),
   lte: z.date().optional(),
   gt: z.date().optional(),
@@ -573,6 +605,14 @@ export const ServiceUpsertArgsSchema: z.ZodType<Omit<Prisma.ServiceUpsertArgs, "
   update: z.union([ ServiceUpdateInputSchema,ServiceUncheckedUpdateInputSchema ]),
 }).strict() ;
 
+export const ServiceCreateManyArgsSchema: z.ZodType<Prisma.ServiceCreateManyArgs> = z.object({
+  data: z.union([ ServiceCreateManyInputSchema,ServiceCreateManyInputSchema.array() ]),
+}).strict() ;
+
+export const ServiceCreateManyAndReturnArgsSchema: z.ZodType<Prisma.ServiceCreateManyAndReturnArgs> = z.object({
+  data: z.union([ ServiceCreateManyInputSchema,ServiceCreateManyInputSchema.array() ]),
+}).strict() ;
+
 export const ServiceDeleteArgsSchema: z.ZodType<Omit<Prisma.ServiceDeleteArgs, "select">> = z.object({
   where: ServiceWhereUniqueInputSchema,
 }).strict() ;
@@ -599,6 +639,14 @@ export const SettingUpsertArgsSchema: z.ZodType<Omit<Prisma.SettingUpsertArgs, "
   where: SettingWhereUniqueInputSchema,
   create: z.union([ SettingCreateInputSchema,SettingUncheckedCreateInputSchema ]),
   update: z.union([ SettingUpdateInputSchema,SettingUncheckedUpdateInputSchema ]),
+}).strict() ;
+
+export const SettingCreateManyArgsSchema: z.ZodType<Prisma.SettingCreateManyArgs> = z.object({
+  data: z.union([ SettingCreateManyInputSchema,SettingCreateManyInputSchema.array() ]),
+}).strict() ;
+
+export const SettingCreateManyAndReturnArgsSchema: z.ZodType<Prisma.SettingCreateManyAndReturnArgs> = z.object({
+  data: z.union([ SettingCreateManyInputSchema,SettingCreateManyInputSchema.array() ]),
 }).strict() ;
 
 export const SettingDeleteArgsSchema: z.ZodType<Omit<Prisma.SettingDeleteArgs, "select">> = z.object({
