@@ -6,6 +6,21 @@ generator client {
   binaryTargets = ["native", "linux-musl"]
 }
 
+generator zod {
+  provider         = "zod-prisma-types"
+  output           = "../data/zodSchemas"
+  writeBarrelFiles = false
+  coerceDate       = false
+
+  aqddIncludeType          = false
+  // createInputTypes         = false
+  createModelTypes         = false
+  addInputTypeValidation   = false
+  addIncludeType           = false
+  addSelectType            = false
+  validateWhereUniqueInput = false
+}
+
 datasource db {
   provider = "sqlite"
   url      = env("DATABASE_URL")
