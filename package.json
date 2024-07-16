@@ -61,7 +61,7 @@
     "eslint-plugin-react": "^7.33.2",
     "eslint-plugin-react-hooks": "^4.6.0",
     "postcss": "^8.4.28",
-    "prettier": "3.3.2",
+    "prettier": "3.3.3",
     "prettier-plugin-tailwindcss": "^0.6.0",
     "prisma": "^4.16.2",
     "tailwind-merge": "^2.0.0",
