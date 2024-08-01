@@ -6,6 +6,10 @@
     {
       "matchPackagePatterns": ["^eslint"],
       "groupName": "eslint packages"
+    },
+    {
+      "matchDatasources": ["npm"],
+      "minimumReleaseAge": "14 days"
     }
   ]
 }
