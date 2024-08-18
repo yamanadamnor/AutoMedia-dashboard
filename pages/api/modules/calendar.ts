@@ -220,15 +220,26 @@ async function handleGet(req: NextApiRequest, res: NextApiResponse) {
       try {
         const sonarrResponses = await fetchSonarr(startDate, endDate);
         return res.json(sonarrResponses);
-      } catch (error) {
-        return res.status(500).json({ message: "Error fetching Sonarr data" });
+      } catch (error: unknown) {
+        if (error instanceof Error) {
+          return res.status(500).json({ message: error.message });
+        }
+
+        return res.status(500).json({
+          message: "An unknown error occurred when fetching Sonarr data",
+        });
       }
     case "radarr":
       try {
         const radarrResponses = await fetchRadarr(startDate, endDate);
         return res.json(radarrResponses);
-      } catch (error) {
-        return res.status(500).json({ message: "Error fetching Radarr data" });
+      } catch (error: unknown) {
+        if (error instanceof Error) {
+          return res.status(500).json({ message: error.message });
+        }
+        return res.status(500).json({
+          message: "An unknown error occurred when fetching Radarr data",
+        });
       }
     default:
       return res

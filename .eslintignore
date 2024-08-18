@@ -1,5 +1,0 @@
-node_modules
-build
-.eslintrc.js
-vite.config.ts
-next-env.d.ts

@@ -23,7 +23,7 @@ export default async function handler(
         },
       });
       return res.status(200).send(service);
-    } catch (error) {
+    } catch {
       return res.status(500).send("Could not delete service");
     }
     // Delete Service
@@ -35,7 +35,7 @@ export default async function handler(
         },
       });
       return res.status(204).end();
-    } catch (error) {
+    } catch {
       return res.status(500).send("Could not delete service");
     }
 
@@ -50,7 +50,7 @@ export default async function handler(
         },
       });
       return res.json(updatedUser);
-    } catch (error) {
+    } catch {
       return res.status(500).send("Could not edit service, try again");
     }
   }
