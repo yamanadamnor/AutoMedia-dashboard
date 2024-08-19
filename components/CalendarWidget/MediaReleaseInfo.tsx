@@ -1,97 +1,79 @@
-import { isEqual, startOfDay } from "date-fns";
+import { endOfMonth, isSameDay, startOfMonth } from "date-fns";
 import { AnimatePresence, motion } from "framer-motion";
-import type { IMediaReleaseInfo } from "@/components/interfaces";
 import MediaReleaseItem from "@/components/CalendarWidget/MediaReleaseItem";
+import { CalendarContext } from "./CalendarContext";
+import { useContext } from "react";
+import { useMovies } from "@/utils/useMovies";
+import { filterMoviesByDate } from "@/utils/filterMoviesByDate";
+import { filterTvShowsByDate } from "@/utils/filterTvShowsByDate";
+import { useShows } from "@/utils/useShows";
+import type { RadarrResponse } from "pages/api/modules/calendar";
 
-function MediaReleaseInfo({
-  sonarrReleases,
-  radarrReleases,
-  selectedDay,
-}: IMediaReleaseInfo) {
-  const filteredSonarr = sonarrReleases.filter((release) => {
-    const mediaDate = startOfDay(new Date(release.airDateUtc));
-    return isEqual(startOfDay(selectedDay), mediaDate);
-  });
+function MediaReleaseInfo() {
+  const { selectedDay } = useContext(CalendarContext);
+  const { data: movies } = useMovies(
+    startOfMonth(selectedDay),
+    endOfMonth(selectedDay),
+  );
+  const { data: tvShows } = useShows(
+    startOfMonth(selectedDay),
+    endOfMonth(selectedDay),
+  );
+  const filteredMovies = filterMoviesByDate(movies ? movies : [], selectedDay);
+  const filteredTvShows = filterTvShowsByDate(
+    tvShows ? tvShows : [],
+    selectedDay,
+  );
 
-  const filteredRadarr = radarrReleases.filter((release) => {
-    const digitalRelease = startOfDay(new Date(release.digitalRelease));
-    const physicalRelease = startOfDay(new Date(release.physicalRelease));
-    return (
-      isEqual(startOfDay(selectedDay), digitalRelease) ||
-      isEqual(startOfDay(selectedDay), physicalRelease)
-    );
-  });
-
-  const getMovieDate = (digitalRelease?: Date, physicalRelease?: Date) => {
-    if (!physicalRelease && digitalRelease) {
+  const getMovieReleaseTypeByDate = (
+    movie: RadarrResponse,
+    date: Date,
+  ): { date: Date | undefined; type: string | undefined } => {
+    if (
+      movie.physicalRelease &&
+      isSameDay(new Date(movie.physicalRelease), date)
+    ) {
       return {
-        mediaItemDate: new Date(digitalRelease),
-        mediaReleaseType: "Digital release",
+        date: new Date(movie.physicalRelease),
+        type: "Physical release",
       };
+    } else if (
+      movie.digitalRelease &&
+      isSameDay(new Date(movie.digitalRelease), date)
+    ) {
+      return { date: new Date(movie.digitalRelease), type: "Digital release" };
     }
-
-    if (physicalRelease && !digitalRelease) {
-      return {
-        mediaItemDate: new Date(physicalRelease),
-        mediaReleaseType: "Physical release",
-      };
-    }
-
-    if (digitalRelease && physicalRelease) {
-      const digitalReleaseDate = new Date(digitalRelease);
-
-      const mediaItemDate = isEqual(
-        startOfDay(digitalReleaseDate),
-        startOfDay(selectedDay),
-      )
-        ? digitalReleaseDate
-        : new Date(physicalRelease);
-      const mediaReleaseType = isEqual(
-        startOfDay(digitalReleaseDate),
-        startOfDay(selectedDay),
-      )
-        ? "Digital release"
-        : "Physical release";
-      return { mediaItemDate, mediaReleaseType };
-    }
-    return;
+    return { date: undefined, type: undefined };
   };
-
   return (
     <motion.div className="flex flex-col">
       <AnimatePresence mode="popLayout">
-        {filteredSonarr.map((sonarrItem) => (
-          <MediaReleaseItem
-            key={`${sonarrItem.series.title}-S${sonarrItem.seasonNumber}-E${sonarrItem.episodeNumber}`}
-            mediaItemDate={new Date(sonarrItem.airDateUtc)}
-            mediaItemDesc={`S${sonarrItem.seasonNumber} E${sonarrItem.episodeNumber} - ${sonarrItem.title}`}
-            mediaItemTitle={sonarrItem.series.title}
-            mediaImages={sonarrItem.series.images}
-            mediaHasFile={sonarrItem.hasFile}
-            mediaItemType="sonarr"
-          />
-        ))}
-        {filteredRadarr.map((radarrItem, index) => {
-          const movieDate = getMovieDate(
-            radarrItem.digitalRelease,
-            radarrItem.physicalRelease,
-          );
+        {filteredMovies.map((movie, index) => {
+          const release = getMovieReleaseTypeByDate(movie, selectedDay);
           return (
             <MediaReleaseItem
-              key={`${radarrItem.title}-${index}`}
-              mediaItemDate={
-                movieDate ? movieDate.mediaItemDate : new Date(selectedDay)
-              }
-              mediaItemDesc={
-                movieDate ? movieDate.mediaReleaseType : "Unknown release"
-              }
-              mediaItemTitle={radarrItem.title}
-              mediaImages={radarrItem.images}
-              mediaHasFile={radarrItem.hasFile}
-              mediaItemType="radarr"
+              key={`${movie.title}-${index}`}
+              releaseDate={release.date}
+              description={release.type}
+              title={movie.title}
+              images={movie.images}
+              isAvailable={movie.hasFile}
+              mediaType="movie"
             />
           );
         })}
+
+        {filteredTvShows.map((tvShow) => (
+          <MediaReleaseItem
+            key={`${tvShow.series.title}-S${tvShow.seasonNumber}-E${tvShow.episodeNumber}`}
+            releaseDate={new Date(tvShow.airDateUtc)}
+            description={`S${tvShow.seasonNumber} E${tvShow.episodeNumber} - ${tvShow.title}`}
+            title={tvShow.series.title}
+            images={tvShow.series.images}
+            isAvailable={tvShow.hasFile}
+            mediaType="tv"
+          />
+        ))}
       </AnimatePresence>
     </motion.div>
   );
