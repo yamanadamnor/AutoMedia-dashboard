@@ -16,8 +16,12 @@ jobs:
         with:
           node-version: "18"
           cache: "npm"
+
       - name: Install packages
         run: npm ci
 
       - name: Run the linter
         run: npm run lint
+
+      - name: Check types
+        run: npm run check-types

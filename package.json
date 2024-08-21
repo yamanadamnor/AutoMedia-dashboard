@@ -6,6 +6,7 @@
     "dev": "next dev -p 3344 --turbo",
     "build": "next build",
     "lint": "eslint .",
+    "check-types": "tsc --noEmit",
     "test": "vitest",
     "start:prod": "node server.js",
     "start:migrate": "npx prisma migrate deploy",
