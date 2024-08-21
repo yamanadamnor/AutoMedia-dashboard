@@ -13,6 +13,7 @@ import { useMovies } from "@/utils/useMovies";
 import { filterMoviesByDate } from "@/utils/filterMoviesByDate";
 import { useShows } from "@/utils/useShows";
 import { filterTvShowsByDate } from "@/utils/filterTvShowsByDate";
+import { StarIcon } from "@heroicons/react/16/solid";
 
 function DayComponent({ day }: { day: Date }) {
   const { selectedDay, setSelectedDay } = useContext(CalendarContext);
@@ -34,19 +35,18 @@ function DayComponent({ day }: { day: Date }) {
       onClick={() => setSelectedDay(day)}
     >
       {format(day, "d")}
-      <div className="flex w-full justify-around px-2">
-        {filteredMovies.length > 0 && (
+      <div className="flex w-full items-center justify-around px-2">
+        {filteredMovies.length > 0 && isSameMonth(day, selectedDay) && (
           <div className="h-1.5 w-1.5 rounded-full bg-orange-400"></div>
         )}
 
-        {filteredTvShows.length > 0 && (
-          <div
-            className={cn(
-              "h-1.5 w-1.5 rounded-full bg-blue-400",
-              isNewSeason &&
-                "bg-transparent outline -outline-offset-1 outline-blue-400",
-            )}
-          ></div>
+        {filteredTvShows.length > 0 &&
+          isSameMonth(day, selectedDay) &&
+          !isNewSeason && (
+            <div className={cn("h-1.5 w-1.5 rounded-full bg-blue-400")}></div>
+          )}
+        {isNewSeason && isSameMonth(day, selectedDay) && (
+          <StarIcon className="h-2.5 w-2.5 text-blue-400" />
         )}
       </div>
     </button>

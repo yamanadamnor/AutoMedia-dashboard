@@ -114,8 +114,8 @@ function CalendarWidget() {
         )}
       >
         <div className="flex w-full flex-col gap-y-4 @container md:w-3/5 lg:w-full">
-          <div className="flex w-full items-center justify-center gap-x-2 @sm:gap-x-8">
-            <div className="flex max-w-56 items-center justify-center sm:w-60">
+          <div className="flex w-full items-center justify-around gap-x-2 @sm:gap-x-8">
+            <div className="flex items-center">
               <div className="self-center text-7xl">
                 <h2 className="select-none leading-none">
                   {format(selectedDay, "dd")}
@@ -125,28 +125,33 @@ function CalendarWidget() {
                 <h2 className="select-none font-thin">
                   {format(selectedDay, "yyyy")}
                 </h2>
-                <h2 className="leading-0 select-none text-3xl">
+                <h2 className="leading-0 select-none text-2xl">
                   {format(selectedDay, "MMMM")}
                 </h2>
               </div>
             </div>
-          </div>
 
-          <div className="flex items-center justify-around px-4">
-            <Button className="group px-2" onClick={() => paginate(-1)}>
-              <ChevronLeftIcon className="h-6 w-6 select-none text-zinc-500 transition-all duration-200 ease-in-out group-hover:text-gray-200" />
-            </Button>
-            <Button
-              onClick={() => setSelectedDay(today)}
-              className="flex items-center gap-x-2"
-            >
-              <CalendarIcon className="w-4" />
-              today
-            </Button>
-
-            <Button className="group px-2" onClick={() => paginate(1)}>
-              <ChevronRightIcon className="h-6 w-6 select-none text-zinc-500 transition-all duration-200 ease-in-out group-hover:text-gray-200" />
-            </Button>
+            <div className="grid grid-cols-2 gap-2">
+              <Button
+                className="group items-center"
+                onClick={() => paginate(-1)}
+              >
+                <ChevronLeftIcon className="h-4 w-4 select-none transition-all duration-200 ease-in-out group-hover:text-gray-200" />
+              </Button>
+              <Button
+                className="group items-center"
+                onClick={() => paginate(1)}
+              >
+                <ChevronRightIcon className="h-4 w-4 select-none transition-all duration-200 ease-in-out group-hover:text-gray-200" />
+              </Button>
+              <Button
+                onClick={() => setSelectedDay(today)}
+                className="col-span-2 flex items-center justify-center gap-x-2 text-sm"
+              >
+                <CalendarIcon className="w-4" />
+                today
+              </Button>
+            </div>
           </div>
 
           <motion.div className="flex justify-center">
