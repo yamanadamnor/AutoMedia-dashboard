@@ -8,6 +8,7 @@ import {
   DialogHeader,
   DialogFooter,
   DialogTrigger,
+  DialogDescription,
 } from "@/ui/Dialog";
 import { Button } from "@/ui/Button";
 import { ServiceForm } from "@/components/ServiceShelf/ServiceForm";
@@ -30,10 +31,22 @@ export const ServiceAddDialog = ({
     <Dialog open={open} onOpenChange={setOpen} {...props}>
       <DialogTrigger asChild>{children}</DialogTrigger>
       <DialogContent className="bg-service-card text-white backdrop-blur-lg">
-        <DialogHeader>
-          <DialogTitle>Service</DialogTitle>
+        <DialogHeader className="flex flex-col gap-y-1">
+          <DialogTitle className="text-xl">Service</DialogTitle>
+          <DialogDescription>
+            {service ? (
+              <>
+                Update{" "}
+                <span className="rounded bg-gray-700 p-0.5 px-2">
+                  {service.title}
+                </span>
+              </>
+            ) : (
+              "Add new service"
+            )}
+          </DialogDescription>
         </DialogHeader>
-        <ServiceForm service={service} />
+        <ServiceForm service={service} onSubmitCommand={() => setOpen(false)} />
         <DialogFooter className="mt-5">
           <Button form="serviceForm" type="submit">
             Save
