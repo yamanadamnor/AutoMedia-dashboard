@@ -18,6 +18,15 @@ import {
   DropdownMenuItem,
   DropdownMenuContent,
 } from "@/ui/DropdownMenu";
+
+import {
+  Dialog,
+  DialogContent,
+  DialogOverlay,
+  DialogPortal,
+  DialogTrigger,
+} from "@/ui/Dialog";
+
 import { Button } from "@/ui/Button";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
@@ -122,14 +131,19 @@ function EditDropdown({ service }: ServiceCardProps) {
           align="end"
           className="bg-service-card-solid text-white"
         >
-          <DropdownMenuItem asChild>
-            <ServiceAddDialog service={service}>
-              <Button className="flex w-full items-center gap-x-2 border-none px-2 py-1 hover:bg-[#2b2c3a]">
+          <ServiceAddDialog service={service}>
+            <DropdownMenuItem
+              className="w-full p-0"
+              onSelect={(e) => {
+                e.preventDefault();
+              }}
+            >
+              <Button className="flex w-full items-center gap-x-2 rounded-sm border-none px-2 py-1.5">
                 <PencilIcon className="h-3 w-3" />
                 Edit
               </Button>
-            </ServiceAddDialog>
-          </DropdownMenuItem>
+            </DropdownMenuItem>
+          </ServiceAddDialog>
 
           <DropdownMenuItem
             className="flex items-center gap-x-2 text-red-300 hover:bg-[#2b2c3a]"
