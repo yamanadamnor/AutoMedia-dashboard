@@ -148,7 +148,7 @@ export const SettingsForm = ({
 
   const watchAllFields = form.watch();
 
-  const handleSubmit = async (values: SettingsFormValues) => {
+  const onValidSubmit = async (values: SettingsFormValues) => {
     try {
       await poster("/api/settings", values);
       toast.success("Updated settings");
@@ -161,7 +161,7 @@ export const SettingsForm = ({
   return (
     <Form {...form}>
       <form
-        onSubmit={form.handleSubmit(handleSubmit)}
+        onSubmit={form.handleSubmit(onValidSubmit)}
         id="settingsForm"
         className="scrollbar flex max-h-[800px] flex-col gap-y-5 overflow-y-scroll"
       >
@@ -316,6 +316,10 @@ export const SettingsForm = ({
               </motion.div>
             )}
           </AnimatePresence>
+
+          {form.formState.errors.root && (
+            <FormMessage>{form.formState.errors.root.message}</FormMessage>
+          )}
         </div>
 
         {/* <div className="space-y-10 rounded-md border border-zinc-700 px-4 py-3"> */}

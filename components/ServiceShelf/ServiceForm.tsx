@@ -45,7 +45,7 @@ export const ServiceForm = ({ service, onSubmitCommand }: ServiceFormProps) => {
   });
 
   const router = useRouter();
-  const onSubmit = async (values: ServiceFormValues) => {
+  const onValidSubmit = async (values: ServiceFormValues) => {
     const parsed = ServiceCreateInputSchema.safeParse(values);
 
     if (!parsed.success) {
@@ -112,7 +112,7 @@ export const ServiceForm = ({ service, onSubmitCommand }: ServiceFormProps) => {
       <form
         id="serviceForm"
         className="flex flex-col gap-y-5"
-        onSubmit={form.handleSubmit(onSubmit)}
+        onSubmit={form.handleSubmit(onValidSubmit)}
       >
         <FormField
           control={form.control}

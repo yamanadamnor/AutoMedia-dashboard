@@ -3,10 +3,10 @@ import { fetcher } from "@/utils/fetcher";
 import type { SettingsFormValues } from "@/components/SettingsForm";
 
 export const useSettings = () => {
-  const settingsFetcher = useSWR<SettingsFormValues, Error>(
+  const { data, error, isLoading } = useSWR<SettingsFormValues, Error>(
     "/api/settings",
     fetcher,
   );
 
-  return settingsFetcher;
+  return { data, error, isLoading };
 };

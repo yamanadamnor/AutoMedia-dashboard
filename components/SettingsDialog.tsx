@@ -1,10 +1,7 @@
 "use client";
 import * as React from "react";
-import useSWR from "swr";
 
-import { fetcher } from "@/utils/fetcher";
 import { SettingsForm } from "@/components/SettingsForm";
-import type { SettingsFormValues } from "@/components/SettingsForm";
 import {
   Dialog,
   DialogTrigger,
@@ -16,16 +13,14 @@ import {
 } from "@/ui/Dialog";
 import { Button } from "@/ui/Button";
 import type * as DialogPrimitive from "@radix-ui/react-dialog";
+import { useSettings } from "@/utils/useSettings";
 
 type SettingsDialogProps = {
   children: React.ReactNode;
 } & React.ComponentPropsWithoutRef<typeof DialogPrimitive.Root>;
 export const SettingsDialog = ({ children, ...props }: SettingsDialogProps) => {
   const [open, setOpen] = React.useState(false);
-  const { data, error } = useSWR<SettingsFormValues, Error>(
-    "/api/settings",
-    fetcher,
-  );
+  const { data, error } = useSettings();
 
   return (
     <>
