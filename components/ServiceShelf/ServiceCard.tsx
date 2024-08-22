@@ -19,14 +19,6 @@ import {
   DropdownMenuContent,
 } from "@/ui/DropdownMenu";
 
-import {
-  Dialog,
-  DialogContent,
-  DialogOverlay,
-  DialogPortal,
-  DialogTrigger,
-} from "@/ui/Dialog";
-
 import { Button } from "@/ui/Button";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
