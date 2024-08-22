@@ -175,7 +175,6 @@ async function fetchSonarr(startDate: string, endDate: string) {
     headers: { "content-type": "application/json" },
   }).then((response) => {
     if (!response.ok) {
-      console.log("Hit the error");
       throw new Error("Error fetching Sonarr data");
     }
     return response.json() as Promise<SonarrResponse[]>;

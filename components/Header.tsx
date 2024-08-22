@@ -15,10 +15,10 @@ import {
 
 import { Avatar, AvatarFallback } from "@/ui/Avatar";
 import { AuthButton } from "@/components/AuthButton";
-import { CommandMenu } from "@/components/CommandMenu";
 import type { Service } from "@prisma/client";
 import { SettingsDialog } from "./SettingsDialog";
 import { Button } from "@/ui/Button";
+import { CommandMenu } from "./CommandMenu";
 
 export const getInitials = (name: string, limit = 3) => {
   const initials = name
@@ -42,6 +42,7 @@ export function Header({ services }: HeaderProps) {
         height={35}
         alt="logo"
       />
+      <CommandMenu services={services} />
       {session?.user ? (
         <ProfileButton />
       ) : (
