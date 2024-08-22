@@ -1,7 +1,6 @@
 {
   "name": "automedia-dashboard",
   "private": true,
-  "type": "module",
   "scripts": {
     "start": "next start -p 3344",
     "dev": "next dev -p 3344",
