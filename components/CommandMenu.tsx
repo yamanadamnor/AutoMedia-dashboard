@@ -42,7 +42,6 @@ export const CommandMenu = ({ services }: { services: Service[] }) => {
       } else if (e.key === "Escape" || (e.key === "Backspace" && !search)) {
         // Escape goes to previous page
         // Backspace goes to previous page when search is empty
-        e.preventDefault();
         setPages((pages) => pages.slice(0, -1));
       }
     };
