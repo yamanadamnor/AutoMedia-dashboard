@@ -32,18 +32,15 @@ export type ServiceFormValues = z.infer<typeof serviceFormSchema>;
 // eslint-disable-next-line @typescript-eslint/consistent-type-definitions
 export type ServiceFormProps = {
   service?: Service;
-  // onSubmit: SubmitHandler<ServiceFormValues>;
+  onSubmitCommand: () => void;
 };
 
-export const ServiceForm = ({ service }: ServiceFormProps) => {
-  const defaultServiceValue = service
-    ? service
-    : { title: "", description: "", href: "" };
+export const ServiceForm = ({ service, onSubmitCommand }: ServiceFormProps) => {
   const form = useForm<ServiceFormValues>({
     resolver: zodResolver(serviceFormSchema),
     defaultValues: {
+      ...service,
       image: "/img/logo-white-muted.svg",
-      ...defaultServiceValue,
     },
   });
 
@@ -63,6 +60,7 @@ export const ServiceForm = ({ service }: ServiceFormProps) => {
     if (response === false) {
       toast.error("Could not add service");
     }
+    onSubmitCommand();
     router.refresh();
     toast.success(`Service ${values.title} added`);
   };
