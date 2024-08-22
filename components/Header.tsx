@@ -41,7 +41,6 @@ export function Header({ services }: HeaderProps) {
         height={35}
         alt="logo"
       />
-      <CommandMenu services={services} />
       {session?.user ? <ProfileButton /> : <AuthButton />}
     </nav>
   );
@@ -68,14 +67,17 @@ const ProfileButton = () => {
         >
           <h2 className="py-5 text-center text-xl">{session?.user?.name}</h2>
           {session?.user?.isAdmin && (
-            <DropdownMenuItem className="gap-x-4 hover:bg-[#2b2c3a]" asChild>
-              <SettingsDialog>
+            <SettingsDialog>
+              <DropdownMenuItem
+                className="p-0"
+                onSelect={(e) => e.preventDefault()}
+              >
                 <Button className="flex w-full gap-x-4 border-none px-2 py-1.5">
                   <Cog6ToothIcon className="h-5 w-5" />
                   Settings
                 </Button>
-              </SettingsDialog>
-            </DropdownMenuItem>
+              </DropdownMenuItem>
+            </SettingsDialog>
           )}
           <DropdownMenuItem
             className="gap-x-4 text-red-300 hover:bg-[#2b2c3a]"
