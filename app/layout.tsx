@@ -4,7 +4,7 @@ import {
   CalendarWidget,
   Header,
   Footer,
-  Settings,
+  SettingsDialog,
   Hero,
 } from "@/components/ClientComponents";
 import { SessionProvider } from "next-auth/react";
@@ -37,7 +37,6 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                 "xl:col-span-6 xl:col-start-3",
               )}
             >
-              <Settings />
               {children}
             </main>
 
