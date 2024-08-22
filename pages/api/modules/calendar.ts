@@ -175,6 +175,7 @@ async function fetchSonarr(startDate: string, endDate: string) {
     headers: { "content-type": "application/json" },
   }).then((response) => {
     if (!response.ok) {
+      console.log("Hit the error");
       throw new Error("Error fetching Sonarr data");
     }
     return response.json() as Promise<SonarrResponse[]>;
@@ -219,12 +220,10 @@ async function handleGet(req: NextApiRequest, res: NextApiResponse) {
         return res.json(sonarrResponses);
       } catch (error: unknown) {
         if (error instanceof Error) {
-          return res.status(500).json({ message: error.message });
+          return res.status(500);
         }
 
-        return res.status(500).json({
-          message: "An unknown error occurred when fetching Sonarr data",
-        });
+        return res.status(500);
       }
     case "movie":
       try {
@@ -232,11 +231,10 @@ async function handleGet(req: NextApiRequest, res: NextApiResponse) {
         return res.json(radarrResponses);
       } catch (error: unknown) {
         if (error instanceof Error) {
-          return res.status(500).json({ message: error.message });
+          return res.status(500);
         }
-        return res.status(500).json({
-          message: "An unknown error occurred when fetching Radarr data",
-        });
+
+        return res.status(500);
       }
     default:
       return res
