@@ -5,7 +5,7 @@ import { ServiceShelfWrapper } from "@/components/ServiceShelf/ServiceShelfWrapp
 import { Button } from "@/ui/Button";
 import { Suspense } from "react";
 
-export default async function BetaPage() {
+export default async function Page() {
   const session = await auth();
 
   return (
