@@ -1,7 +1,7 @@
 import * as React from "react";
-import { useSession } from "next-auth/react";
+// import { useSession } from "next-auth/react";
 import Image from "next/image";
-import { Cog6ToothIcon, PlusCircleIcon } from "@heroicons/react/24/outline";
+// import { Cog6ToothIcon, PlusCircleIcon } from "@heroicons/react/24/outline";
 
 import {
   CommandDialog,
@@ -9,18 +9,17 @@ import {
   CommandGroup,
   CommandInput,
   CommandItem,
-  CommandSeparator,
 } from "@/ui/Command";
 import { cn } from "@/utils/cn";
 import { Button } from "@/ui/Button";
 import type { Service } from "@prisma/client";
-import { ServiceAddDialog, SettingsDialog } from "./ClientComponents";
+// import { ServiceAddDialog, SettingsDialog } from "./ClientComponents";
 
 export const CommandMenu = ({ services }: { services: Service[] }) => {
-  const { data: session } = useSession();
+  // const { data: session } = useSession();
   const [open, setOpen] = React.useState(false);
-  const [addServiceOpen, setAddServiceOpen] = React.useState(false);
-  const [settingsOpen, setSettingsOpen] = React.useState(false);
+  // const [addServiceOpen, setAddServiceOpen] = React.useState(false);
+  // const [settingsOpen, setSettingsOpen] = React.useState(false);
   const [search, setSearch] = React.useState("");
   const [pages, setPages] = React.useState<string[]>([]);
   const page = pages[pages.length - 1];
