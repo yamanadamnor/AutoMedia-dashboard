@@ -1,14 +1,14 @@
 import "@/styles/global.css";
+import { SessionProvider } from "next-auth/react";
+import { Toaster } from "react-hot-toast";
 import { cn } from "@/utils/cn";
 import {
   CalendarWidget,
   Header,
   Footer,
-  SettingsDialog,
   Hero,
 } from "@/components/ClientComponents";
-import { SessionProvider } from "next-auth/react";
-import { Toaster } from "react-hot-toast";
+
 import { getServices } from "@/data/service";
 import { TailwindBreakpointIndicator } from "@/components/TailwindBreakpointIndicator";
 
