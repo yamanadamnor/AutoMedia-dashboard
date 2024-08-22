@@ -17,6 +17,7 @@ import {
   FormMessage,
 } from "@/ui/Form";
 import { AnimatePresence, motion } from "framer-motion";
+import { useRouter } from "next/navigation";
 
 export const settingsFormSchema = z
   .object({
@@ -143,6 +144,7 @@ export const SettingsForm = ({
     resolver: zodResolver(settingsFormSchema),
     defaultValues: { ...settings },
   });
+  const router = useRouter();
 
   const watchAllFields = form.watch();
 
@@ -150,6 +152,7 @@ export const SettingsForm = ({
     try {
       await poster("/api/settings", values);
       toast.success("Updated settings");
+      router.refresh();
     } catch {
       toast.error("Could not update settings");
     }
@@ -177,7 +180,7 @@ export const SettingsForm = ({
                 <div>
                   <FormLabel>Enable Sonarr</FormLabel>
                   <FormDescription className="text-zinc-400">
-                    Enable Sonarr integration for the calendar widget
+                    Enable TV-shows integration for the calendar widget
                   </FormDescription>
                 </div>
 
@@ -253,7 +256,7 @@ export const SettingsForm = ({
                 <div>
                   <FormLabel>Enable Radarr</FormLabel>
                   <FormDescription className="text-zinc-400">
-                    Enable Radarr integration for the calendar widget
+                    Enable Movies integration for the calendar widget
                   </FormDescription>
                 </div>
                 <FormControl>
@@ -315,87 +318,87 @@ export const SettingsForm = ({
           </AnimatePresence>
         </div>
 
-        <div className="space-y-10 rounded-md border border-zinc-700 px-4 py-3">
-          <FormField
-            control={form.control}
-            name="ENABLE_JELLYFIN"
-            render={({ field }) => {
-              return (
-                <FormItem className="flex justify-between">
-                  <Image
-                    src="/img/jellyfin.svg"
-                    width={30}
-                    height={30}
-                    alt="Radarr icon"
-                  />
-                  <div>
-                    <FormLabel>Enable Jellyfin</FormLabel>
-                    <FormDescription className="text-zinc-400">
-                      Enable Jellyfin integration for the calendar widget
-                    </FormDescription>
-                  </div>
-                  <FormControl>
-                    <Switch
-                      className="flex"
-                      checked={field.value}
-                      name={field.name}
-                      onCheckedChange={field.onChange}
-                      ref={field.ref}
-                      onBlur={field.onBlur}
-                    />
-                  </FormControl>
-                  <FormMessage className="text-red-400" />
-                </FormItem>
-              );
-            }}
-          />
-
-          <AnimatePresence>
-            {watchAllFields.ENABLE_JELLYFIN && (
-              <motion.div
-                className="space-y-4"
-                key="jellyfin"
-                initial={initial}
-                animate={animate}
-                exit={exit}
-              >
-                <FormField
-                  control={form.control}
-                  name="JELLYFIN_API_KEY"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Jellyfin API key</FormLabel>
-                      <FormControl>
-                        <Input
-                          placeholder="Enter your Radarr API key"
-                          {...field}
-                        />
-                      </FormControl>
-                      <FormMessage className="text-red-400" />
-                    </FormItem>
-                  )}
-                />
-
-                <FormField
-                  control={form.control}
-                  name="JELLYFIN_URL"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Jellyfin url</FormLabel>
-                      <FormControl>
-                        <Input
-                          placeholder="Enter your Jellyfin url"
-                          {...field}
-                        />
-                      </FormControl>
-                      <FormMessage className="text-red-400" />
-                    </FormItem>
-                  )}
-                />
-              </motion.div>
-            )}
-          </AnimatePresence>
-        </div>
+        {/* <div className="space-y-10 rounded-md border border-zinc-700 px-4 py-3"> */}
+        {/*   <FormField */}
+        {/*     control={form.control} */}
+        {/*     name="ENABLE_JELLYFIN" */}
+        {/*     render={({ field }) => { */}
+        {/*       return ( */}
+        {/*         <FormItem className="flex justify-between"> */}
+        {/*           <Image */}
+        {/*             src="/img/jellyfin.svg" */}
+        {/*             width={30} */}
+        {/*             height={30} */}
+        {/*             alt="Radarr icon" */}
+        {/*           /> */}
+        {/*           <div> */}
+        {/*             <FormLabel>Enable Jellyfin</FormLabel> */}
+        {/*             <FormDescription className="text-zinc-400"> */}
+        {/*               Enable Jellyfin integration for the calendar widget */}
+        {/*             </FormDescription> */}
+        {/*           </div> */}
+        {/*           <FormControl> */}
+        {/*             <Switch */}
+        {/*               className="flex" */}
+        {/*               checked={field.value} */}
+        {/*               name={field.name} */}
+        {/*               onCheckedChange={field.onChange} */}
+        {/*               ref={field.ref} */}
+        {/*               onBlur={field.onBlur} */}
+        {/*             /> */}
+        {/*           </FormControl> */}
+        {/*           <FormMessage className="text-red-400" /> */}
+        {/*         </FormItem> */}
+        {/*       ); */}
+        {/*     }} */}
+        {/*   /> */}
+        {/**/}
+        {/*   <AnimatePresence> */}
+        {/*     {watchAllFields.ENABLE_JELLYFIN && ( */}
+        {/*       <motion.div */}
+        {/*         className="space-y-4" */}
+        {/*         key="jellyfin" */}
+        {/*         initial={initial} */}
+        {/*         animate={animate} */}
+        {/*         exit={exit} */}
+        {/*       > */}
+        {/*         <FormField */}
+        {/*           control={form.control} */}
+        {/*           name="JELLYFIN_API_KEY" */}
+        {/*           render={({ field }) => ( */}
+        {/*             <FormItem> */}
+        {/*               <FormLabel>Jellyfin API key</FormLabel> */}
+        {/*               <FormControl> */}
+        {/*                 <Input */}
+        {/*                   placeholder="Enter your Radarr API key" */}
+        {/*                   {...field} */}
+        {/*                 /> */}
+        {/*               </FormControl> */}
+        {/*               <FormMessage className="text-red-400" /> */}
+        {/*             </FormItem> */}
+        {/*           )} */}
+        {/*         /> */}
+        {/**/}
+        {/*         <FormField */}
+        {/*           control={form.control} */}
+        {/*           name="JELLYFIN_URL" */}
+        {/*           render={({ field }) => ( */}
+        {/*             <FormItem> */}
+        {/*               <FormLabel>Jellyfin url</FormLabel> */}
+        {/*               <FormControl> */}
+        {/*                 <Input */}
+        {/*                   placeholder="Enter your Jellyfin url" */}
+        {/*                   {...field} */}
+        {/*                 /> */}
+        {/*               </FormControl> */}
+        {/*               <FormMessage className="text-red-400" /> */}
+        {/*             </FormItem> */}
+        {/*           )} */}
+        {/*         /> */}
+        {/*       </motion.div> */}
+        {/*     )} */}
+        {/*   </AnimatePresence> */}
+        {/* </div> */}
       </form>
     </Form>
   );

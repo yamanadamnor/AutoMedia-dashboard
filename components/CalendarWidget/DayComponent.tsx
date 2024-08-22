@@ -1,37 +1,28 @@
 import {
   format,
-  isEqual,
-  startOfDay,
   isSameMonth,
   isToday,
   isSameDay,
+  startOfMonth,
+  endOfMonth,
 } from "date-fns";
-import type { IDayComponent } from "@/components/interfaces";
 import { cn } from "@/utils/cn";
+import { useContext } from "react";
+import { CalendarContext } from "./CalendarContext";
+import { useMovies } from "@/utils/useMovies";
+import { filterMoviesByDate } from "@/utils/filterMoviesByDate";
+import { useShows } from "@/utils/useShows";
+import { filterTvShowsByDate } from "@/utils/filterTvShowsByDate";
+import { StarIcon } from "@heroicons/react/16/solid";
 
-function DayComponent({
-  day,
-  sonarrMedia,
-  radarrMedia,
-  selectedDay,
-  onClick,
-}: IDayComponent) {
-  if (!sonarrMedia && !radarrMedia)
-    return <h2 className="font-bold">No releases</h2>;
-
-  const sonarrReleases = sonarrMedia.filter((media) => {
-    const mediaDate = startOfDay(new Date(media.airDateUtc));
-    return isEqual(mediaDate, startOfDay(day));
-  });
-
-  const radarrReleases = radarrMedia.filter((media) => {
-    const digitalRelease = new Date(media.digitalRelease);
-    const physicalRelease = new Date(media.physicalRelease);
-    return (
-      isEqual(startOfDay(digitalRelease), startOfDay(day)) ||
-      isEqual(startOfDay(physicalRelease), startOfDay(day))
-    );
-  });
+function DayComponent({ day }: { day: Date }) {
+  const { selectedDay, setSelectedDay } = useContext(CalendarContext);
+  const { data: movies } = useMovies(startOfMonth(day), endOfMonth(day));
+  const { data: tvShows } = useShows(startOfMonth(day), endOfMonth(day));
+  const filteredMovies = filterMoviesByDate(movies ? movies : [], day);
+  const filteredTvShows = filterTvShowsByDate(tvShows ? tvShows : [], day);
+  const isNewSeason =
+    filteredTvShows.filter((release) => release.episodeNumber === 1).length > 0;
 
   return (
     <button
@@ -41,15 +32,21 @@ function DayComponent({
         isSameDay(day, selectedDay) ? "bg-[#272731] shadow-lg" : "",
         isToday(day) ? "border border-gray-700" : "",
       )}
-      onClick={onClick}
+      onClick={() => setSelectedDay(day)}
     >
       {format(day, "d")}
-      <div className="flex w-full justify-around px-2">
-        {radarrReleases && radarrReleases.length > 0 && (
+      <div className="flex w-full items-center justify-around px-2">
+        {filteredMovies.length > 0 && isSameMonth(day, selectedDay) && (
           <div className="h-1.5 w-1.5 rounded-full bg-orange-400"></div>
         )}
-        {sonarrReleases && sonarrReleases.length > 0 && (
-          <div className="h-1.5 w-1.5 rounded-full bg-blue-400"></div>
+
+        {filteredTvShows.length > 0 &&
+          isSameMonth(day, selectedDay) &&
+          !isNewSeason && (
+            <div className={cn("h-1.5 w-1.5 rounded-full bg-blue-400")}></div>
+          )}
+        {isNewSeason && isSameMonth(day, selectedDay) && (
+          <StarIcon className="h-2.5 w-2.5 text-blue-400" />
         )}
       </div>
     </button>

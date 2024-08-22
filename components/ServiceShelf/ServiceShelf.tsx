@@ -1,17 +1,10 @@
 "use client";
 import { AnimatePresence, motion } from "framer-motion";
-import type { Service } from "@prisma/client";
-import useSWR from "swr";
 
-import { fetcher } from "@/utils/fetcher";
 import ServiceCard from "@/components/ServiceShelf/ServiceCard";
+import type { Service } from "@prisma/client";
 
-const ServiceShelf = () => {
-  const { data, error, isLoading } = useSWR<Service[], Error>(
-    "/api/services",
-    fetcher,
-  );
-
+export function ServiceShelf({ services }: { services: Service[] }) {
   const serviceContainer = {
     hidden: { opacity: 0 },
     show: {
@@ -21,33 +14,19 @@ const ServiceShelf = () => {
       },
     },
   };
+
   return (
-    <>
-      <AnimatePresence>
-        <motion.div
-          variants={serviceContainer}
-          initial="hidden"
-          animate="show"
-          className="grid grid-cols-1 gap-6 text-white sm:grid-cols-2 sm:gap-4 lg:grid-cols-2 lg:gap-6 xl:grid-cols-3"
-        >
-          {error && <div>Failed to load</div>}
-
-          {isLoading && <div>Loading...</div>}
-
-          {data?.map((serv) => (
-            <ServiceCard
-              key={serv.id}
-              id={serv.id}
-              title={serv.title}
-              image={serv.image}
-              href={serv.href}
-              description={serv.description}
-            />
-          ))}
-        </motion.div>
-      </AnimatePresence>
-    </>
+    <AnimatePresence>
+      <motion.div
+        variants={serviceContainer}
+        initial="hidden"
+        animate="show"
+        className="grid grid-cols-1 gap-6 text-white sm:grid-cols-2 sm:gap-4 lg:grid-cols-2 lg:gap-6 xl:grid-cols-3"
+      >
+        {services.map((service) => (
+          <ServiceCard key={service.id} service={service} />
+        ))}
+      </motion.div>
+    </AnimatePresence>
   );
-};
-
-export default ServiceShelf;
+}

@@ -1,6 +1,5 @@
 import * as React from "react";
 import { useForm } from "react-hook-form";
-import type { SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import Image from "next/image";
@@ -15,6 +14,11 @@ import {
   FormMessage,
 } from "@/ui/Form";
 import { Popover, PopoverContent, PopoverTrigger } from "@/ui/Popover";
+import type { Service } from "@prisma/client";
+import { useRouter } from "next/navigation";
+import { ServiceCreateInputSchema } from "@/data/zodSchemas";
+import toast from "react-hot-toast";
+import { addService, updateService } from "@/data/service";
 
 export const serviceFormSchema = z.object({
   title: z.string().min(1),
@@ -27,15 +31,39 @@ export type ServiceFormValues = z.infer<typeof serviceFormSchema>;
 
 // eslint-disable-next-line @typescript-eslint/consistent-type-definitions
 export type ServiceFormProps = {
-  service?: ServiceFormValues;
-  onSubmit: SubmitHandler<ServiceFormValues>;
+  service?: Service;
+  onSubmitCommand: () => void;
 };
 
-export const ServiceForm = ({ service, onSubmit }: ServiceFormProps) => {
+export const ServiceForm = ({ service, onSubmitCommand }: ServiceFormProps) => {
   const form = useForm<ServiceFormValues>({
     resolver: zodResolver(serviceFormSchema),
-    defaultValues: { image: "/img/logo-white-muted.svg", ...service },
+    defaultValues: {
+      ...service,
+      image: "/img/logo-white-muted.svg",
+    },
   });
+
+  const router = useRouter();
+  const onSubmit = async (values: ServiceFormValues) => {
+    const parsed = ServiceCreateInputSchema.safeParse(values);
+
+    if (!parsed.success) {
+      toast.error("Input validation failed");
+    }
+
+    // Check if service is being updated or created
+    const response = service
+      ? await updateService(service.id, values)
+      : await addService(values);
+
+    if (response === false) {
+      toast.error("Could not add service");
+    }
+    onSubmitCommand();
+    router.refresh();
+    toast.success(`Service ${values.title} added`);
+  };
 
   // TODO: Reimplement autoIcon
   // Credit: https://github.com/ajnart/homarr/blob/dev/src/components/AppShelf/AddAppShelfItem.tsx#L62-L76

@@ -6,7 +6,13 @@ import { Command as CommandPrimitive } from "cmdk";
 import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 
 import { cn } from "@/utils/cn";
-import { Dialog, DialogContent } from "@/ui/Dialog";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogTitle,
+} from "@/ui/Dialog";
+import * as VisuallyHidden from "@radix-ui/react-visually-hidden";
 
 const Command = React.forwardRef<
   React.ElementRef<typeof CommandPrimitive>,
@@ -28,6 +34,10 @@ type CommandDialogProps = DialogProps;
 const CommandDialog = ({ children, ...props }: CommandDialogProps) => {
   return (
     <Dialog {...props}>
+      <VisuallyHidden.Root>
+        <DialogTitle>Command menu</DialogTitle>
+        <DialogDescription>Command menu rendered in a dialog</DialogDescription>
+      </VisuallyHidden.Root>
       <DialogContent className="overflow-hidden bg-transparent p-0 shadow-lg backdrop-blur-lg">
         <Command className="[&_[cmdk-group-heading]]:px-2 [&_[cmdk-group-heading]]:font-medium [&_[cmdk-group-heading]]:text-gray-400 [&_[cmdk-group]:not([hidden])_~[cmdk-group]]:pt-0 [&_[cmdk-group]]:px-2 [&_[cmdk-input-wrapper]_svg]:h-5 [&_[cmdk-input-wrapper]_svg]:w-5 [&_[cmdk-input]]:h-12 [&_[cmdk-item]]:px-4 [&_[cmdk-item]]:py-3 [&_[cmdk-item]_svg]:h-5 [&_[cmdk-item]_svg]:w-5">
           {children}
@@ -45,7 +55,7 @@ const CommandInput = React.forwardRef<
 >(({ className, ...props }, ref) => (
   // eslint-disable-next-line react/no-unknown-property
   <div
-    className="flex items-center border-b border-gray-700 px-3"
+    className="flex items-center border-b border-zinc-700 px-3"
     // eslint-disable-next-line react/no-unknown-property
     cmdk-input-wrapper=""
   >

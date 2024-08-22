@@ -2,6 +2,7 @@ import Image from "next/image";
 import * as React from "react";
 import { motion } from "framer-motion";
 import { useSession } from "next-auth/react";
+import { deleteService } from "@/data/service";
 
 import {
   EllipsisVerticalIcon,
@@ -9,7 +10,6 @@ import {
   TrashIcon,
 } from "@heroicons/react/24/solid";
 
-import type { IServiceCard } from "@/components/interfaces";
 import type { Service } from "@prisma/client";
 import {
   DropdownMenu,
@@ -18,22 +18,17 @@ import {
   DropdownMenuItem,
   DropdownMenuContent,
 } from "@/ui/DropdownMenu";
-import { Button } from "@/ui/Button";
-import { deleter } from "@/utils/deleter";
-import { putter } from "utils/putter";
-import {
-  Dialog,
-  DialogContent,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/ui/Dialog";
-import { ServiceForm } from "@/components/ServiceShelf/ServiceForm";
-import type { ServiceFormValues } from "@/components/ServiceShelf/ServiceForm";
-import toast from "react-hot-toast";
 
-const ServiceCard = ({ id, title, image, href, description }: IServiceCard) => {
+import { Button } from "@/ui/Button";
+import toast from "react-hot-toast";
+import { useRouter } from "next/navigation";
+import { ServiceAddDialog } from "./ServiceAddDialog";
+
+type ServiceCardProps = {
+  service: Service;
+};
+
+const ServiceCard = ({ service }: ServiceCardProps) => {
   const { data: session } = useSession();
 
   const initial = { opacity: 0, y: -40 };
@@ -67,9 +62,8 @@ const ServiceCard = ({ id, title, image, href, description }: IServiceCard) => {
       exit={exit}
       whileTap={whileTap}
       whileHover={whileHover}
-      className="group relative flex select-none flex-col items-start justify-between rounded-xl border
-        border-gray-700 bg-service-card px-5 py-2 text-white backdrop-blur-sm transition duration-300 ease-in-out hover:shadow-service"
-      href={href}
+      className="group relative flex select-none flex-col items-start justify-between rounded-xl border border-gray-700 bg-service-card px-5 py-2 text-white backdrop-blur-sm transition duration-300 ease-in-out hover:shadow-service"
+      href={service.href}
     >
       <div className="flex w-full items-center">
         <div className="flex w-full items-center justify-start">
@@ -78,30 +72,19 @@ const ServiceCard = ({ id, title, image, href, description }: IServiceCard) => {
               width={200}
               height={200}
               className="object-contain"
-              src={image}
+              src={service.image}
               alt=""
             />
           </div>
           <h2 className="my-4 overflow-x-hidden truncate text-xl font-bold text-service-desc-light">
-            {title}
+            {service.title}
           </h2>
         </div>
-        {session?.user.isAdmin && (
-          <EditDropdown
-            id={id}
-            title={title}
-            description={description}
-            image={image}
-            href={href}
-          />
-        )}
+        {session?.user.isAdmin && <EditDropdown service={service} />}
       </div>
 
-      <p
-        className="my-3 text-service-desc-dark transition duration-300 ease-in-out
-        group-hover:text-service-desc-light"
-      >
-        {description}
+      <p className="my-3 text-service-desc-dark transition duration-300 ease-in-out group-hover:text-service-desc-light">
+        {service.description}
       </p>
     </motion.a>
   );
@@ -113,26 +96,25 @@ export type EditDropdownProps = Pick<
   "id" | "title" | "description" | "image" | "href"
 >;
 
-function EditDropdown({
-  id,
-  title,
-  description,
-  image,
-  href,
-}: EditDropdownProps) {
+type EditDropdown = {
+  service: Service;
+};
+
+function EditDropdown({ service }: ServiceCardProps) {
   const [open, setOpen] = React.useState(false);
+  const router = useRouter();
 
   const handleDelete = async (e: React.MouseEvent) => {
     e.preventDefault();
-    await deleter(`/api/service/${id}`);
+    await deleteService(service.id);
     setOpen(false);
-    toast.success(`${title} was deleted`);
-    toast.success("Deleted");
+    router.refresh();
+    toast.success(`${service.title} was deleted`);
   };
 
   return (
     <DropdownMenu open={open} onOpenChange={setOpen}>
-      <DropdownMenuTrigger className="group absolute right-0 top-0 mr-3 mt-3 rounded-lg border border-transparent py-2 transition-all ease-in-out hover:border-zinc-700 hover:border-zinc-700 hover:bg-[#2b2c3a] hover:shadow-lg">
+      <DropdownMenuTrigger className="group absolute right-0 top-0 mr-3 mt-3 rounded-lg border border-transparent py-2 transition-all ease-in-out hover:border-zinc-700 hover:bg-[#2b2c3a] hover:shadow-lg">
         <EllipsisVerticalIcon className="w-7 text-zinc-500 group-hover:text-gray-200" />
       </DropdownMenuTrigger>
 
@@ -141,17 +123,19 @@ function EditDropdown({
           align="end"
           className="bg-service-card-solid text-white"
         >
-          <DropdownMenuItem asChild>
-            <ServiceUpdateDialog
-              service={{
-                id,
-                title,
-                description,
-                image,
-                href,
+          <ServiceAddDialog service={service}>
+            <DropdownMenuItem
+              className="w-full p-0"
+              onSelect={(e) => {
+                e.preventDefault();
               }}
-            />
-          </DropdownMenuItem>
+            >
+              <Button className="flex w-full items-center gap-x-2 rounded-sm border-none px-2 py-1.5">
+                <PencilIcon className="h-3 w-3" />
+                Edit
+              </Button>
+            </DropdownMenuItem>
+          </ServiceAddDialog>
 
           <DropdownMenuItem
             className="flex items-center gap-x-2 text-red-300 hover:bg-[#2b2c3a]"
@@ -165,40 +149,3 @@ function EditDropdown({
     </DropdownMenu>
   );
 }
-
-const ServiceUpdateDialog = ({
-  service,
-}: {
-  service: ServiceFormValues & { id: number };
-}) => {
-  const [open, setOpen] = React.useState(false);
-  const handleSubmit = async (values: ServiceFormValues) => {
-    try {
-      await putter(`/api/service/${service.id}`, values);
-      setOpen(false);
-      toast.success("Updated settings");
-    } catch {
-      toast.error("Could not update settings");
-    }
-  };
-
-  return (
-    <Dialog open={open} onOpenChange={setOpen}>
-      <DialogTrigger className="flex w-full items-center gap-x-2 px-2 py-1 hover:bg-[#2b2c3a]">
-        <PencilIcon className="h-3 w-3" />
-        Edit
-      </DialogTrigger>
-      <DialogContent className="bg-service-card text-white backdrop-blur-lg">
-        <DialogHeader>
-          <DialogTitle>Service</DialogTitle>
-        </DialogHeader>
-        <ServiceForm service={service} onSubmit={handleSubmit} />
-        <DialogFooter className="mt-5">
-          <Button form="serviceForm" type="submit">
-            Update
-          </Button>
-        </DialogFooter>
-      </DialogContent>
-    </Dialog>
-  );
-};

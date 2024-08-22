@@ -2,10 +2,10 @@
 import CalendarWidget from "@/components/CalendarWidget/CalendarWidget";
 import { Header } from "@/components/Header";
 import Footer from "@/components/Footer";
-import ServiceShelf from "@/components/ServiceShelf/ServiceShelf";
+import { ServiceShelf } from "@/components/ServiceShelf/ServiceShelf";
 import ServiceCard from "@/components/ServiceShelf/ServiceCard";
 import { ServiceAddDialog } from "@/components/ServiceShelf/ServiceAddDialog";
-import { Settings } from "@/components/Settings";
+import { SettingsDialog } from "@/components/SettingsDialog";
 import Hero from "@/components/Hero";
 import { CommandMenu } from "@/components/CommandMenu";
 
@@ -18,5 +18,5 @@ export {
   ServiceShelf,
   ServiceCard,
   ServiceAddDialog,
-  Settings,
+  SettingsDialog,
 };

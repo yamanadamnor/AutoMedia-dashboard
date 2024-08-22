@@ -1,7 +1,5 @@
 "use client";
 import * as React from "react";
-import { useAtom } from "jotai";
-import toast from "react-hot-toast";
 
 import {
   Dialog,
@@ -10,36 +8,45 @@ import {
   DialogHeader,
   DialogFooter,
   DialogTrigger,
+  DialogDescription,
 } from "@/ui/Dialog";
-import { serviceModalAtom } from "@/components/states";
 import { Button } from "@/ui/Button";
 import { ServiceForm } from "@/components/ServiceShelf/ServiceForm";
-import type { ServiceFormValues } from "@/components/ServiceShelf/ServiceForm";
-import { poster } from "@/utils/poster";
+import type { Service } from "@prisma/client";
+import type * as DialogPrimitive from "@radix-ui/react-dialog";
 
-export const ServiceAddDialog = () => {
-  const [open, setOpen] = useAtom(serviceModalAtom);
+type ServiceAddDialogProps = {
+  service?: Service;
+  children: React.ReactNode;
+} & React.ComponentPropsWithoutRef<typeof DialogPrimitive.Root>;
 
-  const handleSubmit = async (values: ServiceFormValues) => {
-    try {
-      await poster("/api/services", values);
-      setOpen(false);
-      toast.success("Updated settings");
-    } catch {
-      toast.error("Could not update settings");
-    }
-  };
+export const ServiceAddDialog = ({
+  service,
+  children,
+  ...props
+}: ServiceAddDialogProps) => {
+  const [open, setOpen] = React.useState(false);
 
   return (
-    <Dialog open={open} onOpenChange={setOpen}>
-      <DialogTrigger asChild>
-        <Button type="button">Add service</Button>
-      </DialogTrigger>
+    <Dialog open={open} onOpenChange={setOpen} {...props}>
+      <DialogTrigger asChild>{children}</DialogTrigger>
       <DialogContent className="bg-service-card text-white backdrop-blur-lg">
-        <DialogHeader>
-          <DialogTitle>Service</DialogTitle>
+        <DialogHeader className="flex flex-col gap-y-1">
+          <DialogTitle className="text-xl">Service</DialogTitle>
+          <DialogDescription>
+            {service ? (
+              <>
+                Update{" "}
+                <span className="rounded bg-gray-700 p-0.5 px-2">
+                  {service.title}
+                </span>
+              </>
+            ) : (
+              "Add new service"
+            )}
+          </DialogDescription>
         </DialogHeader>
-        <ServiceForm onSubmit={handleSubmit} />
+        <ServiceForm service={service} onSubmitCommand={() => setOpen(false)} />
         <DialogFooter className="mt-5">
           <Button form="serviceForm" type="submit">
             Save

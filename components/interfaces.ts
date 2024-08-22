@@ -1,7 +1,7 @@
 import type { Prisma } from "@prisma/client";
 import type { StaticImageData } from "next/image";
 
-export interface IService {
+export type IService = {
   id: string;
   name: string;
   img?: string | StaticImageData;
@@ -10,14 +10,14 @@ export interface IService {
   inEdit?: boolean;
   handleServiceDelete?: () => void;
   handleServiceAdd?: () => void;
-}
+};
 
-export interface IServiceCard extends Prisma.ServiceCreateInput {
+export type IServiceCard = {
   id: number;
   inEdit?: boolean;
-}
+} & Prisma.ServiceCreateInput;
 
-export interface ISonarrReleases {
+export type ISonarrReleases = {
   airDateUtc: Date;
   title: string;
   seriesId: number;
@@ -28,49 +28,21 @@ export interface ISonarrReleases {
     title: string;
     images: { coverType: string; url: string; remoteUrl: string }[];
   };
-}
+};
 
-export interface IRadarrReleases {
+export type IRadarrReleases = {
   id: number;
   title: string;
   digitalRelease: Date;
   physicalRelease: Date;
   hasFile: boolean;
   images: { coverType: string; url: string; remoteUrl: string }[];
-}
+};
 
-export interface IMediaReleaseInfo {
-  sonarrReleases: ISonarrReleases[];
-  radarrReleases: IRadarrReleases[];
-  selectedDay: Date;
-}
-
-export interface IMediaReleaseItem {
-  mediaItemTitle: string;
-  mediaItemDesc: string;
-  mediaImages: { coverType: string; url: string; remoteUrl: string }[];
-  mediaItemDate: Date;
-  mediaItemType: "sonarr" | "radarr";
-  mediaHasFile: boolean;
-}
-
-export interface IDayComponent {
-  day: Date;
-  selectedDay: Date;
-  onClick: () => void;
-  sonarrMedia: {
-    airDateUtc: Date;
-  }[];
-  radarrMedia: {
-    digitalRelease: Date;
-    physicalRelease: Date;
-  }[];
-}
-
-export interface IBtnKind {
+export type IBtnKind = {
   onClick: React.MouseEventHandler<HTMLButtonElement>;
   message: string;
-}
+};
 
 // https://github.com/tailwindlabs/heroicons/issues/64#issuecomment-1659901474
 type IconSVGProps = React.PropsWithoutRef<React.SVGProps<SVGSVGElement>> &
@@ -81,8 +53,8 @@ type IconProps = IconSVGProps & {
 };
 export type HeroIcon = React.FC<IconProps>;
 
-export interface IMenuItem {
+export type IMenuItem = {
   buttonText: string;
   Icon: HeroIcon;
   onClick: (e: React.MouseEvent) => void;
-}
+};

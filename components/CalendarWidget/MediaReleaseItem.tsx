@@ -2,7 +2,6 @@ import { format, formatISO } from "date-fns";
 import Image from "next/image";
 import { motion } from "framer-motion";
 
-import type { IMediaReleaseItem } from "@/components/interfaces";
 import { cn } from "@/utils/cn";
 import { Button } from "@/ui/Button";
 import {
@@ -11,15 +10,25 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/ui/Tooltip";
+import type { MediaCover, MediaType } from "pages/api/modules/calendar";
+
+type MediaReleaseItemProps = {
+  title: string;
+  description?: string;
+  releaseDate?: Date;
+  images?: MediaCover[];
+  isAvailable: boolean;
+  mediaType: MediaType;
+};
 
 function MediaReleaseItem({
-  mediaItemTitle,
-  mediaItemDesc,
-  mediaItemType,
-  mediaItemDate,
-  mediaImages,
-  mediaHasFile,
-}: IMediaReleaseItem) {
+  title,
+  description,
+  releaseDate,
+  images,
+  isAvailable,
+  mediaType,
+}: MediaReleaseItemProps) {
   const variants = {
     hideItem: {
       height: 0,
@@ -41,6 +50,8 @@ function MediaReleaseItem({
     },
   };
 
+  const poster = images?.find((image) => image.coverType === "poster");
+
   return (
     <div className="overflow-hidden">
       <motion.div
@@ -51,38 +62,25 @@ function MediaReleaseItem({
         exit="hideItem"
         className="grid grid-cols-mediaItem gap-x-4"
       >
-        {mediaImages.map((image) => {
-          if (image.coverType === "poster") {
-            return (
-              <div
-                key={image.coverType}
-                className="relative aspect-2/3 w-12 overflow-hidden md:w-20"
-              >
-                <Image
-                  src={image.remoteUrl ? image.remoteUrl : image.url}
-                  fill
-                  alt="Media poster"
-                  placeholder="blur"
-                  blurDataURL={image.remoteUrl ? image.remoteUrl : image.url}
-                />
-              </div>
-            );
-          }
-        })}
+        {poster && poster.remoteUrl && (
+          <div className="relative aspect-2/3 w-12 overflow-hidden md:w-20">
+            <Image src={poster.remoteUrl} fill alt="Media poster" />
+          </div>
+        )}
 
         <div>
-          <h2 className="text-md font-bold md:text-xl">{mediaItemTitle}</h2>
+          <h2 className="text-md font-bold md:text-xl">{title}</h2>
           <h3
             className={cn(
               "text-xs font-bold md:text-sm",
-              mediaItemType === "sonarr" ? "text-blue-400" : "",
-              mediaItemType === "radarr" ? "text-orange-400" : "",
+              mediaType === "tv" ? "text-blue-400" : "",
+              mediaType === "movie" ? "text-orange-400" : "",
             )}
           >
-            {mediaItemDesc}
+            {description}
           </h3>
 
-          {mediaHasFile && (
+          {isAvailable && (
             <TooltipProvider>
               <Tooltip>
                 <TooltipTrigger asChild>
@@ -108,13 +106,18 @@ function MediaReleaseItem({
             </TooltipProvider>
           )}
 
-          <time
-            dateTime={formatISO(mediaItemDate)}
-            className="block text-xs text-gray-400 md:text-sm"
-          >
-            {format(mediaItemDate, "EE, MMM dd")} at{" "}
-            {format(mediaItemDate, "p")}
-          </time>
+          {releaseDate ? (
+            <time
+              dateTime={formatISO(releaseDate)}
+              className="block text-xs text-gray-400 md:text-sm"
+            >
+              {format(releaseDate, "EE, MMM dd")} at {format(releaseDate, "p")}
+            </time>
+          ) : (
+            <p className="block text-xs text-gray-400 md:text-sm">
+              Unknown date
+            </p>
+          )}
         </div>
       </motion.div>
     </div>

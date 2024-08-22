@@ -1,4 +1,6 @@
 /* eslint-disable @typescript-eslint/consistent-type-definitions */
+import { getSettings } from "@/data/setting";
+import { parseSettings } from "@/utils/parseSettings";
 import type { NextApiRequest, NextApiResponse } from "next";
 
 type MediaCoverTypes =
@@ -10,10 +12,10 @@ type MediaCoverTypes =
   | "headshot"
   | "clearlogo";
 
-type MediaCover = {
+export type MediaCover = {
   coverType: MediaCoverTypes;
   url: string;
-  rmooteUrl: string;
+  remoteUrl: string;
 };
 type RatingType = "user" | "critic";
 
@@ -57,7 +59,7 @@ type Series = {
   // TODO: Complete
 };
 
-type SonarrResponse = {
+export type SonarrResponse = {
   id: number;
   seriesId: number;
   tvdbId: number;
@@ -112,7 +114,7 @@ type MovieFile = {
   // https://radarr.video/docs/api/#/Calendar/get_api_v3_calendar:~:text=MovieHistoryEventType-,MovieResource,-%7B
 };
 
-type RadarrResponse = {
+export type RadarrResponse = {
   title: string;
   originalTitle: string;
   originalLanguage: Language;
@@ -123,7 +125,8 @@ type RadarrResponse = {
   status: string;
   overview: string;
   inCinemas: string;
-  digitalRelease: string;
+  digitalRelease?: string;
+  physicalRelease?: string;
   images: MediaCover[];
   website: string;
   year: number;
@@ -158,25 +161,15 @@ type RadarrResponse = {
   // TODO: Complete the type
 };
 
-const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
-const SERVICES = {
-  sonarr: {
-    service: "sonarr",
-    port: 8989,
-    url: "/api/v3/calendar",
-    apiKey: process.env.NEXT_PUBLIC_SONARR_API,
-  },
-  radarr: {
-    service: "radarr",
-    port: 7878,
-    url: "/api/v3/calendar",
-    apiKey: process.env.NEXT_PUBLIC_RADARR_API,
-  },
-} as const;
+export type MediaType = "tv" | "movie";
 
 async function fetchSonarr(startDate: string, endDate: string) {
-  const { port, apiKey, url } = SERVICES.sonarr;
-  const requestUrl = `${BASE_URL}:${port}${url}?apikey=${apiKey}&start=${startDate}&end=${endDate}&includeSeries=true`;
+  const settings = await getSettings();
+  const { ENABLE_SONARR, SONARR_URL, SONARR_API_KEY } = parseSettings(settings);
+
+  if (!ENABLE_SONARR || !SONARR_URL || !SONARR_API_KEY) return [];
+
+  const requestUrl = `${SONARR_URL}/api/v3/calendar?apikey=${SONARR_API_KEY}&start=${startDate}&end=${endDate}&includeSeries=true`;
   return fetch(requestUrl, {
     method: "GET",
     headers: { "content-type": "application/json" },
@@ -189,8 +182,12 @@ async function fetchSonarr(startDate: string, endDate: string) {
 }
 
 async function fetchRadarr(startDate: string, endDate: string) {
-  const { port, apiKey, url } = SERVICES.radarr;
-  const requestUrl = `${BASE_URL}:${port}${url}?apikey=${apiKey}&start=${startDate}&end=${endDate}`;
+  const settings = await getSettings();
+  const { ENABLE_RADARR, RADARR_URL, RADARR_API_KEY } = parseSettings(settings);
+
+  if (!ENABLE_RADARR || !RADARR_URL || !RADARR_API_KEY) return [];
+
+  const requestUrl = `${RADARR_URL}/api/v3/calendar?apikey=${RADARR_API_KEY}&start=${startDate}&end=${endDate}`;
   return fetch(requestUrl, {
     method: "GET",
     headers: { "content-type": "application/json" },
@@ -206,7 +203,7 @@ async function handleGet(req: NextApiRequest, res: NextApiResponse) {
   const { startDate, endDate, type } = req.query as {
     startDate: string;
     endDate: string;
-    type: "sonarr" | "radarr";
+    type: MediaType;
   };
 
   if (!startDate || !endDate) {
@@ -216,7 +213,7 @@ async function handleGet(req: NextApiRequest, res: NextApiResponse) {
   }
 
   switch (type) {
-    case "sonarr":
+    case "tv":
       try {
         const sonarrResponses = await fetchSonarr(startDate, endDate);
         return res.json(sonarrResponses);
@@ -229,7 +226,7 @@ async function handleGet(req: NextApiRequest, res: NextApiResponse) {
           message: "An unknown error occurred when fetching Sonarr data",
         });
       }
-    case "radarr":
+    case "movie":
       try {
         const radarrResponses = await fetchRadarr(startDate, endDate);
         return res.json(radarrResponses);

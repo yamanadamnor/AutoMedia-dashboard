@@ -1,24 +1,59 @@
 import "@/styles/global.css";
+import { SessionProvider } from "next-auth/react";
+import { Toaster } from "react-hot-toast";
 import { cn } from "@/utils/cn";
 import {
   CalendarWidget,
   Header,
   Footer,
-  Settings,
   Hero,
-  CommandMenu,
 } from "@/components/ClientComponents";
-import { SessionProvider } from "next-auth/react";
 
-export default function Layout({ children }: { children: React.ReactNode }) {
+import { getServices } from "@/data/service";
+import { TailwindBreakpointIndicator } from "@/components/TailwindBreakpointIndicator";
+
+export default async function Layout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  const services = await getServices();
+
   return (
     <html lang="en" className="bg-base h-full">
       <body>
+        <TailwindBreakpointIndicator />
+        <div className="pointer-events-none absolute inset-x-0 left-0 top-0 flex w-full select-none justify-center overflow-hidden">
+          <div className="flex w-[108rem] flex-none justify-end">
+            <picture>
+              <source srcSet="/img/1-dark.png" type="image/png" />
+              <img src="" alt="" />
+            </picture>
+          </div>
+        </div>
         <SessionProvider>
-          <div className="center justify-items-centerr text-whitelg:gap-x-8 relative z-auto mx-auto grid h-full min-h-screen max-w-8xl grid-cols-app grid-rows-app place-content-start gap-x-6 gap-y-8">
-            <CommandMenu />
+          <div className="center justify-items-centerr relative z-auto mx-auto grid h-full min-h-screen max-w-8xl grid-cols-app grid-rows-app place-content-start gap-x-6 gap-y-8 text-white lg:gap-x-8">
+            <Toaster
+              position="top-right"
+              toastOptions={{
+                success: {
+                  style: {
+                    borderRadius: "10px",
+                    background: "#20202c",
+                    color: "#fff",
+                  },
+                },
+                error: {
+                  style: {
+                    borderRadius: "10px",
+                    background: "#20202c",
+                    color: "#fff",
+                  },
+                },
+              }}
+            />
             <div className="col-span-7 col-start-2 row-start-1 row-end-2 flex h-24 w-full items-center justify-between py-6">
-              <Header />
+              <Header services={services} />
             </div>
 
             <div className="col-span-5 col-start-4 row-start-2 hidden w-full text-white lg:block xl:col-span-6 xl:col-start-3">
@@ -37,7 +72,6 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                 "xl:col-span-6 xl:col-start-3",
               )}
             >
-              <Settings />
               {children}
             </main>
 

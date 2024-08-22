@@ -1,25 +1,28 @@
 "use client";
 import * as React from "react";
 import useSWR from "swr";
-import { useAtom } from "jotai";
 
 import { fetcher } from "@/utils/fetcher";
 import { SettingsForm } from "@/components/SettingsForm";
 import type { SettingsFormValues } from "@/components/SettingsForm";
 import {
   Dialog,
+  DialogTrigger,
   DialogTitle,
   DialogContent,
   DialogHeader,
   DialogDescription,
   DialogFooter,
 } from "@/ui/Dialog";
-import { settingsModalAtom } from "@/components/states";
 import { Button } from "@/ui/Button";
+import type * as DialogPrimitive from "@radix-ui/react-dialog";
 
-export const Settings = () => {
-  const [open, setOpen] = useAtom(settingsModalAtom);
-  const { data, error, isLoading } = useSWR<SettingsFormValues, Error>(
+type SettingsDialogProps = {
+  children: React.ReactNode;
+} & React.ComponentPropsWithoutRef<typeof DialogPrimitive.Root>;
+export const SettingsDialog = ({ children, ...props }: SettingsDialogProps) => {
+  const [open, setOpen] = React.useState(false);
+  const { data, error } = useSWR<SettingsFormValues, Error>(
     "/api/settings",
     fetcher,
   );
@@ -27,8 +30,8 @@ export const Settings = () => {
   return (
     <>
       {error && <h3 className="text-white">Error fetching settings</h3>}
-      {isLoading && <h3 className="text-white">Loading...</h3>}
-      <Dialog open={open} onOpenChange={setOpen}>
+      <Dialog open={open} onOpenChange={setOpen} {...props}>
+        <DialogTrigger asChild>{children}</DialogTrigger>
         <DialogContent className="bg-service-card text-white backdrop-blur-lg">
           <DialogHeader>
             <DialogTitle>Settings</DialogTitle>
