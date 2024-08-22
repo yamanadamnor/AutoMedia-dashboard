@@ -49,9 +49,7 @@ jobs:
         with:
           context: .
           build-args: |
-            "ARG_DATABASE_URL=${{ secrets.DATABASE_URL }}"
-            "ARG_NEXTAUTH_URL=${{ secrets.NEXTAUTH_URL }}"
-            "ARG_NEXT_PUBLIC_SECRET=${{ secrets.NEXT_PUBLIC_SECRET }}"
+            "DATABASE_URL=${{ secrets.DATABASE_URL }}"
           push: ${{ github.event_name != 'pull_request' }}
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}

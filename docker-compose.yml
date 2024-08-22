@@ -1,13 +1,11 @@
-version: "3.9"
 services:
   dashboard:
     container_name: dashboard
+    env_file: .env
     build:
       context: ./
       dockerfile: Dockerfile
       args:
-        - ARG_NEXT_PUBLIC_SECRET=$NEXT_PUBLIC_SECRET
-        - ARG_DATABASE_URL=$DATABASE_URL
-        - ARG_NEXTAUTH_URL=$NEXTAUTH_URL
+        - DATABASE_URL=$DATABASE_URL
     ports:
       - "3344:3344"
