@@ -8,15 +8,15 @@ import {
   DropdownMenuTrigger,
 } from "@/ui/DropdownMenu";
 import {
-  ArrowLeftOnRectangleIcon,
+  ArrowLeftEndOnRectangleIcon,
   Cog6ToothIcon,
 } from "@heroicons/react/24/outline";
-import { useSetAtom } from "jotai";
 
 import { Avatar, AvatarFallback } from "@/ui/Avatar";
 import { AuthButton } from "@/components/AuthButton";
-import { commandMenuAtom, settingsModalAtom } from "@/components/states";
-import { Kbd } from "@/components/CommandMenu";
+import { CommandMenu } from "@/components/CommandMenu";
+import type { Service } from "@prisma/client";
+import { SettingsDialog } from "./SettingsDialog";
 import { Button } from "@/ui/Button";
 
 export const getInitials = (name: string, limit = 3) => {
@@ -27,9 +27,11 @@ export const getInitials = (name: string, limit = 3) => {
   return initials;
 };
 
-export const Header = () => {
+type HeaderProps = {
+  services: Service[];
+};
+export function Header({ services }: HeaderProps) {
   const { data: session } = useSession();
-  const setCommandMenuModal = useSetAtom(commandMenuAtom);
   return (
     <nav className="flex w-full items-center justify-between">
       <Image
@@ -39,29 +41,19 @@ export const Header = () => {
         height={35}
         alt="logo"
       />
-      <Button
-        className="ml-auto mr-10 hidden gap-x-2 bg-service-card px-5 py-2 text-zinc-500 md:flex md:items-center"
-        onClick={() => setCommandMenuModal(true)}
-      >
-        Press <Kbd className="bg-zinc-700">⌘</Kbd>
-        <Kbd className="bg-zinc-700">K</Kbd> to search
-      </Button>
+      <CommandMenu services={services} />
       {session?.user ? <ProfileButton /> : <AuthButton />}
     </nav>
   );
-};
+}
 
 const ProfileButton = () => {
   const { data: session } = useSession();
-  const setSettingsModalOpen = useSetAtom(settingsModalAtom);
 
   return (
     <DropdownMenu>
       <DropdownMenuTrigger>
-        <Avatar
-          className="h-12 w-12 bg-[#2f2038]
-            text-white transition-all duration-200 ease-in-out hover:bg-gray-700"
-        >
+        <Avatar className="h-12 w-12 bg-[#2f2038] text-white transition-all duration-200 ease-in-out hover:bg-gray-700">
           <AvatarFallback>
             {getInitials(session?.user?.name ?? "AA")}
           </AvatarFallback>
@@ -72,27 +64,24 @@ const ProfileButton = () => {
         <DropdownMenuContent
           sideOffset={10}
           align="end"
-          className="min-w-[220px] rounded-md bg-[#252634] p-[5px] text-white
-              shadow-[0px_10px_38px_-10px_rgba(22,_23,_24,_0.35),_0px_10px_20px_-15px_rgba(22,_23,_24,_0.2)] 
-              will-change-[opacity,transform] data-[side=bottom]:animate-slideUpAndFade 
-              data-[side=left]:animate-slideRightAndFade data-[side=right]:animate-slideLeftAndFade 
-              data-[side=top]:animate-slideDownAndFade"
+          className="min-w-[220px] rounded-md bg-[#252634] p-[5px] text-white shadow-[0px_10px_38px_-10px_rgba(22,_23,_24,_0.35),_0px_10px_20px_-15px_rgba(22,_23,_24,_0.2)] will-change-[opacity,transform] data-[side=bottom]:animate-slideUpAndFade data-[side=left]:animate-slideRightAndFade data-[side=right]:animate-slideLeftAndFade data-[side=top]:animate-slideDownAndFade"
         >
           <h2 className="py-5 text-center text-xl">{session?.user?.name}</h2>
           {session?.user?.isAdmin && (
-            <DropdownMenuItem
-              className="gap-x-4 hover:bg-[#2b2c3a]"
-              onSelect={() => setSettingsModalOpen(true)}
-            >
-              <Cog6ToothIcon className="h-5 w-5" />
-              Settings
+            <DropdownMenuItem className="gap-x-4 hover:bg-[#2b2c3a]" asChild>
+              <SettingsDialog>
+                <Button className="flex w-full gap-x-4 border-none px-2 py-1.5">
+                  <Cog6ToothIcon className="h-5 w-5" />
+                  Settings
+                </Button>
+              </SettingsDialog>
             </DropdownMenuItem>
           )}
           <DropdownMenuItem
             className="gap-x-4 text-red-300 hover:bg-[#2b2c3a]"
             onClick={() => signOut()}
           >
-            <ArrowLeftOnRectangleIcon className="h-5 w-5" />
+            <ArrowLeftEndOnRectangleIcon className="h-5 w-5" />
             Sign out
           </DropdownMenuItem>
         </DropdownMenuContent>

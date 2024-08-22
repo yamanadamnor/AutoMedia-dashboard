@@ -6,19 +6,19 @@ import {
   Footer,
   Settings,
   Hero,
-  CommandMenu,
 } from "@/components/ClientComponents";
 import { SessionProvider } from "next-auth/react";
+import { TailwindBreakpointIndicator } from "@/components/TailwindBreakpointIndicator";
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" className="bg-base h-full">
       <body>
+        <TailwindBreakpointIndicator />
         <SessionProvider>
           <div className="center justify-items-centerr text-whitelg:gap-x-8 relative z-auto mx-auto grid h-full min-h-screen max-w-8xl grid-cols-app grid-rows-app place-content-start gap-x-6 gap-y-8">
-            <CommandMenu />
             <div className="col-span-7 col-start-2 row-start-1 row-end-2 flex h-24 w-full items-center justify-between py-6">
-              <Header />
+              <Header services={services} />
             </div>
 
             <div className="col-span-5 col-start-4 row-start-2 hidden w-full text-white lg:block xl:col-span-6 xl:col-start-3">

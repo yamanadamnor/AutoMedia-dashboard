@@ -99,7 +99,6 @@ module.exports = {
   },
   plugins: [
     require("@tailwindcss/container-queries"),
-    require("tailwindcss-debug-screens"),
     require("tailwindcss-animate"),
   ],
 };
