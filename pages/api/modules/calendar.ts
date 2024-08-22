@@ -57,7 +57,7 @@ type Series = {
   // TODO: Complete
 };
 
-type SonarrResponse = {
+export type SonarrResponse = {
   id: number;
   seriesId: number;
   tvdbId: number;
@@ -112,7 +112,7 @@ type MovieFile = {
   // https://radarr.video/docs/api/#/Calendar/get_api_v3_calendar:~:text=MovieHistoryEventType-,MovieResource,-%7B
 };
 
-type RadarrResponse = {
+export type RadarrResponse = {
   title: string;
   originalTitle: string;
   originalLanguage: Language;
@@ -123,7 +123,8 @@ type RadarrResponse = {
   status: string;
   overview: string;
   inCinemas: string;
-  digitalRelease: string;
+  digitalRelease?: string;
+  physicalRelease?: string;
   images: MediaCover[];
   website: string;
   year: number;
@@ -157,6 +158,8 @@ type RadarrResponse = {
   id: number;
   // TODO: Complete the type
 };
+
+export type MediaType = "tv" | "movie";
 
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
 const SERVICES = {
@@ -206,7 +209,7 @@ async function handleGet(req: NextApiRequest, res: NextApiResponse) {
   const { startDate, endDate, type } = req.query as {
     startDate: string;
     endDate: string;
-    type: "sonarr" | "radarr";
+    type: MediaType;
   };
 
   if (!startDate || !endDate) {
@@ -216,7 +219,7 @@ async function handleGet(req: NextApiRequest, res: NextApiResponse) {
   }
 
   switch (type) {
-    case "sonarr":
+    case "tv":
       try {
         const sonarrResponses = await fetchSonarr(startDate, endDate);
         return res.json(sonarrResponses);
@@ -229,7 +232,7 @@ async function handleGet(req: NextApiRequest, res: NextApiResponse) {
           message: "An unknown error occurred when fetching Sonarr data",
         });
       }
-    case "radarr":
+    case "movie":
       try {
         const radarrResponses = await fetchRadarr(startDate, endDate);
         return res.json(radarrResponses);
