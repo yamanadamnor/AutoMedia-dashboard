@@ -9,6 +9,7 @@ import {
 } from "@/ui/DropdownMenu";
 import {
   ArrowLeftEndOnRectangleIcon,
+  ArrowPathIcon,
   Cog6ToothIcon,
 } from "@heroicons/react/24/outline";
 
@@ -31,7 +32,7 @@ type HeaderProps = {
   services: Service[];
 };
 export function Header({ services }: HeaderProps) {
-  const { data: session } = useSession();
+  const { data: session, status } = useSession();
   return (
     <nav className="flex w-full items-center justify-between">
       <Image
@@ -41,14 +42,27 @@ export function Header({ services }: HeaderProps) {
         height={35}
         alt="logo"
       />
-      {session?.user ? <ProfileButton /> : <AuthButton />}
+      {session?.user ? (
+        <ProfileButton />
+      ) : (
+        <>
+          {status === "loading" ? (
+            <Avatar className="h-12 w-12 bg-[#2f2038] text-white">
+              <AvatarFallback>
+                <ArrowPathIcon className="size-5 animate-spin" />
+              </AvatarFallback>
+            </Avatar>
+          ) : (
+            <AuthButton />
+          )}
+        </>
+      )}
     </nav>
   );
 }
 
 const ProfileButton = () => {
   const { data: session } = useSession();
-
   return (
     <DropdownMenu>
       <DropdownMenuTrigger>
