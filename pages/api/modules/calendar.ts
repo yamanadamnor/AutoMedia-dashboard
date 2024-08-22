@@ -1,4 +1,6 @@
 /* eslint-disable @typescript-eslint/consistent-type-definitions */
+import { getSettings } from "@/data/setting";
+import { parseSettings } from "@/utils/parseSettings";
 import type { NextApiRequest, NextApiResponse } from "next";
 
 type MediaCoverTypes =
@@ -161,25 +163,13 @@ export type RadarrResponse = {
 
 export type MediaType = "tv" | "movie";
 
-const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
-const SERVICES = {
-  sonarr: {
-    service: "sonarr",
-    port: 8989,
-    url: "/api/v3/calendar",
-    apiKey: process.env.NEXT_PUBLIC_SONARR_API,
-  },
-  radarr: {
-    service: "radarr",
-    port: 7878,
-    url: "/api/v3/calendar",
-    apiKey: process.env.NEXT_PUBLIC_RADARR_API,
-  },
-} as const;
-
 async function fetchSonarr(startDate: string, endDate: string) {
-  const { port, apiKey, url } = SERVICES.sonarr;
-  const requestUrl = `${BASE_URL}:${port}${url}?apikey=${apiKey}&start=${startDate}&end=${endDate}&includeSeries=true`;
+  const settings = await getSettings();
+  const { ENABLE_SONARR, SONARR_URL, SONARR_API_KEY } = parseSettings(settings);
+
+  if (!ENABLE_SONARR || !SONARR_URL || !SONARR_API_KEY) return [];
+
+  const requestUrl = `${SONARR_URL}/api/v3/calendar?apikey=${SONARR_API_KEY}&start=${startDate}&end=${endDate}&includeSeries=true`;
   return fetch(requestUrl, {
     method: "GET",
     headers: { "content-type": "application/json" },
@@ -192,8 +182,12 @@ async function fetchSonarr(startDate: string, endDate: string) {
 }
 
 async function fetchRadarr(startDate: string, endDate: string) {
-  const { port, apiKey, url } = SERVICES.radarr;
-  const requestUrl = `${BASE_URL}:${port}${url}?apikey=${apiKey}&start=${startDate}&end=${endDate}`;
+  const settings = await getSettings();
+  const { ENABLE_RADARR, RADARR_URL, RADARR_API_KEY } = parseSettings(settings);
+
+  if (!ENABLE_RADARR || !RADARR_URL || !RADARR_API_KEY) return [];
+
+  const requestUrl = `${RADARR_URL}/api/v3/calendar?apikey=${RADARR_API_KEY}&start=${startDate}&end=${endDate}`;
   return fetch(requestUrl, {
     method: "GET",
     headers: { "content-type": "application/json" },
