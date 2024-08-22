@@ -10,7 +10,7 @@ type MediaCoverTypes =
   | "headshot"
   | "clearlogo";
 
-type MediaCover = {
+export type MediaCover = {
   coverType: MediaCoverTypes;
   url: string;
   rmooteUrl: string;
