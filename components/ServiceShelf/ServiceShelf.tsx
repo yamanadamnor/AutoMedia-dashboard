@@ -2,7 +2,6 @@
 import { AnimatePresence, motion } from "framer-motion";
 
 import ServiceCard from "@/components/ServiceShelf/ServiceCard";
-import { deleteService } from "@/data/service";
 import type { Service } from "@prisma/client";
 
 export function ServiceShelf({ services }: { services: Service[] }) {
@@ -25,11 +24,7 @@ export function ServiceShelf({ services }: { services: Service[] }) {
         className="grid grid-cols-1 gap-6 text-white sm:grid-cols-2 sm:gap-4 lg:grid-cols-2 lg:gap-6 xl:grid-cols-3"
       >
         {services.map((service) => (
-          <ServiceCard
-            key={service.id}
-            service={service}
-            deleteServiceAction={deleteService}
-          />
+          <ServiceCard key={service.id} service={service} />
         ))}
       </motion.div>
     </AnimatePresence>
