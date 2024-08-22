@@ -25,6 +25,9 @@ WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 
+# # only for SSG pages
+ARG DATABASE_URL
+ENV DATABASE_URL=$DATABASE_URL
 
 RUN npm run build
 
@@ -52,9 +55,6 @@ RUN mkdir -p config
 ENV PORT 3344
 EXPOSE 3344
 
-# # only for SSG pages
-ARG DATABASE_URL
-ENV DATABASE_URL=$DATABASE_URL
 
 ENV NEXT_TELEMETRY_DISABLED 1
 
