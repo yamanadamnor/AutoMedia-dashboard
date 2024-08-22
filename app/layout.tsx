@@ -15,6 +15,14 @@ export default function Layout({ children }: { children: React.ReactNode }) {
     <html lang="en" className="bg-base h-full">
       <body>
         <TailwindBreakpointIndicator />
+        <div className="pointer-events-none absolute inset-x-0 left-0 top-0 flex w-full select-none justify-center overflow-hidden">
+          <div className="flex w-[108rem] flex-none justify-end">
+            <picture>
+              <source srcSet="/img/1-dark.png" type="image/png" />
+              <img src="" alt="" />
+            </picture>
+          </div>
+        </div>
         <SessionProvider>
           <div className="center justify-items-centerr text-whitelg:gap-x-8 relative z-auto mx-auto grid h-full min-h-screen max-w-8xl grid-cols-app grid-rows-app place-content-start gap-x-6 gap-y-8">
             <div className="col-span-7 col-start-2 row-start-1 row-end-2 flex h-24 w-full items-center justify-between py-6">
