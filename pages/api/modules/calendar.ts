@@ -13,7 +13,7 @@ type MediaCoverTypes =
 export type MediaCover = {
   coverType: MediaCoverTypes;
   url: string;
-  rmooteUrl: string;
+  remoteUrl: string;
 };
 type RatingType = "user" | "critic";
 
