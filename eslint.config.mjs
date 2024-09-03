@@ -32,6 +32,19 @@ export default [
       "**/package-lock.yaml",
     ],
   },
+  {
+    files: [
+      "app/**/*.ts",
+      "pages/**/*.tsx",
+      "components/**/*.tsx",
+      "data/**/*.ts",
+      "prisma/**/*.ts",
+      "server/**/*.ts",
+      "ui/**/*.tsx",
+      "utils/**/*.ts",
+      "utils/**/*.tsx",
+    ],
+  },
   ...fixupConfigRules(
     compat.extends(
       "eslint:recommended",
