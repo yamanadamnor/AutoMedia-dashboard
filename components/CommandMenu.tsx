@@ -9,6 +9,7 @@ import {
   CommandGroup,
   CommandInput,
   CommandItem,
+  CommandEmpty,
 } from "@/ui/Command";
 import { cn } from "@/utils/cn";
 import { Button } from "@/ui/Button";
@@ -80,55 +81,57 @@ export const CommandMenu = ({ services }: { services: Service[] }) => {
           onValueChange={setSearch}
         />
         <CommandList className="text-white">
-          {/* <CommandEmpty>No results found.</CommandEmpty> */}
+          <CommandEmpty>No services added.</CommandEmpty>
 
           {/* {isLoading && <CommandLoading>Hang on…</CommandLoading>} */}
 
           {!page && (
             <>
-              <CommandGroup heading="Services">
-                {services?.map((service) => (
-                  <CommandItem
-                    key={service.id}
-                    className="group flex w-full justify-between rounded-md"
-                    value={service.title}
-                    onSelect={() =>
-                      runCommand(() => window.open(service.href, "_blank"))
-                    }
-                  >
-                    <div className="flex items-center gap-x-4">
-                      <Image
-                        src={service.image}
-                        height={18}
-                        width={18}
-                        className="grayscale group-aria-[selected=true]:grayscale-0"
-                        alt="Service logo"
-                      />
-                      {service.title}
-                    </div>
-                    <p className="text-gray-500">Service</p>
-                  </CommandItem>
-                ))}
+              {services.length > 0 && (
+                <CommandGroup heading="Services">
+                  {services?.map((service) => (
+                    <CommandItem
+                      key={service.id}
+                      className="group flex w-full justify-between rounded-md"
+                      value={service.title}
+                      onSelect={() =>
+                        runCommand(() => window.open(service.href, "_blank"))
+                      }
+                    >
+                      <div className="flex items-center gap-x-4">
+                        <Image
+                          src={service.image}
+                          height={18}
+                          width={18}
+                          className="grayscale group-aria-[selected=true]:grayscale-0"
+                          alt="Service logo"
+                        />
+                        {service.title}
+                      </div>
+                      <p className="text-gray-500">Service</p>
+                    </CommandItem>
+                  ))}
 
-                {/* FIX: Nested dialogs */}
-                {/* {session?.user.isAdmin && ( */}
-                {/*   <CommandItem */}
-                {/*     className="group flex w-full justify-between rounded-md" */}
-                {/*     onSelect={() => runCommand(() => setAddServiceOpen(true))} */}
-                {/*   > */}
-                {/*     <ServiceAddDialog */}
-                {/*       open={addServiceOpen} */}
-                {/*       onOpenChange={setAddServiceOpen} */}
-                {/*     > */}
-                {/*       <Button className="flex items-center gap-x-4 border-none p-0"> */}
-                {/*         <PlusCircleIcon className="text-gray-300" /> */}
-                {/*         Add Service */}
-                {/*       </Button> */}
-                {/*     </ServiceAddDialog> */}
-                {/*     <p className="text-gray-500">Service</p> */}
-                {/*   </CommandItem> */}
-                {/* )} */}
-              </CommandGroup>
+                  {/* FIX: Nested dialogs */}
+                  {/* {session?.user.isAdmin && ( */}
+                  {/*   <CommandItem */}
+                  {/*     className="group flex w-full justify-between rounded-md" */}
+                  {/*     onSelect={() => runCommand(() => setAddServiceOpen(true))} */}
+                  {/*   > */}
+                  {/*     <ServiceAddDialog */}
+                  {/*       open={addServiceOpen} */}
+                  {/*       onOpenChange={setAddServiceOpen} */}
+                  {/*     > */}
+                  {/*       <Button className="flex items-center gap-x-4 border-none p-0"> */}
+                  {/*         <PlusCircleIcon className="text-gray-300" /> */}
+                  {/*         Add Service */}
+                  {/*       </Button> */}
+                  {/*     </ServiceAddDialog> */}
+                  {/*     <p className="text-gray-500">Service</p> */}
+                  {/*   </CommandItem> */}
+                  {/* )} */}
+                </CommandGroup>
+              )}
 
               {/* <CommandSeparator className="bg-zinc-700" /> */}
 
