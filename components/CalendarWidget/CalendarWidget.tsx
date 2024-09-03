@@ -116,7 +116,7 @@ function CalendarWidget() {
         <div className="flex w-full flex-col gap-y-4 @container md:w-3/5 lg:w-full">
           <div className="flex w-full items-center justify-around gap-x-2 @sm:gap-x-8">
             <div className="flex items-center">
-              <div className="self-center text-7xl">
+              <div className="self-center text-5xl @lg:text-7xl">
                 <h2 className="select-none leading-none">
                   {format(selectedDay, "dd")}
                 </h2>
