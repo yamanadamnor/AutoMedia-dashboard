@@ -6,6 +6,8 @@ const Hero = () => {
 
   const firstName = session?.user?.name?.split(" ")[0] ?? "";
 
+  if (!session) return null;
+
   return (
     <motion.div
       initial={{

@@ -10,9 +10,9 @@ export default async function Page() {
 
   return (
     <>
-      <div className="flex-gap-48 flex items-center">
+      <div className="flex items-center">
         {session?.user.isAdmin && (
-          <div className="my-4 text-white">
+          <div className="text-white">
             <ServiceAddDialog>
               <Button>Add Service</Button>
             </ServiceAddDialog>

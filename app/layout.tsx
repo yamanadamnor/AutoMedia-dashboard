@@ -52,14 +52,12 @@ export default async function Layout({
                 },
               }}
             />
-            <div className="col-span-7 col-start-2 row-start-1 row-end-2 flex h-24 w-full items-center justify-between py-6">
+            <div className="col-span-7 col-start-2 row-span-1 row-start-1 flex h-24 w-full items-center justify-between py-6">
               <Header services={services} />
             </div>
 
-            <div className="col-span-5 col-start-4 row-start-2 hidden w-full text-white lg:block xl:col-span-6 xl:col-start-3">
+            <div className="lg:row-end-full col-start-2 col-end-[-2] w-full lg:col-end-4 xl:col-end-3">
               <Hero />
-            </div>
-            <div className="col-start-2 col-end-[-2] row-start-2 w-full lg:col-end-4 lg:row-end-[-1] xl:col-end-3">
               <div className="w-full">
                 <CalendarWidget />
               </div>
@@ -67,8 +65,8 @@ export default async function Layout({
 
             <main
               className={cn(
-                "col-start-2 col-end-[-2] w-full",
-                "lg:col-span-5 lg:col-start-4 lg:row-start-3",
+                "col-start-2 col-end-[-2] flex w-full flex-col gap-y-10",
+                "lg:col-span-5 lg:col-start-4 lg:row-start-2",
                 "xl:col-span-6 xl:col-start-3",
               )}
             >
