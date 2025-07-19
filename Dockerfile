@@ -38,9 +38,7 @@ RUN npm run build
 FROM base AS runner
 WORKDIR /app
 
-ENV NODE_ENV production
-# Uncomment the following line in case you want to disable telemetry during runtime.
-ENV NEXT_TELEMETRY_DISABLED 1
+ENV NODE_ENV=production
 
 COPY --from=builder /app/public ./public
 
@@ -52,11 +50,11 @@ COPY --from=builder /app/prisma ./prisma
 
 RUN mkdir -p config
 
-ENV PORT 3344
+ENV PORT=3344
 EXPOSE 3344
 
 
-ENV NEXT_TELEMETRY_DISABLED 1
+ENV NEXT_TELEMETRY_DISABLED=1
 
 # run migrate and seed here
 CMD ["npm", "run", "start:migrate:prod"]
