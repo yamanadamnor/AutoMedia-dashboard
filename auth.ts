@@ -47,6 +47,7 @@ interface CustomProfile {
   email_verified: boolean;
   groups: string[];
 }
+
 const customProvider = {
   id: "custom", // signIn("custom") and will be part of the callback URL
   name: "ACS", // optional, used on the default login page as the button text.
@@ -56,6 +57,10 @@ const customProvider = {
   clientSecret: process.env.AUTH_CLIENT_SECRET, // from the provider's dashboard
   authorization: { params: { scope: "openid profile groups email" } },
   checks: ["pkce", "state"],
+  idToken: false,
+  client: {
+    token_endpoint_auth_method: "client_secret_post",
+  },
   profile(profile) {
     return {
       id: profile.sub,
