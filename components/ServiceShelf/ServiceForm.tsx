@@ -40,7 +40,7 @@ export const ServiceForm = ({ service, onSubmitCommand }: ServiceFormProps) => {
     resolver: zodResolver(serviceFormSchema),
     defaultValues: {
       ...service,
-      image: "/img/logo-white-muted.svg",
+      image: service?.image ?? "/img/logo-white-muted.svg",
     },
   });
 
