@@ -1,4 +1,4 @@
-import { auth } from "@/auth";
+import { auth, isAdmin } from "@/lib/auth";
 import { ServiceAddDialog } from "@/components/ClientComponents";
 import { ServiceCardSkeletons } from "@/components/ServiceShelf/ServiceCardSkeletons";
 import { ServiceShelfWrapper } from "@/components/ServiceShelf/ServiceShelfWrapper";
@@ -6,12 +6,14 @@ import { Button } from "@/ui/Button";
 import { Suspense } from "react";
 
 export default async function Page() {
-  const session = await auth();
+  const session = await auth.api.getSession({
+    headers: new Headers(),
+  });
 
   return (
     <>
       <div className="flex items-center">
-        {session?.user.isAdmin && (
+        {isAdmin(session?.user) && (
           <div className="text-white">
             <ServiceAddDialog>
               <Button>Add Service</Button>

@@ -1,5 +1,4 @@
 import Image from "next/image";
-import { signOut, useSession } from "next-auth/react";
 import {
   DropdownMenu,
   DropdownMenuItem,
@@ -19,6 +18,8 @@ import type { Service } from "@prisma/client";
 import { SettingsDialog } from "./SettingsDialog";
 import { Button } from "@/ui/Button";
 import { CommandMenu } from "./CommandMenu";
+import { authClient } from "@/lib/auth-client";
+import { isAdmin } from "@/lib/auth";
 
 export const getInitials = (name: string, limit = 3) => {
   const initials = name
@@ -32,7 +33,7 @@ type HeaderProps = {
   services: Service[];
 };
 export function Header({ services }: HeaderProps) {
-  const { data: session, status } = useSession();
+  const { data: session, isPending } = authClient.useSession();
   return (
     <nav className="flex w-full items-center justify-between">
       <Image
@@ -47,7 +48,7 @@ export function Header({ services }: HeaderProps) {
         <ProfileButton />
       ) : (
         <>
-          {status === "loading" ? (
+          {isPending ? (
             <Avatar className="h-12 w-12 bg-[#2f2038] text-white">
               <AvatarFallback>
                 <ArrowPathIcon className="size-5 animate-spin" />
@@ -63,7 +64,12 @@ export function Header({ services }: HeaderProps) {
 }
 
 const ProfileButton = () => {
-  const { data: session } = useSession();
+  const { data: session } = authClient.useSession();
+  
+  const handleSignOut = () => {
+    authClient.signOut();
+  };
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger>
@@ -81,7 +87,7 @@ const ProfileButton = () => {
           className="min-w-[220px] rounded-md bg-[#252634] p-[5px] text-white shadow-[0px_10px_38px_-10px_rgba(22,_23,_24,_0.35),_0px_10px_20px_-15px_rgba(22,_23,_24,_0.2)] will-change-[opacity,transform] data-[side=bottom]:animate-slideUpAndFade data-[side=left]:animate-slideRightAndFade data-[side=right]:animate-slideLeftAndFade data-[side=top]:animate-slideDownAndFade"
         >
           <h2 className="py-5 text-center text-xl">{session?.user?.name}</h2>
-          {session?.user?.isAdmin && (
+          {isAdmin(session?.user) && (
             <SettingsDialog>
               <DropdownMenuItem
                 className="p-0"
@@ -96,7 +102,7 @@ const ProfileButton = () => {
           )}
           <DropdownMenuItem
             className="gap-x-4 text-red-300 hover:bg-[#2b2c3a]"
-            onClick={() => signOut()}
+            onClick={handleSignOut}
           >
             <ArrowLeftEndOnRectangleIcon className="h-5 w-5" />
             Sign out
