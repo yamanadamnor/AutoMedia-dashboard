@@ -1,21 +1,24 @@
+// Simplified client-side auth for better-auth
 import { createAuthClient } from "better-auth/react";
-import type { Session } from "./auth";
 
 export const authClient = createAuthClient({
   baseURL: typeof window !== "undefined" ? window.location.origin : "",
 });
 
-export type { Session };
+// Basic mock session interface
+export interface Session {
+  user: {
+    id: string;
+    name: string;
+    email: string;
+    role: string;
+  };
+}
 
-// Helper functions for client-side usage
-export const signIn = () => {
-  return authClient.signIn.social({ provider: "custom" });
-};
-
-export const signOut = () => {
-  return authClient.signOut();
-};
-
-export const getSession = () => {
-  return authClient.getSession();
+// Mock session hook for development
+export const useSession = () => {
+  return {
+    data: null,
+    isPending: false,
+  };
 };
