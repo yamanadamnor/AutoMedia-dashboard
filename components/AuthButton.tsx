@@ -1,15 +1,15 @@
 import { Button } from "@/ui/Button";
-import { authClient } from "@/lib/auth-client";
+import { useSession, signIn, signOut } from "@/lib/auth-client";
 
 export const AuthButton = () => {
-  const { data: session } = authClient.useSession();
+  const { data: session } = useSession();
 
   const handleSignIn = () => {
-    authClient.signIn.social({ provider: "custom" });
+    signIn({ provider: "custom" });
   };
 
   const handleSignOut = () => {
-    authClient.signOut();
+    signOut();
   };
 
   return (

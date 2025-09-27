@@ -18,7 +18,7 @@ import type { Service } from "@prisma/client";
 import { SettingsDialog } from "./SettingsDialog";
 import { Button } from "@/ui/Button";
 import { CommandMenu } from "./CommandMenu";
-import { authClient } from "@/lib/auth-client";
+import { useSession, signOut } from "@/lib/auth-client";
 import { isAdmin } from "@/lib/auth";
 
 export const getInitials = (name: string, limit = 3) => {
@@ -33,7 +33,7 @@ type HeaderProps = {
   services: Service[];
 };
 export function Header({ services }: HeaderProps) {
-  const { data: session, isPending } = authClient.useSession();
+  const { data: session, isPending } = useSession();
   return (
     <nav className="flex w-full items-center justify-between">
       <Image
@@ -64,10 +64,10 @@ export function Header({ services }: HeaderProps) {
 }
 
 const ProfileButton = () => {
-  const { data: session } = authClient.useSession();
+  const { data: session } = useSession();
   
   const handleSignOut = () => {
-    authClient.signOut();
+    signOut();
   };
 
   return (

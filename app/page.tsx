@@ -6,9 +6,7 @@ import { Button } from "@/ui/Button";
 import { Suspense } from "react";
 
 export default async function Page() {
-  const session = await auth.api.getSession({
-    headers: new Headers(),
-  });
+  const session = await auth();
 
   return (
     <>
