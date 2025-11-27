@@ -1,0 +1,11 @@
+{
+	"version": "1.0",
+	"generatorVersion": "unknown",
+	"generatedAt": "2025-11-27T19:27:37.108Z",
+	"outputPath": "/home/yams/projects/AutoMedia-dashboard/data/zodSchemas",
+	"files": ["schemas.ts"],
+	"directories": [],
+	"singleFileMode": true,
+	"singleFileName": "schemas.ts"
+}
+
