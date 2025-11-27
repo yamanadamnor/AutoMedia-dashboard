@@ -18,7 +18,8 @@
 			"recommended": true
 		},
 		"domains": {
-			"next": "recommended"
+			"next": "recommended",
+			"react": "recommended"
 		}
 	},
 	"javascript": {
