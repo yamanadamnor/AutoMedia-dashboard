@@ -36,7 +36,7 @@
 		"dotenv": "^17.2.3",
 		"framer-motion": "^11.18.2",
 		"jotai": "^2.15.1",
-		"next": "^14.2.33",
+		"next": "^16.0.0",
 		"next-auth": "5.0.0-beta.30",
 		"prisma-zod-generator": "^2.1.2",
 		"react": "^18.3.1",
