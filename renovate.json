@@ -1,15 +1,15 @@
 {
-  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "extends": ["config:base"],
-  "labels": ["PR: Update deps"],
-  "packageRules": [
-    {
-      "matchPackagePatterns": ["^eslint"],
-      "groupName": "eslint packages"
-    },
-    {
-      "matchDatasources": ["npm"],
-      "minimumReleaseAge": "14 days"
-    }
-  ]
+	"$schema": "https://docs.renovatebot.com/renovate-schema.json",
+	"extends": ["config:base"],
+	"labels": ["PR: Update deps"],
+	"packageRules": [
+		{
+			"matchPackagePatterns": ["^eslint"],
+			"groupName": "eslint packages"
+		},
+		{
+			"matchDatasources": ["npm"],
+			"minimumReleaseAge": "14 days"
+		}
+	]
 }

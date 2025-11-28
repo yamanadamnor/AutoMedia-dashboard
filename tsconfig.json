@@ -1,46 +1,51 @@
 {
-  "$schema": "https://json.schemastore.org/tsconfig",
-  "display": "Default",
-  "compilerOptions": {
-    "baseUrl": ".",
-    "plugins": [
-      {
-        "name": "next"
-      }
-    ],
-    "paths": {
-      "@/auth": ["auth.ts"],
-      "@/components/*": ["components/*"],
-      "@/data/*": ["data/*"],
-      "@/ui/*": ["ui/*"],
-      "@/utils/*": ["utils/*"],
-      "@/styles/*": ["styles/*"],
-      "@/server/*": ["server/*"]
-    },
-    "composite": false,
-    "declarationMap": true,
-    "target": "es6",
-    "useDefineForClassFields": true,
-    "lib": ["dom", "dom.iterable", "esnext"],
-    "allowJs": true,
-    "skipLibCheck": true,
-    "esModuleInterop": true,
-    "allowSyntheticDefaultImports": true,
-    "strict": true,
-    "strictNullChecks": true,
-    "forceConsistentCasingInFileNames": true,
-    "inlineSources": false,
-    "module": "esnext",
-    "moduleResolution": "node",
-    "noUnusedLocals": false,
-    "noUnusedParameters": false,
-    "noEmit": true,
-    "preserveWatchOutput": true,
-    "resolveJsonModule": true,
-    "isolatedModules": true,
-    "jsx": "preserve",
-    "incremental": true
-  },
-  "include": ["**/*.ts", "**/*.tsx", "next-env.d.ts", ".next/types/**/*.ts", "vite.config.mts"],
-  "exclude": ["node_modules"]
+	"display": "Default",
+	"compilerOptions": {
+		"baseUrl": ".",
+		"plugins": [
+			{
+				"name": "next"
+			}
+		],
+		"paths": {
+			"@/auth": ["auth.ts"],
+			"@/components/*": ["components/*"],
+			"@/data/*": ["data/*"],
+			"@/ui/*": ["ui/*"],
+			"@/utils/*": ["utils/*"],
+			"@/styles/*": ["styles/*"],
+			"@/server/*": ["server/*"],
+			"@/prisma/*": ["prisma/*"]
+		},
+		"composite": false,
+		"target": "es6",
+		"useDefineForClassFields": true,
+		"lib": ["dom", "dom.iterable", "esnext"],
+		"allowJs": true,
+		"skipLibCheck": true,
+		"esModuleInterop": true,
+		"allowSyntheticDefaultImports": true,
+		"strict": true,
+		"strictNullChecks": true,
+		"forceConsistentCasingInFileNames": true,
+		"inlineSources": false,
+		"module": "esnext",
+		"moduleResolution": "node",
+		"noUnusedLocals": false,
+		"noUnusedParameters": false,
+		"noEmit": true,
+		"preserveWatchOutput": true,
+		"resolveJsonModule": true,
+		"isolatedModules": true,
+		"jsx": "preserve",
+		"incremental": true
+	},
+	"include": [
+		"**/*.ts",
+		"**/*.tsx",
+		"next-env.d.ts",
+		".next/types/**/*.ts",
+		"vite.config.mts"
+	],
+	"exclude": ["node_modules"]
 }
