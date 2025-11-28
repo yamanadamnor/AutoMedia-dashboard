@@ -4,22 +4,22 @@ import type { Prisma, Service } from "@/prisma/generated/client";
 import { prisma } from "@/server/prisma";
 
 export default async function handler(
-  req: NextApiRequest,
-  res: NextApiResponse,
+	req: NextApiRequest,
+	res: NextApiResponse,
 ) {
-  if (req.method === "POST") {
-    const serviceData = req.body as Prisma.ServiceCreateInput;
+	if (req.method === "POST") {
+		const serviceData = req.body as Prisma.ServiceCreateInput;
 
-    const savedService = await prisma.service.create({
-      data: serviceData,
-    });
+		const savedService = await prisma.service.create({
+			data: serviceData,
+		});
 
-    res.json(savedService);
-  } else if (req.method === "GET") {
-    const services: Service[] = await prisma.service.findMany();
+		res.json(savedService);
+	} else if (req.method === "GET") {
+		const services: Service[] = await prisma.service.findMany();
 
-    res.json(services);
-  } else {
-    res.status(405).send({ message: "Method not allowed" });
-  }
+		res.json(services);
+	} else {
+		res.status(405).send({ message: "Method not allowed" });
+	}
 }

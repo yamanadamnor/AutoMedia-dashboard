@@ -1,26 +1,26 @@
 "use server";
 
-import { prisma } from "@/server/prisma";
-import type { Prisma } from "@/prisma/generated/client";
 import { settingsFormSchema } from "@/components/SettingsForm";
+import type { Prisma } from "@/prisma/generated/client";
+import { prisma } from "@/server/prisma";
 
 export async function getSettings() {
-  const settings = await prisma.setting.findMany();
-  return settings;
+	const settings = await prisma.setting.findMany();
+	return settings;
 }
 
 export async function updateSetting(
-  key: string,
-  data: Prisma.SettingUpdateInput,
+	key: string,
+	data: Prisma.SettingUpdateInput,
 ) {
-  const parsed = settingsFormSchema.safeParse(data);
+	const parsed = settingsFormSchema.safeParse(data);
 
-  if (!parsed.success) {
-    return false;
-  }
+	if (!parsed.success) {
+		return false;
+	}
 
-  await prisma.setting.update({
-    data,
-    where: { key },
-  });
+	await prisma.setting.update({
+		data,
+		where: { key },
+	});
 }
