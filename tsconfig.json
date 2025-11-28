@@ -8,15 +8,8 @@
 			}
 		],
 		"paths": {
-			"@/auth": ["auth.ts"],
-			"@/components/*": ["components/*"],
-			"@/data/*": ["data/*"],
-			"@/ui/*": ["ui/*"],
-			"@/utils/*": ["utils/*"],
-			"@/styles/*": ["styles/*"],
-			"@/server/*": ["server/*"],
-			"@/prisma/*": ["prisma/*"],
-			"@/generated/*": ["generated/*"]
+			"@/*": ["src/*"],
+			"@/auth": ["auth.ts"]
 		},
 		"composite": false,
 		"target": "es6",

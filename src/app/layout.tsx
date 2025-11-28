@@ -1,4 +1,4 @@
-import "@/styles/global.css";
+import "./global.css";
 import Image from "next/image";
 import { SessionProvider } from "next-auth/react";
 import { Toaster } from "react-hot-toast";
