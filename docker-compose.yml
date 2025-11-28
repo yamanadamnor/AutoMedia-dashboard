@@ -6,7 +6,6 @@ services:
       context: ./
       dockerfile: Dockerfile
       args:
-        - DATABASE_URL=$DATABASE_URL
         - AUTH_URL=$AUTH_URL
     ports:
       - "3344:3344"
