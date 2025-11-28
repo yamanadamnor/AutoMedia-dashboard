@@ -4,7 +4,7 @@
  */
 
 import * as z from "zod";
-import type { Prisma } from "../client";
+import type { Prisma } from "../client.ts";
 // File: TransactionIsolationLevel.schema.ts
 
 export const TransactionIsolationLevelSchema = z.enum(["Serializable"]);
