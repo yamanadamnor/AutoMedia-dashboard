@@ -3,22 +3,13 @@
 
 generator client {
   provider = "prisma-client"
-  output = "./generated"
+  output   = "./generated"
 }
 
 generator zod {
-  provider         = "zod-prisma-types"
-  output           = "../data/zodSchemas"
-  writeBarrelFiles = false
-  coerceDate       = false
-
-  aqddIncludeType          = false
-  // createInputTypes         = false
-  createModelTypes         = false
-  addInputTypeValidation   = false
-  addIncludeType           = false
-  addSelectType            = false
-  validateWhereUniqueInput = false
+  provider = "prisma-zod-generator"
+  output   = "./generated/zod"
+  config   = "./zod-generator.config.json"
 }
 
 datasource db {

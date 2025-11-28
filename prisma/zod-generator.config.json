@@ -1,0 +1,13 @@
+{
+	"useMultipleFiles": false,
+	"safety": {
+		"skipManifest": true
+	},
+	"mode": "minimal",
+	"pureModels": true,
+	"variants": {
+		"pure": { "enabled": true },
+		"input": { "enabled": true, "partial": true },
+		"result": { "enabled": true }
+	}
+}

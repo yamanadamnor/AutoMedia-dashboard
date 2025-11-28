@@ -1,7 +1,7 @@
 "use server";
 
 import { prisma } from "@/server/prisma";
-import type { Prisma } from "@prisma/client";
+import type { Prisma } from "@/prisma/generated/client";
 import { settingsFormSchema } from "@/components/SettingsForm";
 
 export async function getSettings() {

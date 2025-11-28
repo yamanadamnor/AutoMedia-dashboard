@@ -1,58 +1,58 @@
 "use server";
 
-import { prisma } from "@/server/prisma";
-import type { Prisma } from "@prisma/client";
+import type { Prisma } from "@/prisma/generated/client";
 import {
-  ServiceUpdateInputSchema,
-  ServiceCreateInputSchema,
-} from "@/data/zodSchemas";
+	ServiceUncheckedCreateInputObjectZodSchema,
+	ServiceUpdateInputObjectZodSchema,
+} from "@/prisma/generated/zod/schemas";
+import { prisma } from "@/server/prisma";
 
 export async function getService(id: number) {
-  const service = await prisma.service.findUnique({
-    where: { id },
-  });
-  return service;
+	const service = await prisma.service.findUnique({
+		where: { id },
+	});
+	return service;
 }
 
 export async function getServices() {
-  const services = await prisma.service.findMany();
+	const services = await prisma.service.findMany();
 
-  return services;
+	return services;
 }
 
 export async function updateService(
-  id: number,
-  data: Prisma.ServiceUpdateInput,
+	id: number,
+	data: Prisma.ServiceUpdateInput,
 ) {
-  const parsed = ServiceUpdateInputSchema.safeParse(data);
+	const parsed = ServiceUpdateInputObjectZodSchema.safeParse(data);
 
-  if (!parsed.success) {
-    return false;
-  }
+	if (!parsed.success) {
+		return false;
+	}
 
-  await prisma.service.update({
-    data,
-    where: {
-      id: id,
-    },
-  });
+	await prisma.service.update({
+		data,
+		where: {
+			id: id,
+		},
+	});
 }
 
 export async function addService(data: Prisma.ServiceCreateInput) {
-  const parsed = ServiceCreateInputSchema.safeParse(data);
+	const parsed = ServiceUncheckedCreateInputObjectZodSchema.safeParse(data);
 
-  if (!parsed.success) {
-    return false;
-  }
+	if (!parsed.success) {
+		return false;
+	}
 
-  await prisma.service.create({
-    data,
-  });
+	await prisma.service.create({
+		data,
+	});
 }
 export async function deleteService(id: number) {
-  await prisma.service.delete({
-    where: {
-      id: id,
-    },
-  });
+	await prisma.service.delete({
+		where: {
+			id: id,
+		},
+	});
 }

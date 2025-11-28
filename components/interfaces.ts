@@ -1,4 +1,4 @@
-import type { Prisma } from "@prisma/client";
+import type { Prisma } from "@/prisma/generated/client";
 import type { StaticImageData } from "next/image";
 
 export type IService = {
