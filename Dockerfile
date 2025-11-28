@@ -17,9 +17,10 @@ RUN \
   elif [ -f package-lock.json ]; then npm ci; \
   elif [ -f pnpm-lock.yaml ]; then pnpm install --prod --frozen-lockfile; \
   else echo "Lockfile not found." && exit 1; \
-  fi \
-  # Rebuild the source code only when needed
-  FROM base AS builder
+  fi \;
+
+# Rebuild the source code only when needed
+FROM base AS builder
 
 WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
