@@ -25,7 +25,7 @@ COPY . .
 ARG AUTH_URL
 ENV AUTH_URL=$AUTH_URL
 
-RUN pnpm run build
+RUN mkdir -p config && pnpm run build
 
 # Production image, copy all the files and run next
 FROM base AS runner
