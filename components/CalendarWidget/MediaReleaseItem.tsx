@@ -59,7 +59,7 @@ function MediaReleaseItem({
 				initial="hideItem"
 				animate="showItem"
 				exit="hideItem"
-				className="grid grid-cols-mediaItem gap-x-4"
+				className="grid grid-cols-media-item gap-x-4"
 			>
 				{poster?.remoteUrl && (
 					<div className="relative aspect-2/3 w-12 overflow-hidden md:w-20">

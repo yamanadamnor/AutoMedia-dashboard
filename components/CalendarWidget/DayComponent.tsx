@@ -28,7 +28,7 @@ function DayComponent({ day }: { day: Date }) {
 		<button
 			type="button"
 			className={cn(
-				"flex h-12 w-9 select-none flex-col items-center justify-around justify-self-center rounded leading-none transition duration-300 ease-in-out hover:bg-[#272731] hover:shadow-service-sm",
+				"flex h-12 w-9 select-none flex-col items-center justify-around justify-self-center rounded-sm leading-none transition duration-300 ease-in-out hover:bg-[#272731] hover:shadow-service-sm",
 				isSameMonth(day, selectedDay) ? "" : "text-gray-600",
 				isSameDay(day, selectedDay) ? "bg-[#272731] shadow-lg" : "",
 				isToday(day) ? "border border-gray-700" : "",

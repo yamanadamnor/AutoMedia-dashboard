@@ -19,7 +19,7 @@ function ServiceCardSkeleton() {
 				</div>
 			</div>
 
-			<p className="my-3 h-3 w-28 animate-pulse rounded bg-gray-600"></p>
+			<p className="my-3 h-3 w-28 animate-pulse rounded-sm bg-gray-600"></p>
 		</div>
 	);
 }

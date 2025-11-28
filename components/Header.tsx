@@ -73,7 +73,7 @@ const ProfileButton = () => {
 				<DropdownMenuContent
 					sideOffset={10}
 					align="end"
-					className="min-w-[220px] rounded-md bg-[#252634] p-[5px] text-white shadow-[0px_10px_38px_-10px_rgba(22,_23,_24,_0.35),_0px_10px_20px_-15px_rgba(22,_23,_24,_0.2)] will-change-[opacity,transform] data-[side=bottom]:animate-slideUpAndFade data-[side=left]:animate-slideRightAndFade data-[side=right]:animate-slideLeftAndFade data-[side=top]:animate-slideDownAndFade"
+					className="min-w-[220px] rounded-md bg-[#252634] p-[5px] text-white shadow-[0px_10px_38px_-10px_rgba(22,23,24,0.35),0px_10px_20px_-15px_rgba(22,23,24,0.2)] will-change-[opacity,transform] data-[side=bottom]:animate-slide-up-and-fade data-[side=left]:animate-slide-right-and-fade data-[side=right]:animate-slide-left-and-fade data-[side=top]:animate-slide-down-and-fade"
 				>
 					<h2 className="py-5 text-center text-xl">{session?.user?.name}</h2>
 					{session?.user?.isAdmin && (

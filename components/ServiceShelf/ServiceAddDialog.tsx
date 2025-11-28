@@ -36,7 +36,7 @@ export const ServiceAddDialog = ({
 						{service ? (
 							<>
 								Update{" "}
-								<span className="rounded bg-gray-700 p-0.5 px-2">
+								<span className="rounded-sm bg-gray-700 p-0.5 px-2">
 									{service.title}
 								</span>
 							</>

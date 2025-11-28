@@ -5,56 +5,75 @@
  */
 /* stylelint-disable-next-line at-rule-no-unknown */
 
-@tailwind base;
+@import "tailwindcss";
+
+@config "../tailwind.config.js";
+
+/*
+  The default border color has changed to `currentcolor` in Tailwind CSS v4,
+  so we've added these compatibility styles to make sure everything still
+  looks the same as it did with Tailwind CSS v3.
+
+  If we ever want to remove these styles, we need to add an explicit border
+  color utility to any element that depends on these defaults.
+*/
+@layer base {
+	*,
+	::after,
+	::before,
+	::backdrop,
+	::file-selector-button {
+		border-color: var(--color-gray-200, currentcolor);
+	}
+}
 
 /**
  * This injects Tailwind's component classes and any component classes
  * registered by plugins.
  */
 /* stylelint-disable-next-line at-rule-no-unknown */
-@tailwind components;
 
 /**
  * This injects Tailwind's utility classes and any utility classes registered
  * by plugins.
  */
 /* stylelint-disable-next-line at-rule-no-unknown */
-@tailwind utilities;
 
-@layer utilities {
-	.scrollbar::-webkit-scrollbar {
+@utility scrollbar {
+	&::-webkit-scrollbar {
 		width: 4px;
 		height: 10px;
 	}
 
-	.scrollbar::-webkit-scrollbar-track {
+	&::-webkit-scrollbar-track {
 		border-radius: 100vh;
 		background: none;
 	}
 
-	.scrollbar::-webkit-scrollbar-thumb {
+	&::-webkit-scrollbar-thumb {
 		background: #3f3f52;
 		border-radius: 100vh;
 	}
 
-	.scrollbar::-webkit-scrollbar:hover {
+	&::-webkit-scrollbar:hover {
 		width: 10px;
 	}
 
-	.scrollbar::-webkit-scrollbar-thumb:hover {
+	&::-webkit-scrollbar-thumb:hover {
 		background: #858585;
 	}
 }
 
-/**
- * Use this directive to control where Tailwind injects the hover, focus,
- * responsive, dark mode, and other variants of each class.
- *
- * If omitted, Tailwind will append these classes to the very end of
- * your stylesheet by default.
- */
-/* stylelint-disable-next-line at-rule-no-unknown */
-@tailwind variants;
+@layer utilities {
+	/**
+	 * Use this directive to control where Tailwind injects the hover, focus,
+	 * responsive, dark mode, and other variants of each class.
+	 *
+	 * If omitted, Tailwind will append these classes to the very end of
+	 * your stylesheet by default.
+	 */
+	/* stylelint-disable-next-line at-rule-no-unknown */
+}
 @font-face {
 	font-family: "GT Walsheim Pro";
 	src: url("/fonts/GTWalsheimPro/GTWalsheimPro-Thin.woff2");

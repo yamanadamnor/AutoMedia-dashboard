@@ -97,7 +97,7 @@ export const CommandMenu = ({ services }: { services: Service[] }) => {
 													src={service.image}
 													height={18}
 													width={18}
-													className="grayscale group-aria-[selected=true]:grayscale-0"
+													className="grayscale group-aria-selected:grayscale-0"
 													alt="Service logo"
 												/>
 												{service.title}
@@ -222,7 +222,7 @@ export const Kbd = ({
 	return (
 		<kbd
 			className={cn(
-				"flex h-5 w-5 items-center justify-center rounded bg-gray-700 px-3 py-3 text-gray-400",
+				"flex h-5 w-5 items-center justify-center rounded-sm bg-gray-700 px-3 py-3 text-gray-400",
 				className,
 			)}
 		>

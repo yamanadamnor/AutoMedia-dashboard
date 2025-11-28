@@ -1,4 +1,5 @@
 import "@/styles/global.css";
+import Image from "next/image";
 import { SessionProvider } from "next-auth/react";
 import { Toaster } from "react-hot-toast";
 import {
@@ -8,7 +9,6 @@ import {
 	Hero,
 } from "@/components/ClientComponents";
 import { TailwindBreakpointIndicator } from "@/components/TailwindBreakpointIndicator";
-
 import { getServices } from "@/data/service";
 import { cn } from "@/utils/cn";
 
@@ -21,14 +21,11 @@ export default async function Layout({
 
 	return (
 		<html lang="en" className="bg-base h-full">
-			<body>
+			<body className="relative">
 				<TailwindBreakpointIndicator />
-				<div className="pointer-events-none absolute inset-x-0 left-0 top-0 flex w-full select-none justify-center overflow-hidden">
-					<div className="flex w-[108rem] flex-none justify-end">
-						<picture>
-							<source srcSet="/img/1-dark.png" type="image/png" />
-							<img src="" alt="" />
-						</picture>
+				<div className="pointer-events-none absolute inset-x-0 left-0 top-0 flex w-full select-none justify-center overflow-hidden h-1/3">
+					<div className="flex w-432 flex-none justify-end">
+						<Image src="/img/1-dark.png" fill alt="Background" />
 					</div>
 				</div>
 				<SessionProvider>
@@ -56,7 +53,7 @@ export default async function Layout({
 							<Header services={services} />
 						</div>
 
-						<div className="lg:row-end-full col-start-2 col-end-[-2] w-full lg:col-end-4 xl:col-end-3">
+						<div className="lg:row-end-full col-start-2 -col-end-2 w-full lg:col-end-4 xl:col-end-3">
 							<Hero />
 							<div className="w-full">
 								<CalendarWidget />
@@ -65,7 +62,7 @@ export default async function Layout({
 
 						<main
 							className={cn(
-								"col-start-2 col-end-[-2] flex w-full flex-col gap-y-10",
+								"col-start-2 -col-end-2 flex w-full flex-col gap-y-10",
 								"lg:col-span-5 lg:col-start-4 lg:row-start-2",
 								"xl:col-span-6 xl:col-start-3",
 							)}
@@ -73,7 +70,7 @@ export default async function Layout({
 							{children}
 						</main>
 
-						<div className="relative bottom-0 col-start-1 col-end-[-1] grid w-full p-8">
+						<div className="relative bottom-0 col-start-1 -col-end-1 grid w-full p-8">
 							<div className="absolute bottom-0 left-0 w-full rounded-t-2xl bg-service-card"></div>
 							<Footer />
 						</div>

@@ -59,7 +59,7 @@ const ServiceCard = ({ service }: ServiceCardProps) => {
 			exit={exit}
 			whileTap={whileTap}
 			whileHover={whileHover}
-			className="group relative flex select-none flex-col items-start justify-between rounded-xl border border-gray-700 bg-service-card px-5 py-2 text-white backdrop-blur-sm transition duration-300 ease-in-out hover:shadow-service"
+			className="group relative flex select-none flex-col items-start justify-between rounded-xl border border-gray-700 bg-service-card px-5 py-2 text-white backdrop-blur-xs transition duration-300 ease-in-out hover:shadow-service"
 			href={service.href}
 		>
 			<div className="flex w-full items-center">
@@ -123,7 +123,7 @@ function EditDropdown({ service }: ServiceCardProps) {
 								e.preventDefault();
 							}}
 						>
-							<Button className="flex w-full items-center gap-x-2 rounded-sm border-none px-2 py-1.5">
+							<Button className="flex w-full items-center gap-x-2 rounded-xs border-none px-2 py-1.5">
 								<PencilIcon className="h-3 w-3" />
 								Edit
 							</Button>

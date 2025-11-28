@@ -106,7 +106,7 @@ function CalendarWidget() {
 		>
 			<motion.div
 				className={cn(
-					"group:border flex w-full flex-col rounded-xl border border-gray-700 bg-service-card p-3 py-8 text-white backdrop-blur-sm @container md:flex-row lg:flex-col",
+					"group:border flex w-full flex-col rounded-xl border border-gray-700 bg-service-card p-3 py-8 text-white backdrop-blur-xs @container md:flex-row lg:flex-col",
 					selectedDayMovies.length > 0 || selectedDayShows.length > 0
 						? "gap-4"
 						: "",
@@ -231,7 +231,7 @@ function RenderCalendarCells({
 						return (
 							<div
 								key={`${format(cell, "yyyy-MM-dd")}-${index}`}
-								className="mt-1 h-2/3 w-2/4 select-none justify-self-center rounded pt-1 text-center text-sm text-gray-600"
+								className="mt-1 h-2/3 w-2/4 select-none justify-self-center rounded-sm pt-1 text-center text-sm text-gray-600"
 							>
 								{format(cell, "I")}
 							</div>
