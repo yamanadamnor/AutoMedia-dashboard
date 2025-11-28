@@ -59,7 +59,7 @@ export const ServiceForm = ({ service, onSubmitCommand }: ServiceFormProps) => {
 	// TODO: Reimplement autoIcon
 	// Credit: https://github.com/ajnart/homarr/blob/dev/src/components/AppShelf/AddAppShelfItem.tsx#L62-L76
 	// eslint-disable-next-line @typescript-eslint/no-unused-vars
-	const autoIcon = (name: string) => {
+	const _autoIcon = (name: string) => {
 		if (name === undefined || name === "") return null;
 		fetch(
 			`https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/${name

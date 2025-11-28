@@ -17,15 +17,7 @@ export default function LoginBtn() {
 	};
 
 	if (session && status === "authenticated") {
-		return (
-			<>
-				<Btn message="Sign out" onClick={() => signOut()} />
-			</>
-		);
+		return <Btn message="Sign out" onClick={() => signOut()} />;
 	}
-	return (
-		<>
-			<Btn message="Sign in" onClick={() => signIn("custom")} />
-		</>
-	);
+	return <Btn message="Sign in" onClick={() => signIn("custom")} />;
 }

@@ -227,7 +227,7 @@ function RenderCalendarCells({
 		<>
 			{daysOfSelectedMonth.map((row) => {
 				return row.map((cell, index) => {
-					if (index % 8 == 0) {
+					if (index % 8 === 0) {
 						return (
 							<div
 								key={`${format(cell, "yyyy-MM-dd")}-${index}`}

@@ -44,18 +44,14 @@ export function Header({ services }: HeaderProps) {
 			<CommandMenu services={services} />
 			{session?.user ? (
 				<ProfileButton />
+			) : status === "loading" ? (
+				<Avatar className="h-12 w-12 bg-[#2f2038] text-white">
+					<AvatarFallback>
+						<ArrowPathIcon className="size-5 animate-spin" />
+					</AvatarFallback>
+				</Avatar>
 			) : (
-				<>
-					{status === "loading" ? (
-						<Avatar className="h-12 w-12 bg-[#2f2038] text-white">
-							<AvatarFallback>
-								<ArrowPathIcon className="size-5 animate-spin" />
-							</AvatarFallback>
-						</Avatar>
-					) : (
-						<AuthButton />
-					)}
-				</>
+				<AuthButton />
 			)}
 		</nav>
 	);

@@ -18,7 +18,7 @@ export default async function handler(
 		try {
 			const service = await prisma.service.findFirst({
 				where: {
-					id: Array.isArray(id) ? parseInt(id[0]) : parseInt(id),
+					id: Array.isArray(id) ? parseInt(id[0], 10) : parseInt(id, 10),
 				},
 			});
 			return res.status(200).send(service);
@@ -30,7 +30,7 @@ export default async function handler(
 		try {
 			await prisma.service.delete({
 				where: {
-					id: Array.isArray(id) ? parseInt(id[0]) : parseInt(id),
+					id: Array.isArray(id) ? parseInt(id[0], 10) : parseInt(id, 10),
 				},
 			});
 			return res.status(204).end();
@@ -45,7 +45,7 @@ export default async function handler(
 			const updatedUser = await prisma.service.update({
 				data,
 				where: {
-					id: Array.isArray(id) ? parseInt(id[0]) : parseInt(id),
+					id: Array.isArray(id) ? parseInt(id[0], 10) : parseInt(id, 10),
 				},
 			});
 			return res.json(updatedUser);

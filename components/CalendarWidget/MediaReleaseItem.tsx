@@ -61,7 +61,7 @@ function MediaReleaseItem({
 				exit="hideItem"
 				className="grid grid-cols-mediaItem gap-x-4"
 			>
-				{poster && poster.remoteUrl && (
+				{poster?.remoteUrl && (
 					<div className="relative aspect-2/3 w-12 overflow-hidden md:w-20">
 						<Image src={poster.remoteUrl} fill alt="Media poster" />
 					</div>
