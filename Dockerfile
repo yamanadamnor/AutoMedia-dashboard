@@ -15,7 +15,7 @@ COPY prisma ./prisma
 RUN \
   if [ -f yarn.lock ]; then yarn --frozen-lockfile; \
   elif [ -f package-lock.json ]; then npm ci; \
-  elif [ -f pnpm-lock.yaml ]; then --mount=type=cache,id=pnpm,target=/pnpm/store && pnpm install --prod --frozen-lockfile; \
+  elif [ -f pnpm-lock.yaml ]; then pnpm install --prod --frozen-lockfile; \
   else echo "Lockfile not found." && exit 1; \
   fi \
 
