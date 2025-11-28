@@ -1,9 +1,12 @@
-FROM node:24-alpine3.22 AS base
+FROM node:24-alpine3.17 AS base
+ENV PNPM_HOME="/pnpm"
+ENV PATH="$PNPM_HOME:$PATH"
+RUN corepack enable
 
 # Install dependencies only when needed
 FROM base AS deps
 # Check https://github.com/nodejs/docker-node/tree/b4117f9333da4138b03a546ec926ef50a31506c3#nodealpine to understand why libc6-compat might be needed.
-RUN apk add --no-cache libc6-compat openssl
+RUN apk add --no-cache openssl
 WORKDIR /app
 
 # Install dependencies based on the preferred package manager
@@ -12,12 +15,9 @@ COPY prisma ./prisma
 RUN \
   if [ -f yarn.lock ]; then yarn --frozen-lockfile; \
   elif [ -f package-lock.json ]; then npm ci; \
-  elif [ -f pnpm-lock.yaml ]; then yarn global add pnpm && pnpm i --frozen-lockfile; \
+  elif [ -f pnpm-lock.yaml ]; then --mount=type=cache,id=pnpm,target=/pnpm/store && pnpm install --prod --frozen-lockfile; \
   else echo "Lockfile not found." && exit 1; \
   fi \
-  && npm install sharp \
-  && npx prisma generate \
-  && rm -rf prisma
 
 # Rebuild the source code only when needed
 FROM base AS builder
@@ -33,7 +33,7 @@ ENV DATABASE_URL=$DATABASE_URL
 ARG AUTH_URL
 ENV AUTH_URL=$AUTH_URL
 
-RUN npm run build
+RUN pnpm run build
 
 # Production image, copy all the files and run next
 FROM base AS runner
