@@ -22,8 +22,6 @@ COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 
 # # only for SSG pages
-ARG DATABASE_URL
-ENV DATABASE_URL=$DATABASE_URL
 ARG AUTH_URL
 ENV AUTH_URL=$AUTH_URL
 
