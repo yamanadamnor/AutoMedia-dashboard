@@ -1,5 +1,5 @@
 import { endOfMonth, isSameDay, startOfMonth } from "date-fns";
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, motion } from "motion/react";
 import type { RadarrResponse } from "pages/api/modules/calendar";
 import { useContext } from "react";
 import MediaReleaseItem from "@/components/CalendarWidget/MediaReleaseItem";

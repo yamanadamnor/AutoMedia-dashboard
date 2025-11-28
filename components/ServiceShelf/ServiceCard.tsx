@@ -3,7 +3,7 @@ import {
 	PencilIcon,
 	TrashIcon,
 } from "@heroicons/react/24/solid";
-import { motion } from "framer-motion";
+import { motion } from "motion/react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";

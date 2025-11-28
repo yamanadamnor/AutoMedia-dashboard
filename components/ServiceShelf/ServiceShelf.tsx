@@ -1,5 +1,5 @@
 "use client";
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, motion } from "motion/react";
 import ServiceCard from "@/components/ServiceShelf/ServiceCard";
 import type { Service } from "@/generated/client";
 

@@ -16,8 +16,8 @@ import {
 	startOfToday,
 	startOfWeek,
 } from "date-fns";
-import type { Variants } from "framer-motion";
-import { motion } from "framer-motion";
+import type { Variants } from "motion/react";
+import { motion } from "motion/react";
 import { useMemo, useState } from "react";
 import DayComponent from "@/components/CalendarWidget/DayComponent";
 import MediaReleaseInfo from "@/components/CalendarWidget/MediaReleaseInfo";
