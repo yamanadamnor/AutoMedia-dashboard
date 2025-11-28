@@ -1,5 +1,5 @@
-import type { Setting } from "@prisma/client";
 import type { SettingsFormValues } from "@/components/SettingsForm";
+import type { Setting } from "@/prisma/generated/client";
 
 export const parseSettings = (settings: Setting[]): SettingsFormValues => {
 	const settingsDeepCopy = structuredClone(settings);

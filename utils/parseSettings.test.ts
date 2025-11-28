@@ -1,5 +1,5 @@
-import type { Setting } from "@prisma/client";
 import { describe, expect, it } from "vitest";
+import type { Setting } from "@/prisma/generated/client";
 import { parseSettings } from "@/utils/parseSettings";
 
 const settingsMock = [

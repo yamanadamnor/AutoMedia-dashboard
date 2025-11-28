@@ -3,7 +3,6 @@ import {
 	PencilIcon,
 	TrashIcon,
 } from "@heroicons/react/24/solid";
-import type { Service } from "@prisma/client";
 import { motion } from "framer-motion";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
@@ -11,6 +10,7 @@ import { useSession } from "next-auth/react";
 import * as React from "react";
 import toast from "react-hot-toast";
 import { deleteService } from "@/data/service";
+import type { Service } from "@/prisma/generated/client";
 import { Button } from "@/ui/Button";
 import {
 	DropdownMenu,
@@ -92,10 +92,6 @@ export type EditDropdownProps = Pick<
 	Service,
 	"id" | "title" | "description" | "image" | "href"
 >;
-
-type EditDropdown = {
-	service: Service;
-};
 
 function EditDropdown({ service }: ServiceCardProps) {
 	const [open, setOpen] = React.useState(false);

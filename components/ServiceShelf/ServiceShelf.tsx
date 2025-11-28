@@ -1,7 +1,7 @@
 "use client";
-import type { Service } from "@prisma/client";
 import { AnimatePresence, motion } from "framer-motion";
 import ServiceCard from "@/components/ServiceShelf/ServiceCard";
+import type { Service } from "@/prisma/generated/client";
 
 export function ServiceShelf({ services }: { services: Service[] }) {
 	const serviceContainer = {

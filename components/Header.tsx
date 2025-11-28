@@ -3,10 +3,10 @@ import {
 	ArrowPathIcon,
 	Cog6ToothIcon,
 } from "@heroicons/react/24/outline";
-import type { Service } from "@prisma/client";
 import Image from "next/image";
 import { signOut, useSession } from "next-auth/react";
 import { AuthButton } from "@/components/AuthButton";
+import type { Service } from "@/prisma/generated/client";
 import { Avatar, AvatarFallback } from "@/ui/Avatar";
 import { Button } from "@/ui/Button";
 import {

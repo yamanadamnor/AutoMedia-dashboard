@@ -1,8 +1,10 @@
+/* biome-ignore-all lint/suspicious/noUnknownAtRules: Tailwind v3 */
 /**
  * This injects Tailwind's base styles and any base styles registered by
  * plugins.
  */
 /* stylelint-disable-next-line at-rule-no-unknown */
+
 @tailwind base;
 
 /**
@@ -20,28 +22,28 @@
 @tailwind utilities;
 
 @layer utilities {
-  .scrollbar::-webkit-scrollbar {
-    width: 4px;
-    height: 10px;
-  }
+	.scrollbar::-webkit-scrollbar {
+		width: 4px;
+		height: 10px;
+	}
 
-  .scrollbar::-webkit-scrollbar-track {
-    border-radius: 100vh;
-    background: none;
-  }
+	.scrollbar::-webkit-scrollbar-track {
+		border-radius: 100vh;
+		background: none;
+	}
 
-  .scrollbar::-webkit-scrollbar-thumb {
-    background: #3f3f52;
-    border-radius: 100vh;
-  }
+	.scrollbar::-webkit-scrollbar-thumb {
+		background: #3f3f52;
+		border-radius: 100vh;
+	}
 
-  .scrollbar::-webkit-scrollbar:hover {
-    width: 10px;
-  }
+	.scrollbar::-webkit-scrollbar:hover {
+		width: 10px;
+	}
 
-  .scrollbar::-webkit-scrollbar-thumb:hover {
-    background: #858585;
-  }
+	.scrollbar::-webkit-scrollbar-thumb:hover {
+		background: #858585;
+	}
 }
 
 /**
@@ -54,44 +56,44 @@
 /* stylelint-disable-next-line at-rule-no-unknown */
 @tailwind variants;
 @font-face {
-  font-family: "GT Walsheim Pro";
-  src: url("/fonts/GTWalsheimPro/GTWalsheimPro-Thin.woff2");
-  font-weight: 100;
-  font-style: normal;
+	font-family: "GT Walsheim Pro";
+	src: url("/fonts/GTWalsheimPro/GTWalsheimPro-Thin.woff2");
+	font-weight: 100;
+	font-style: normal;
 }
 
 @font-face {
-  font-family: "GT Walsheim Pro";
-  src: url("/fonts/GTWalsheimPro/GTWalsheimPro-Regular.woff2");
-  font-weight: normal;
-  font-style: normal;
+	font-family: "GT Walsheim Pro";
+	src: url("/fonts/GTWalsheimPro/GTWalsheimPro-Regular.woff2");
+	font-weight: normal;
+	font-style: normal;
 }
 
 @font-face {
-  font-family: "GT Walsheim Pro";
-  src: url("/fonts/GTWalsheimPro/GTWalsheimPro-Medium.woff2");
-  font-weight: 500;
-  font-style: normal;
+	font-family: "GT Walsheim Pro";
+	src: url("/fonts/GTWalsheimPro/GTWalsheimPro-Medium.woff2");
+	font-weight: 500;
+	font-style: normal;
 }
 
 @font-face {
-  font-family: "GT Walsheim Pro";
-  src: url("/fonts/GTWalsheimPro/GTWalsheimPro-Bold.woff2");
-  font-weight: bold;
-  font-style: normal;
+	font-family: "GT Walsheim Pro";
+	src: url("/fonts/GTWalsheimPro/GTWalsheimPro-Bold.woff2");
+	font-weight: bold;
+	font-style: normal;
 }
 
 @font-face {
-  font-family: "GT Walsheim Pro";
-  src: url("/fonts/GTWalsheimPro/GTWalsheimPro-Black.woff2");
-  font-weight: 900;
-  font-style: normal;
+	font-family: "GT Walsheim Pro";
+	src: url("/fonts/GTWalsheimPro/GTWalsheimPro-Black.woff2");
+	font-weight: 900;
+	font-style: normal;
 }
 
 body {
-  /* @apply bg-main-img; */
-  @apply bg-background;
-  @apply bg-cover;
-  @apply bg-no-repeat;
-  @apply bg-center;
+	/* @apply bg-main-img; */
+	@apply bg-background;
+	@apply bg-cover;
+	@apply bg-no-repeat;
+	@apply bg-center;
 }

@@ -1,5 +1,7 @@
 import type { DefaultSession } from "next-auth";
 import NextAuth from "next-auth";
+// biome-ignore lint/correctness/noUnusedImports: Needed for types
+import { JWT } from "next-auth/jwt";
 import type { OIDCConfig } from "next-auth/providers";
 
 declare module "next-auth" {
