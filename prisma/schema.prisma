@@ -3,7 +3,7 @@
 
 generator client {
   provider               = "prisma-client"
-  output                 = "./generated"
+  output                 = "../generated"
   moduleFormat           = "esm"
   generatedFileExtension = "ts"
   importFileExtension    = "ts"
@@ -11,7 +11,7 @@ generator client {
 
 generator zod {
   provider = "prisma-zod-generator"
-  output   = "./generated/zod"
+  output   = "../generated/zod"
   config   = "./zod-generator.config.json"
 }
 

@@ -1,5 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from "next";
-import type { Prisma, Service } from "@/prisma/generated/client";
+import type { Prisma, Service } from "@/generated/client";
 
 import { prisma } from "@/server/prisma";
 

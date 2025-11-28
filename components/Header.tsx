@@ -6,7 +6,7 @@ import {
 import Image from "next/image";
 import { signOut, useSession } from "next-auth/react";
 import { AuthButton } from "@/components/AuthButton";
-import type { Service } from "@/prisma/generated/client";
+import type { Service } from "@/generated/client";
 import { Avatar, AvatarFallback } from "@/ui/Avatar";
 import { Button } from "@/ui/Button";
 import {

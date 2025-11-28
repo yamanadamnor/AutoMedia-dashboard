@@ -19,7 +19,7 @@ const config: runtime.GetPrismaClientConfig = {
 	engineVersion: "f09f2815f091dbba658cdcd2264306d88bb5bda6",
 	activeProvider: "sqlite",
 	inlineSchema:
-		'// This is your Prisma schema file,\n// learn more about it in the docs: https://pris.ly/d/prisma-schema\n\ngenerator client {\n  provider               = "prisma-client"\n  output                 = "./generated"\n  moduleFormat           = "esm"\n  generatedFileExtension = "ts"\n  importFileExtension    = "ts"\n}\n\ngenerator zod {\n  provider = "prisma-zod-generator"\n  output   = "./generated/zod"\n  config   = "./zod-generator.config.json"\n}\n\ndatasource db {\n  provider = "sqlite"\n}\n\nmodel Service {\n  id          Int      @id @default(autoincrement())\n  title       String\n  description String\n  image       String\n  href        String\n  createdAt   DateTime @default(now())\n}\n\nmodel Setting {\n  key   String @id @unique\n  value String\n}\n',
+		'// This is your Prisma schema file,\n// learn more about it in the docs: https://pris.ly/d/prisma-schema\n\ngenerator client {\n  provider               = "prisma-client"\n  output                 = "../generated"\n  moduleFormat           = "esm"\n  generatedFileExtension = "ts"\n  importFileExtension    = "ts"\n}\n\ngenerator zod {\n  provider = "prisma-zod-generator"\n  output   = "../generated/zod"\n  config   = "./zod-generator.config.json"\n}\n\ndatasource db {\n  provider = "sqlite"\n}\n\nmodel Service {\n  id          Int      @id @default(autoincrement())\n  title       String\n  description String\n  image       String\n  href        String\n  createdAt   DateTime @default(now())\n}\n\nmodel Setting {\n  key   String @id @unique\n  value String\n}\n',
 	runtimeDataModel: {
 		models: {},
 		enums: {},

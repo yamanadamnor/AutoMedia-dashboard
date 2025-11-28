@@ -1,10 +1,10 @@
 "use server";
 
-import type { Prisma } from "@/prisma/generated/client";
+import type { Prisma } from "@/generated/client";
 import {
 	ServiceUncheckedCreateInputObjectZodSchema,
 	ServiceUpdateInputObjectZodSchema,
-} from "@/prisma/generated/zod/schemas";
+} from "@/generated/zod/schemas";
 import { prisma } from "@/server/prisma";
 
 export async function getService(id: number) {

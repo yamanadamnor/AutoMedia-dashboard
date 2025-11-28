@@ -1,7 +1,7 @@
 import Image from "next/image";
 import * as React from "react";
 
-import type { Service } from "@/prisma/generated/client";
+import type { Service } from "@/generated/client";
 import { Button } from "@/ui/Button";
 import {
 	CommandDialog,

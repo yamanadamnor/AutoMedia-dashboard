@@ -15,7 +15,8 @@
 			"@/utils/*": ["utils/*"],
 			"@/styles/*": ["styles/*"],
 			"@/server/*": ["server/*"],
-			"@/prisma/*": ["prisma/*"]
+			"@/prisma/*": ["prisma/*"],
+			"@/generated/*": ["generated/*"]
 		},
 		"composite": false,
 		"target": "es6",

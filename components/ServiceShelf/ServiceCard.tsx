@@ -10,7 +10,7 @@ import { useSession } from "next-auth/react";
 import * as React from "react";
 import toast from "react-hot-toast";
 import { deleteService } from "@/data/service";
-import type { Service } from "@/prisma/generated/client";
+import type { Service } from "@/generated/client";
 import { Button } from "@/ui/Button";
 import {
 	DropdownMenu,

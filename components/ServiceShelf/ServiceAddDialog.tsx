@@ -2,7 +2,7 @@
 import type * as DialogPrimitive from "@radix-ui/react-dialog";
 import * as React from "react";
 import { ServiceForm } from "@/components/ServiceShelf/ServiceForm";
-import type { Service } from "@/prisma/generated/client";
+import type { Service } from "@/generated/client";
 import { Button } from "@/ui/Button";
 import {
 	Dialog,

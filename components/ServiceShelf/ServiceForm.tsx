@@ -5,7 +5,7 @@ import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import * as z from "zod";
 import { addService, updateService } from "@/data/service";
-import type { Service } from "@/prisma/generated/client";
+import type { Service } from "@/generated/client";
 import {
 	Form,
 	FormControl,
