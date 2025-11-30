@@ -48,7 +48,7 @@ export const settingsFormSchema = z
 			ctx,
 		) => {
 			const apiKeyValidation = z.string().min(10);
-			const urlValidation = z.string().url();
+			const urlValidation = z.url();
 
 			// Validate SONARR_URL and SONARR_API_KEY if ENABLE_SONARR is true
 			if (ENABLE_SONARR) {

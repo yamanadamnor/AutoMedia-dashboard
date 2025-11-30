@@ -21,7 +21,7 @@ export const serviceFormSchema = z.object({
 	title: z.string().min(1),
 	description: z.string().min(1),
 	image: z.string(),
-	href: z.string().url(),
+	href: z.url(),
 });
 
 export type ServiceFormValues = z.infer<typeof serviceFormSchema>;
