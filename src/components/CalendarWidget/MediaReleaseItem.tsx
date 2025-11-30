@@ -1,7 +1,7 @@
 import { format, formatISO } from "date-fns";
 import { motion } from "motion/react";
 import Image from "next/image";
-import type { MediaCover, MediaType } from "pages/api/modules/calendar";
+import type { MediaCover, MediaType } from "@/pages/api/modules/calendar";
 import { Button } from "@/ui/Button";
 import {
 	Tooltip,

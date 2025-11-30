@@ -1,5 +1,5 @@
 import { format } from "date-fns";
-import type { MediaType } from "pages/api/modules/calendar";
+import type { MediaType } from "@/pages/api/modules/calendar";
 export function mediaFetcher<T>(
 	url: string,
 	mediaType: MediaType,

@@ -1,5 +1,5 @@
 import { isEqual, startOfDay } from "date-fns";
-import type { SonarrResponse } from "pages/api/modules/calendar";
+import type { SonarrResponse } from "@/pages/api/modules/calendar";
 
 export function filterTvShowsByDate(allTvShows: SonarrResponse[], date: Date) {
 	return allTvShows.filter((media) => {

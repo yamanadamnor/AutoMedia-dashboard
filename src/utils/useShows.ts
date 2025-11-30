@@ -1,5 +1,5 @@
-import type { MediaType, SonarrResponse } from "pages/api/modules/calendar";
 import useSWR from "swr";
+import type { MediaType, SonarrResponse } from "@/pages/api/modules/calendar";
 import { mediaFetcher } from "./mediaFetcher";
 
 export function useShows(startDate: Date, endDate: Date) {

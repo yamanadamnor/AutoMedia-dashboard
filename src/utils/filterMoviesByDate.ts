@@ -1,5 +1,5 @@
 import { isEqual, startOfDay } from "date-fns";
-import type { RadarrResponse } from "pages/api/modules/calendar";
+import type { RadarrResponse } from "@/pages/api/modules/calendar";
 
 export function filterMoviesByDate(allMovies: RadarrResponse[], date: Date) {
 	return allMovies.filter((media) => {

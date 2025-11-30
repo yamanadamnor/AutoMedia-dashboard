@@ -1,5 +1,5 @@
-import type { MediaType, RadarrResponse } from "pages/api/modules/calendar";
 import useSWR from "swr";
+import type { MediaType, RadarrResponse } from "@/pages/api/modules/calendar";
 import { mediaFetcher } from "./mediaFetcher";
 
 export function useMovies(startDate: Date, endDate: Date) {
