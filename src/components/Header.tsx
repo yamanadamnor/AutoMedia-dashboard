@@ -4,9 +4,9 @@ import {
 	Cog6ToothIcon,
 } from "@heroicons/react/24/outline";
 import Image from "next/image";
-import { signOut, useSession } from "next-auth/react";
 import { AuthButton } from "@/components/AuthButton";
 import type { Service } from "@/generated/client";
+import { authClient } from "@/lib/auth-client";
 import { Avatar, AvatarFallback } from "@/ui/Avatar";
 import { Button } from "@/ui/Button";
 import {
@@ -31,7 +31,7 @@ type HeaderProps = {
 	services: Service[];
 };
 export function Header({ services }: HeaderProps) {
-	const { data: session, status } = useSession();
+	const { data: session, isPending } = authClient.useSession();
 	return (
 		<nav className="flex w-full items-center justify-between">
 			<Image
@@ -44,7 +44,7 @@ export function Header({ services }: HeaderProps) {
 			<CommandMenu services={services} />
 			{session?.user ? (
 				<ProfileButton />
-			) : status === "loading" ? (
+			) : isPending ? (
 				<Avatar className="h-12 w-12 bg-[#2f2038] text-white">
 					<AvatarFallback>
 						<ArrowPathIcon className="size-5 animate-spin" />
@@ -58,7 +58,7 @@ export function Header({ services }: HeaderProps) {
 }
 
 const ProfileButton = () => {
-	const { data: session } = useSession();
+	const { data: session } = authClient.useSession();
 	return (
 		<DropdownMenu>
 			<DropdownMenuTrigger>
@@ -91,7 +91,7 @@ const ProfileButton = () => {
 					)}
 					<DropdownMenuItem
 						className="gap-x-4 text-red-300 hover:bg-[#2b2c3a]"
-						onClick={() => signOut()}
+						onClick={() => authClient.signOut()}
 					>
 						<ArrowLeftEndOnRectangleIcon className="h-5 w-5" />
 						Sign out
