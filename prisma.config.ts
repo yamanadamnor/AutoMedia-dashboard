@@ -7,6 +7,6 @@ export default defineConfig({
 		seed: "tsx src/prisma/seed.ts",
 	},
 	datasource: {
-		url: "file:../../config/dashboard.db",
+		url: "file:./config/dashboard.db",
 	},
 });
