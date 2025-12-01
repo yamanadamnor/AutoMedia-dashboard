@@ -1,14 +1,12 @@
 import { Suspense } from "react";
 import { Toaster } from "react-hot-toast";
 import { CalendarWidget } from "@/components/ClientComponents";
-import { Header } from "@/components/Header";
+import { HeaderWrapper } from "@/components/header-wrapper";
 import { ServiceCardSkeletons } from "@/components/ServiceShelf/ServiceCardSkeletons";
 import { ServiceShelfWrapper } from "@/components/ServiceShelf/ServiceShelfWrapper";
-import { getServices } from "@/data/service";
 import { cn } from "@/utils/cn";
 
-export default async function Page() {
-	const services = await getServices();
+export default function Page() {
 	return (
 		<div className="center justify-items-centerr relative z-auto mx-auto grid h-full min-h-screen max-w-8xl grid-cols-app grid-rows-app place-content-start gap-x-6 gap-y-8 text-white lg:gap-x-8">
 			<Toaster
@@ -31,7 +29,7 @@ export default async function Page() {
 				}}
 			/>
 			<div className="col-span-7 col-start-2 row-span-1 row-start-1 flex h-24 w-full items-center justify-between py-6">
-				<Header services={services} />
+				<HeaderWrapper />
 			</div>
 
 			<div className="lg:row-end-full col-start-2 -col-end-2 w-full lg:col-end-4 xl:col-end-3">
