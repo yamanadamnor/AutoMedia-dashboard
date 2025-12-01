@@ -48,9 +48,6 @@ jobs:
         uses: docker/build-push-action@v6
         with:
           context: .
-          build-args: |
-            "DATABASE_URL=${{ secrets.DATABASE_URL }}"
-            "AUTH_URL=${{ secrets.NEXTAUTH_URL }}"
           push: ${{ github.event_name != 'pull_request' }}
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}

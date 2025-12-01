@@ -5,7 +5,5 @@ services:
     build:
       context: ./
       dockerfile: Dockerfile
-      args:
-        - AUTH_URL=$AUTH_URL
     ports:
       - "3344:3344"
