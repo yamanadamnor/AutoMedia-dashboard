@@ -62,7 +62,7 @@ export const CommandMenu = ({ services }: { services: Service[] }) => {
 		<>
 			<Button
 				onClick={() => setOpen(true)}
-				className="ml-auto mr-10 hidden gap-x-2 bg-service-card px-5 py-2 text-zinc-500 md:flex md:items-center"
+				className="hidden gap-x-2 bg-service-card px-5 py-2 text-zinc-500 md:flex md:items-center"
 			>
 				Press <Kbd className="bg-zinc-700">⌘</Kbd>
 				<Kbd className="bg-zinc-700">K</Kbd> to search

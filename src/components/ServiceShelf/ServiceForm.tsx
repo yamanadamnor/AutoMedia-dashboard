@@ -36,7 +36,9 @@ export const ServiceForm = ({ service, onSubmitCommand }: ServiceFormProps) => {
 	const form = useForm<ServiceFormValues>({
 		resolver: zodResolver(serviceFormSchema),
 		defaultValues: {
-			...service,
+			title: service?.title ?? "",
+			description: service?.description ?? "",
+			href: service?.href ?? "",
 			image: service?.image ?? "/img/logo-white-muted.svg",
 		},
 	});

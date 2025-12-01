@@ -1,3 +1,4 @@
+"use client";
 import {
 	ArrowLeftEndOnRectangleIcon,
 	ArrowPathIcon,
@@ -16,7 +17,9 @@ import {
 	DropdownMenuPortal,
 	DropdownMenuTrigger,
 } from "@/ui/DropdownMenu";
+import { ServiceAddDialog } from "./ClientComponents";
 import { CommandMenu } from "./CommandMenu";
+import Hero from "./Hero";
 import { SettingsDialog } from "./SettingsDialog";
 
 export const getInitials = (name: string, limit = 3) => {
@@ -33,26 +36,41 @@ type HeaderProps = {
 export function Header({ services }: HeaderProps) {
 	const { data: session, isPending } = authClient.useSession();
 	return (
-		<nav className="flex w-full items-center justify-between">
-			<Image
-				src="/img/logo-white.svg"
-				className="select-none opacity-80"
-				width={35}
-				height={35}
-				alt="logo"
-			/>
-			<CommandMenu services={services} />
-			{session?.user ? (
-				<ProfileButton />
-			) : isPending ? (
-				<Avatar className="h-12 w-12 bg-[#2f2038] text-white">
-					<AvatarFallback>
-						<ArrowPathIcon className="size-5 animate-spin" />
-					</AvatarFallback>
-				</Avatar>
-			) : (
-				<AuthButton />
-			)}
+		<nav className="flex w-full items-center justify-between gap-4">
+			<div className="flex items-center gap-6">
+				<Image
+					src="/img/logo-white.svg"
+					className="select-none opacity-80"
+					width={35}
+					height={35}
+					alt="logo"
+				/>
+				<Hero />
+			</div>
+
+			<div className="flex items-center gap-4">
+				{session?.user.isAdmin && (
+					<div className="text-white">
+						<ServiceAddDialog>
+							<Button>Add Service</Button>
+						</ServiceAddDialog>
+					</div>
+				)}
+
+				<CommandMenu services={services} />
+
+				{session?.user ? (
+					<ProfileButton />
+				) : isPending ? (
+					<Avatar className="h-12 w-12 bg-[#2f2038] text-white">
+						<AvatarFallback>
+							<ArrowPathIcon className="size-5 animate-spin" />
+						</AvatarFallback>
+					</Avatar>
+				) : (
+					<AuthButton />
+				)}
+			</div>
 		</nav>
 	);
 }

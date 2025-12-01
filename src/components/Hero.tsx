@@ -4,7 +4,7 @@ import { authClient } from "@/lib/auth-client";
 const Hero = () => {
 	const { data: session } = authClient.useSession();
 
-	const firstName = session?.user?.name?.split(" ")[0] ?? "";
+	const [firstName, lastname] = session?.user?.name?.split(" ") ?? "";
 
 	if (!session) return null;
 
@@ -23,8 +23,9 @@ const Hero = () => {
 			}}
 		>
 			<div className="w-full">
-				<h1 className="font-ligh text-2xl leading-relaxed sm:text-4xl sm:leading-20">
-					Welcome <span className="font-bold italic">{firstName}</span>
+				<h1 className="font-light text-xl leading-relaxed">
+					Welcome{" "}
+					<span className="font-bold italic">{`${firstName} ${lastname}`}</span>
 				</h1>
 			</div>
 		</motion.div>

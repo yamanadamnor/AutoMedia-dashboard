@@ -1,34 +1,56 @@
-import { headers } from "next/headers";
 import { Suspense } from "react";
-import { ServiceAddDialog } from "@/components/ClientComponents";
+import { Toaster } from "react-hot-toast";
+import { CalendarWidget } from "@/components/ClientComponents";
+import { Header } from "@/components/Header";
 import { ServiceCardSkeletons } from "@/components/ServiceShelf/ServiceCardSkeletons";
 import { ServiceShelfWrapper } from "@/components/ServiceShelf/ServiceShelfWrapper";
-import { auth } from "@/lib/auth";
-import { Button } from "@/ui/Button";
+import { getServices } from "@/data/service";
+import { cn } from "@/utils/cn";
 
 export default async function Page() {
-	const session = await auth.api.getSession({
-		headers: await headers(),
-	});
-
-	if (!session) {
-		return "Unauthorized";
-	}
-
+	const services = await getServices();
 	return (
-		<>
-			<div className="flex items-center">
-				{session?.user.isAdmin && (
-					<div className="text-white">
-						<ServiceAddDialog>
-							<Button>Add Service</Button>
-						</ServiceAddDialog>
-					</div>
-				)}
+		<div className="center justify-items-centerr relative z-auto mx-auto grid h-full min-h-screen max-w-8xl grid-cols-app grid-rows-app place-content-start gap-x-6 gap-y-8 text-white lg:gap-x-8">
+			<Toaster
+				position="top-right"
+				toastOptions={{
+					success: {
+						style: {
+							borderRadius: "10px",
+							background: "#20202c",
+							color: "#fff",
+						},
+					},
+					error: {
+						style: {
+							borderRadius: "10px",
+							background: "#20202c",
+							color: "#fff",
+						},
+					},
+				}}
+			/>
+			<div className="col-span-7 col-start-2 row-span-1 row-start-1 flex h-24 w-full items-center justify-between py-6">
+				<Header services={services} />
 			</div>
-			<Suspense fallback={<ServiceCardSkeletons />}>
-				<ServiceShelfWrapper />
-			</Suspense>
-		</>
+
+			<div className="lg:row-end-full col-start-2 -col-end-2 w-full lg:col-end-4 xl:col-end-3">
+				<div className="w-full">
+					<CalendarWidget />
+				</div>
+			</div>
+
+			<main
+				className={cn(
+					"col-start-2 -col-end-2 flex w-full flex-col gap-y-10",
+					"lg:col-span-5 lg:col-start-4 lg:row-start-2",
+					"xl:col-span-6 xl:col-start-3",
+				)}
+			>
+				<Suspense fallback={<ServiceCardSkeletons />}>
+					<ServiceShelfWrapper />
+				</Suspense>
+			</main>
+		</div>
 	);
 }

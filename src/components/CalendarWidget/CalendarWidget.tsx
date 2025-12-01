@@ -124,7 +124,7 @@ function CalendarWidget() {
 								<h2 className="select-none font-thin">
 									{format(selectedDay, "yyyy")}
 								</h2>
-								<h2 className="leading-0 select-none text-2xl">
+								<h2 className="select-none text-2xl">
 									{format(selectedDay, "MMMM")}
 								</h2>
 							</div>
