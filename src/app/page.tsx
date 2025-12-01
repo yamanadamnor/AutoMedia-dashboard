@@ -18,11 +18,13 @@ export default async function Page() {
 	return (
 		<>
 			<div className="flex items-center">
-				<div className="text-white">
-					<ServiceAddDialog>
-						<Button>Add Service</Button>
-					</ServiceAddDialog>
-				</div>
+				{session?.user.isAdmin && (
+					<div className="text-white">
+						<ServiceAddDialog>
+							<Button>Add Service</Button>
+						</ServiceAddDialog>
+					</div>
+				)}
 			</div>
 			<Suspense fallback={<ServiceCardSkeletons />}>
 				<ServiceShelfWrapper />
