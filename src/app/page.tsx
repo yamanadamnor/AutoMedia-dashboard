@@ -1,12 +1,19 @@
+import { headers } from "next/headers";
 import { Suspense } from "react";
-import { auth } from "@/auth";
 import { ServiceAddDialog } from "@/components/ClientComponents";
 import { ServiceCardSkeletons } from "@/components/ServiceShelf/ServiceCardSkeletons";
 import { ServiceShelfWrapper } from "@/components/ServiceShelf/ServiceShelfWrapper";
+import { auth } from "@/lib/auth";
 import { Button } from "@/ui/Button";
 
 export default async function Page() {
-	const session = await auth();
+	const session = await auth.api.getSession({
+		headers: await headers(),
+	});
+
+	if (!session) {
+		return "Unauthorized";
+	}
 
 	return (
 		<>

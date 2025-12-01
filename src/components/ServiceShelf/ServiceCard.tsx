@@ -6,11 +6,11 @@ import {
 import { motion } from "motion/react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { useSession } from "next-auth/react";
 import * as React from "react";
 import toast from "react-hot-toast";
 import { deleteService } from "@/data/service";
 import type { Service } from "@/generated/client";
+import { authClient } from "@/lib/auth-client";
 import { Button } from "@/ui/Button";
 import {
 	DropdownMenu,
@@ -26,7 +26,7 @@ type ServiceCardProps = {
 };
 
 const ServiceCard = ({ service }: ServiceCardProps) => {
-	const { data: session } = useSession();
+	const { data: session } = authClient.useSession();
 
 	const initial = { opacity: 0, y: -40 };
 

@@ -1,8 +1,8 @@
 import { motion } from "motion/react";
-import { useSession } from "next-auth/react";
+import { authClient } from "@/lib/auth-client";
 
 const Hero = () => {
-	const { data: session } = useSession();
+	const { data: session } = authClient.useSession();
 
 	const firstName = session?.user?.name?.split(" ")[0] ?? "";
 
