@@ -1,9 +1,6 @@
 ignoredBuiltDependencies:
 
 onlyBuiltDependencies:
-  - '@prisma/engines'
   - esbuild
   - sharp
   - better-sqlite3
-  - prisma
-  - prisma-zod-generator
