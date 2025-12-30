@@ -1,58 +1,39 @@
 "use server";
 
-import type { Prisma } from "@/generated/client";
+import { eq } from "drizzle-orm";
+import { db } from "@/db";
+import { service } from "@/db/schema";
 import {
-	ServiceUncheckedCreateInputObjectZodSchema,
-	ServiceUpdateInputObjectZodSchema,
-} from "@/generated/zod/schemas";
-import { prisma } from "@/server/prisma";
+	type ServiceInsert,
+	type ServiceUpdate,
+	serviceUpdateSchema,
+} from "@/db/zod-schemas";
 
 export async function getService(id: number) {
-	const service = await prisma.service.findUnique({
-		where: { id },
-	});
-	return service;
+	const result = await db.select().from(service).where(eq(service.id, id));
+	return result[0];
 }
 
 export async function getServices() {
-	const services = await prisma.service.findMany();
-
-	return services;
+	return await db.select().from(service);
 }
 
-export async function updateService(
-	id: number,
-	data: Prisma.ServiceUpdateInput,
-) {
-	const parsed = ServiceUpdateInputObjectZodSchema.safeParse(data);
+export async function updateService(id: number, data: ServiceUpdate) {
+	const parsed = serviceUpdateSchema.safeParse(data);
+	if (!parsed) {
+		return false;
+	}
+	await db.update(service).set(data).where(eq(service.id, id));
+}
 
-	if (!parsed.success) {
+export async function addService(data: ServiceInsert) {
+	const parsed = serviceUpdateSchema.safeParse(data);
+	if (!parsed) {
 		return false;
 	}
 
-	await prisma.service.update({
-		data,
-		where: {
-			id: id,
-		},
-	});
-}
-
-export async function addService(data: Prisma.ServiceCreateInput) {
-	const parsed = ServiceUncheckedCreateInputObjectZodSchema.safeParse(data);
-
-	if (!parsed.success) {
-		return false;
-	}
-
-	await prisma.service.create({
-		data,
-	});
+	await db.insert(service).values(data);
 }
 export async function deleteService(id: number) {
-	await prisma.service.delete({
-		where: {
-			id: id,
-		},
-	});
+	await db.delete(service).where(eq(service.id, id));
 }
