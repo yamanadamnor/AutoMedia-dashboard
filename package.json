@@ -13,7 +13,8 @@
 		"drizzle:studio": "drizzle-kit studio",
 		"drizzle:push": "drizzle-kit push",
 		"drizzle:generate": "drizzle-kit generate",
-		"drizzle:migrate": "drizzle-kit migrate"
+		"drizzle:migrate": "drizzle-kit migrate",
+		"drizzle:start:migrate:prod": "drizzle-kit migrate && pnpm start"
 	},
 	"dependencies": {
 		"@heroicons/react": "^2.2.0",
