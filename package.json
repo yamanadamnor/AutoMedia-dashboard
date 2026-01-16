@@ -9,7 +9,7 @@
 		"build": "next build",
 		"format-and-lint": "biome check",
 		"check-types": "tsc --noEmit",
-		"start:prod": "drizzle-kit migrate && node server.js",
+		"start:prod": "node server.js",
 		"drizzle:studio": "drizzle-kit studio",
 		"drizzle:push": "drizzle-kit push",
 		"drizzle:generate": "drizzle-kit generate",

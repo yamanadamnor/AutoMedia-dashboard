@@ -56,4 +56,4 @@ ENV PORT=3344
 EXPOSE 3344
 
 # run migrate and seed here
-CMD ["npm", "run", "start:migrate:prod"]
+CMD ["npm", "run", "start:prod"]
