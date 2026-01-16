@@ -16,7 +16,7 @@ async function seed() {
 
 	const insertValues = Object.entries(settings).map((entry) => ({
 		key: entry[0],
-		value: entry[1],
+		value: String(entry[1]),
 	}));
 
 	await db.insert(setting).values(insertValues).onConflictDoNothing({

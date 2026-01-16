@@ -9,7 +9,7 @@ import { useRouter } from "next/navigation";
 import * as React from "react";
 import toast from "react-hot-toast";
 import { deleteService } from "@/data/service";
-import type { Service } from "@/generated/client";
+import type { ServiceSelect } from "@/db/zod-schemas";
 import { authClient } from "@/lib/auth-client";
 import { Button } from "@/ui/Button";
 import {
@@ -22,7 +22,7 @@ import {
 import { ServiceAddDialog } from "./ServiceAddDialog";
 
 type ServiceCardProps = {
-	service: Service;
+	service: ServiceSelect;
 };
 
 const ServiceCard = ({ service }: ServiceCardProps) => {
@@ -89,7 +89,7 @@ const ServiceCard = ({ service }: ServiceCardProps) => {
 
 export default ServiceCard;
 export type EditDropdownProps = Pick<
-	Service,
+	ServiceSelect,
 	"id" | "title" | "description" | "image" | "href"
 >;
 

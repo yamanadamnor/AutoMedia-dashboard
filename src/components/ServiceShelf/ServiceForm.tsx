@@ -5,7 +5,7 @@ import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import * as z from "zod";
 import { addService, updateService } from "@/data/service";
-import type { Service } from "@/generated/client";
+import type { ServiceSelect } from "@/db/zod-schemas";
 import {
 	Form,
 	FormControl,
@@ -28,7 +28,7 @@ export type ServiceFormValues = z.infer<typeof serviceFormSchema>;
 
 // eslint-disable-next-line @typescript-eslint/consistent-type-definitions
 export type ServiceFormProps = {
-	service?: Service;
+	service?: ServiceSelect;
 	onSubmitCommand: () => void;
 };
 

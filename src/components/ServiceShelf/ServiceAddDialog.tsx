@@ -2,7 +2,7 @@
 import type * as DialogPrimitive from "@radix-ui/react-dialog";
 import * as React from "react";
 import { ServiceForm } from "@/components/ServiceShelf/ServiceForm";
-import type { Service } from "@/generated/client";
+import type { ServiceSelect } from "@/db/zod-schemas";
 import { Button } from "@/ui/Button";
 import {
 	Dialog,
@@ -15,7 +15,7 @@ import {
 } from "@/ui/Dialog";
 
 type ServiceAddDialogProps = {
-	service?: Service;
+	service?: ServiceSelect;
 	children: React.ReactNode;
 } & React.ComponentPropsWithoutRef<typeof DialogPrimitive.Root>;
 

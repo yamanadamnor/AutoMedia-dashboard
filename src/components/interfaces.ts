@@ -1,5 +1,5 @@
 import type { StaticImageData } from "next/image";
-import type { Prisma } from "@/generated/client";
+import type { ServiceInsert } from "@/db/zod-schemas";
 
 export type IService = {
 	id: string;
@@ -15,7 +15,7 @@ export type IService = {
 export type IServiceCard = {
 	id: number;
 	inEdit?: boolean;
-} & Prisma.ServiceCreateInput;
+} & ServiceInsert;
 
 export type ISonarrReleases = {
 	airDateUtc: Date;

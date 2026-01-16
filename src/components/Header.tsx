@@ -6,7 +6,7 @@ import {
 } from "@heroicons/react/24/outline";
 import Image from "next/image";
 import { AuthButton } from "@/components/AuthButton";
-import type { Service } from "@/generated/client";
+import type { ServiceSelect } from "@/db/zod-schemas";
 import { authClient } from "@/lib/auth-client";
 import { Avatar, AvatarFallback } from "@/ui/Avatar";
 import { Button } from "@/ui/Button";
@@ -31,7 +31,7 @@ export const getInitials = (name: string, limit = 3) => {
 };
 
 type HeaderProps = {
-	services: Service[];
+	services: ServiceSelect[];
 };
 export function Header({ services }: HeaderProps) {
 	const { data: session, isPending } = authClient.useSession();
