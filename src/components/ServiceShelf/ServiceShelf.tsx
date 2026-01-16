@@ -1,9 +1,9 @@
 "use client";
 import { AnimatePresence, motion } from "motion/react";
 import ServiceCard from "@/components/ServiceShelf/ServiceCard";
-import type { Service } from "@/generated/client";
+import type { ServiceSelect } from "@/db/zod-schemas";
 
-export function ServiceShelf({ services }: { services: Service[] }) {
+export function ServiceShelf({ services }: { services: ServiceSelect[] }) {
 	const serviceContainer = {
 		hidden: { opacity: 0 },
 		show: {

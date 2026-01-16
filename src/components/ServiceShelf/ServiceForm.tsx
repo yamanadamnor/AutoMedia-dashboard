@@ -5,7 +5,7 @@ import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import * as z from "zod";
 import { addService, updateService } from "@/data/service";
-import type { Service } from "@/generated/client";
+import type { ServiceSelect } from "@/db/zod-schemas";
 import {
 	Form,
 	FormControl,
@@ -28,7 +28,7 @@ export type ServiceFormValues = z.infer<typeof serviceFormSchema>;
 
 // eslint-disable-next-line @typescript-eslint/consistent-type-definitions
 export type ServiceFormProps = {
-	service?: Service;
+	service?: ServiceSelect;
 	onSubmitCommand: () => void;
 };
 
@@ -56,30 +56,6 @@ export const ServiceForm = ({ service, onSubmitCommand }: ServiceFormProps) => {
 		onSubmitCommand();
 		router.refresh();
 		toast.success(`Service ${values.title} added`);
-	};
-
-	// TODO: Reimplement autoIcon
-	// Credit: https://github.com/ajnart/homarr/blob/dev/src/components/AppShelf/AddAppShelfItem.tsx#L62-L76
-	// eslint-disable-next-line @typescript-eslint/no-unused-vars
-	const _autoIcon = (name: string) => {
-		if (name === undefined || name === "") return null;
-		fetch(
-			`https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/${name
-				.replace(/\s+/g, "-")
-				.toLowerCase()
-				.replace(/^dash\.$/, "dashdot")}.png`,
-		)
-			.then((res) => {
-				if (res.ok) {
-					form.setValue("image", res.url);
-				}
-			})
-			.catch((err) => {
-				// eslint-disable-next-line no-console
-				console.error(err);
-			});
-
-		return false;
 	};
 
 	return (

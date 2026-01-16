@@ -1,7 +1,7 @@
 import Image from "next/image";
 import * as React from "react";
 
-import type { Service } from "@/generated/client";
+import type { ServiceSelect } from "@/db/zod-schemas";
 import { Button } from "@/ui/Button";
 import {
 	CommandDialog,
@@ -13,7 +13,7 @@ import {
 } from "@/ui/Command";
 import { cn } from "@/utils/cn";
 
-export const CommandMenu = ({ services }: { services: Service[] }) => {
+export const CommandMenu = ({ services }: { services: ServiceSelect[] }) => {
 	const [open, setOpen] = React.useState(false);
 	const [search, setSearch] = React.useState("");
 	const [pages, setPages] = React.useState<string[]>([]);

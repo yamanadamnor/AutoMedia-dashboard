@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import type { Setting } from "@/generated/client";
+import type { SettingSelect } from "@/db/zod-schemas";
 import { parseSettings } from "@/utils/parseSettings";
 
 const settingsMock = [
@@ -13,7 +13,7 @@ const settingsMock = [
 	{ key: "ENABLE_JELLYFIN", value: "false" },
 	{ key: "JELLYFIN_API_KEY", value: "jjjjjjjjjjjj" },
 	{ key: "JELLYFIN_URL", value: "http://kjkjkjkjkjk" },
-] as Setting[];
+] as SettingSelect[];
 
 const parsedSettingsMock = {
 	theme: "dark",

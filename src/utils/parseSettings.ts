@@ -1,7 +1,9 @@
 import type { SettingsFormValues } from "@/components/SettingsForm";
-import type { Setting } from "@/generated/client";
+import type { SettingSelect } from "@/db/zod-schemas";
 
-export const parseSettings = (settings: Setting[]): SettingsFormValues => {
+export const parseSettings = (
+	settings: SettingSelect[],
+): SettingsFormValues => {
 	const settingsDeepCopy = structuredClone(settings);
 	const parsedSettings = Object.fromEntries(
 		settingsDeepCopy.map((item) => [

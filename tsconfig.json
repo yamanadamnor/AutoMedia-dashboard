@@ -1,14 +1,13 @@
 {
 	"display": "Default",
 	"compilerOptions": {
-		"baseUrl": ".",
 		"plugins": [
 			{
 				"name": "next"
 			}
 		],
 		"paths": {
-			"@/*": ["src/*"]
+			"@/*": ["./src/*"]
 		},
 		"composite": false,
 		"target": "es6",
@@ -23,7 +22,7 @@
 		"forceConsistentCasingInFileNames": true,
 		"inlineSources": false,
 		"module": "esnext",
-		"moduleResolution": "node",
+		"moduleResolution": "bundler",
 		"noUnusedLocals": false,
 		"noUnusedParameters": false,
 		"noEmit": true,

@@ -1,26 +1,21 @@
 "use server";
 
-import { settingsFormSchema } from "@/components/SettingsForm";
-import type { Prisma } from "@/generated/client";
-import { prisma } from "@/server/prisma";
+import { eq } from "drizzle-orm";
+import { db } from "@/db";
+import { setting } from "@/db/schema";
+import { type SettingUpdate, settingUpdateSchema } from "@/db/zod-schemas";
 
 export async function getSettings() {
-	const settings = await prisma.setting.findMany();
+	const settings = await db.select().from(setting);
 	return settings;
 }
 
-export async function updateSetting(
-	key: string,
-	data: Prisma.SettingUpdateInput,
-) {
-	const parsed = settingsFormSchema.safeParse(data);
+export async function updateSetting(key: string, data: SettingUpdate) {
+	const parsed = settingUpdateSchema.safeParse(data);
 
 	if (!parsed.success) {
 		return false;
 	}
 
-	await prisma.setting.update({
-		data,
-		where: { key },
-	});
+	await db.update(setting).set(data).where(eq(setting.key, key));
 }
