@@ -3,6 +3,8 @@ import Image from "next/image";
 import { Footer } from "@/components/ClientComponents";
 import { TailwindBreakpointIndicator } from "@/components/TailwindBreakpointIndicator";
 
+export const dynamic = "force-dynamic";
+
 export default async function Layout({
 	children,
 }: {
