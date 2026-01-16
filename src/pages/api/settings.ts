@@ -1,5 +1,8 @@
+import { sql } from "drizzle-orm";
 import type { NextApiRequest, NextApiResponse } from "next";
 import type { SettingsFormValues } from "@/components/SettingsForm";
+import { db } from "@/db";
+import { setting } from "@/db/schema";
 import { parseSettings } from "@/utils/parseSettings";
 
 export default async function handler(
@@ -10,20 +13,27 @@ export default async function handler(
 		const settings = req.body as SettingsFormValues;
 
 		try {
-			for (const [key, value] of Object.entries(settings)) {
-				await prisma.setting.upsert({
-					where: { key: key },
-					update: { key: key, value: String(value) },
-					create: { key: key, value: String(value) },
+			const settingsToUpsert = Object.entries(settings).map(([key, value]) => ({
+				key: key,
+				value: String(value),
+			}));
+
+			await db
+				.insert(setting)
+				.values(settingsToUpsert)
+				.onConflictDoUpdate({
+					target: setting.key,
+					set: {
+						value: sql`${setting.value} = EXCLUDED.value`,
+					},
 				});
-			}
 		} catch {
 			return res.status(500).send({ message: "Could not save settings" });
 		}
 
 		return res.status(201).json(settings);
 	} else if (req.method === "GET") {
-		const settings = await prisma.setting.findMany();
+		const settings = await db.select().from(setting);
 		const parsedSettings = parseSettings(settings);
 		res.status(200).json(parsedSettings);
 	} else {
