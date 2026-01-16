@@ -39,7 +39,7 @@ The lint command lints both CSS files located in `styles/` directory and ts/tsx 
 - Typescript
 - nextjs
 - next-auth
-- prisma
+- drizzle-orm
 - tailwindcss
 - dnd-toolkit
 - framer-motion
