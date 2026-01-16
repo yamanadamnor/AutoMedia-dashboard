@@ -3,7 +3,7 @@ name: AutoMedia-dashboard Preview
 on:
   push:
     tags:
-      - "preview-*"
+      - "preview*"
 
 env:
   REGISTRY: ghcr.io
