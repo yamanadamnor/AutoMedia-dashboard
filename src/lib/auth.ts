@@ -3,6 +3,8 @@ import { betterAuth } from "better-auth";
 import { genericOAuth } from "better-auth/plugins";
 
 export const auth = betterAuth({
+	secret: process.env.AUTH_SECRET || process.env.BETTER_AUTH_SECRET,
+	baseURL: process.env.AUTH_URL || process.env.BETTER_AUTH_URL,
 	advanced: {
 		cookiePrefix: "automedia-dashboard",
 	},
@@ -34,7 +36,7 @@ export const auth = betterAuth({
 					providerId: "custom",
 					clientId: process.env.AUTH_CLIENT_ID!,
 					clientSecret: process.env.AUTH_CLIENT_SECRET!,
-					discoveryUrl: `${process.env.AUTH_ISSUER!}/.well-known/openid-configuration`,
+					discoveryUrl: process.env.AUTH_ISSUER,
 					pkce: true,
 					scopes: ["openid", "profile", "groups", "email"],
 					mapProfileToUser: async (profile) => {
