@@ -3,8 +3,11 @@ import { betterAuth } from "better-auth";
 import { genericOAuth } from "better-auth/plugins";
 
 export const auth = betterAuth({
-	secret: process.env.AUTH_SECRET || process.env.BETTER_AUTH_SECRET,
-	baseURL: process.env.AUTH_URL || process.env.BETTER_AUTH_URL,
+	secret: process.env.AUTH_SECRET || process.env.BETTER_AUTH_SECRET || "secret",
+	baseURL:
+		process.env.AUTH_URL ||
+		process.env.BETTER_AUTH_URL ||
+		"http://localhost:3344",
 	advanced: {
 		cookiePrefix: "automedia-dashboard",
 	},
