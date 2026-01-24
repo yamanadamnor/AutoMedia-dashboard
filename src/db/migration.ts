@@ -2,6 +2,7 @@ import path, { dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 import { migrate } from "drizzle-orm/libsql/migrator";
 import { db } from ".";
+import { seed } from "./seed";
 
 async function runMigrations() {
 	console.log("Migration started");
@@ -14,6 +15,10 @@ async function runMigrations() {
 	try {
 		await migrate(db, { migrationsFolder });
 		console.log("Migration completed");
+
+		console.log("Running seed");
+		await seed();
+		console.log("Seed completed");
 	} catch (error) {
 		console.error("Migration failed:", error);
 	}

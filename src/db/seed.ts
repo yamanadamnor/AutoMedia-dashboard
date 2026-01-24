@@ -1,7 +1,7 @@
 import { db } from ".";
 import { setting } from "./schema";
 
-async function seed() {
+export async function seed() {
 	const settings = {
 		ENABLE_SONARR: false,
 		SONARR_URL: "",
