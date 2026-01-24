@@ -9,7 +9,7 @@
 		"build": "next build",
 		"format-and-lint": "biome check",
 		"check-types": "tsc --noEmit",
-		"start:prod": "node ./src/db/migration.ts && node server.js",
+		"start:prod": "node server.js",
 		"migrate:prod": "tsx ./src/db/migration.ts",
 		"drizzle:studio": "drizzle-kit studio",
 		"drizzle:push": "drizzle-kit push",
@@ -64,7 +64,6 @@
 		"tailwindcss": "^4.1.18",
 		"tailwindcss-animate": "^1.0.7",
 		"typescript": "^5.9.3",
-		"tsx": "^4.21.0",
 		"vite-tsconfig-paths": "^5.1.4",
 		"vitest": "^4.0.16"
 	},
