@@ -21,7 +21,7 @@ WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 
-RUN pnpm run drizzle:migrate && pnpm run build;
+RUN pnpm run migrate:prod && pnpm run build;
 
 # Production image, copy all the files and run next
 FROM base AS runner
