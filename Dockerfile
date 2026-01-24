@@ -17,11 +17,15 @@ RUN pnpm install --frozen-lockfile;
 # Rebuild the source code only when needed
 FROM base AS builder
 
+ARG DB_FILE_NAME=./config/dashboard.db
+
 WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 
-RUN pnpm run migrate:prod && pnpm run build;
+RUN mkdir -p config
+ENV DB_FILE_NAME=./config/dashboard.db
+RUN pnpm run migrate:prod && pnpm run seed:prod && pnpm run build;
 
 # Production image, copy all the files and run next
 FROM base AS runner

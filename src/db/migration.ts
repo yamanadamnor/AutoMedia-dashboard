@@ -1,8 +1,8 @@
+import fs from "node:fs";
 import path, { dirname } from "node:path";
 import { fileURLToPath } from "node:url";
-import { migrate } from "drizzle-orm/libsql/migrator";
+import { migrate } from "drizzle-orm/better-sqlite3/migrator";
 import { db } from ".";
-import { seed } from "./seed";
 
 async function runMigrations() {
 	console.log("Migration started");
@@ -13,12 +13,11 @@ async function runMigrations() {
 	const migrationsFolder = path.join(__dirname, "../drizzle");
 
 	try {
-		console.log("Migration started...");
-		await migrate(db, { migrationsFolder });
+		migrate(db, { migrationsFolder });
 		console.log("Migration completed");
-
 	} catch (error) {
 		console.error("Migration failed:", error);
+		process.exit(1);
 	}
 }
 
