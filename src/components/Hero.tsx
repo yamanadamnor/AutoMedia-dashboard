@@ -22,7 +22,7 @@ const Hero = () => {
 				duration: 0.5,
 			}}
 		>
-			<div className="w-full">
+			<div className="w-full hidden lg:block">
 				<h1 className="font-light text-xl leading-relaxed">
 					Welcome{" "}
 					<span className="font-bold italic">{`${firstName} ${lastname}`}</span>
