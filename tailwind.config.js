@@ -15,7 +15,6 @@ export default {
 			},
 			gridTemplateColumns: {
 				app: "1% 3fr repeat(6, 1fr) 1%",
-				mediaItem: "auto 1fr",
 			},
 			gridTemplateRows: {
 				app: "auto auto 1fr",
