@@ -1,7 +1,6 @@
 import fs from "node:fs";
-import path from "node:path";
-import { dirname } from "path";
-import { fileURLToPath } from "url";
+import path, { dirname } from "node:path";
+import { fileURLToPath } from "node:url";
 import "dotenv/config";
 import { createClient } from "@libsql/client";
 import { drizzle } from "drizzle-orm/libsql";
