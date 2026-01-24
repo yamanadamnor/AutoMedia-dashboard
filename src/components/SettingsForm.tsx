@@ -148,12 +148,12 @@ export const SettingsForm = ({
 	const watchAllFields = form.watch();
 
 	const onValidSubmit = async (values: SettingsFormValues) => {
-		try {
-			await poster("/api/settings", values);
+		const res = await poster("/api/settings", values);
+		if (res.message) {
+			toast.error("Could not update settings");
+		} else {
 			toast.success("Updated settings");
 			router.refresh();
-		} catch {
-			toast.error("Could not update settings");
 		}
 	};
 

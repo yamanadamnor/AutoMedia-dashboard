@@ -23,11 +23,10 @@ export default async function handler(
 				.values(settingsToUpsert)
 				.onConflictDoUpdate({
 					target: setting.key,
-					set: {
-						value: sql`${setting.value} = EXCLUDED.value`,
-					},
+					set: { value: sql.raw(`excluded.${setting.value.name}`) },
 				});
-		} catch {
+		} catch (error) {
+			console.log(error);
 			return res.status(500).send({ message: "Could not save settings" });
 		}
 
