@@ -10,7 +10,6 @@
 		"format-and-lint": "biome check",
 		"check-types": "tsc --noEmit",
 		"start:prod": "node server.js",
-		"migrate:prod": "tsx ./src/db/migration.ts",
 		"drizzle:studio": "drizzle-kit studio",
 		"drizzle:push": "drizzle-kit push",
 		"drizzle:generate": "drizzle-kit generate",
