@@ -40,10 +40,8 @@ COPY --from=builder /app/public ./public
 COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
 COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
 COPY --from=builder --chown=nextjs:nodejs /app/config ./config
-RUN mkdir -p config
 
 USER nextjs
-
 
 ENV HOSTNAME 0.0.0.0
 ENV PORT=3344
