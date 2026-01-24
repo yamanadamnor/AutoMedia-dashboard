@@ -13,12 +13,10 @@ async function runMigrations() {
 	const migrationsFolder = path.join(__dirname, "../drizzle");
 
 	try {
+		console.log("Migration started...");
 		await migrate(db, { migrationsFolder });
 		console.log("Migration completed");
 
-		console.log("Running seed");
-		await seed();
-		console.log("Seed completed");
 	} catch (error) {
 		console.error("Migration failed:", error);
 	}
