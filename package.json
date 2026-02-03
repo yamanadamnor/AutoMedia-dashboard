@@ -9,7 +9,7 @@
 		"build": "next build",
 		"format-and-lint": "biome check",
 		"check-types": "tsc --noEmit",
-		"start:prod": "node server.js",
+		"start:prod": "tsx ./src/db/migration.ts && tsx ./src/db/seed.ts && node server.js",
 		"migrate:prod": "tsx ./src/db/migration.ts",
 		"seed:prod": "tsx ./src/db/seed.ts",
 		"drizzle:studio": "drizzle-kit studio",

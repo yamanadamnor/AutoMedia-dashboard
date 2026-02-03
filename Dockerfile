@@ -4,6 +4,7 @@ FROM node:24-alpine3.22 AS base
 ENV PNPM_HOME="/pnpm"
 ENV PATH="$PNPM_HOME:$PATH"
 RUN corepack enable
+RUN pnpm install tsx -g
 
 # Install dependencies only when needed
 FROM base AS deps
@@ -24,8 +25,7 @@ COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 
 RUN mkdir -p config
-ENV DB_FILE_NAME=./config/dashboard.db
-RUN pnpm run migrate:prod && pnpm run seed:prod && pnpm run build;
+RUN pnpm run migrate:prod && pnpm run build;
 
 # Production image, copy all the files and run next
 FROM base AS runner
@@ -43,11 +43,12 @@ COPY --from=builder /app/public ./public
 # https://nextjs.org/docs/advanced-features/output-file-tracing
 COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
 COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
-COPY --from=builder --chown=nextjs:nodejs /app/config ./config
-COPY --from=builder --chown=nextjs:nodejs /app/src/db ./src/db
+
+RUN mkdir -p config
 
 USER nextjs
 
+ENV DB_FILE_NAME=./config/dashboard.db
 ENV HOSTNAME 0.0.0.0
 ENV PORT=3344
 EXPOSE $PORT
