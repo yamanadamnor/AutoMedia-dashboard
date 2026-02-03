@@ -7,7 +7,7 @@ export async function seed() {
 
 	const existingSettings = await db.select().from(setting);
 
-	if (existingSettings.length === 0) {
+	if (existingSettings.length > 0) {
 		console.log("Database already seeded, skipping");
 		process.exit(1);
 	}
