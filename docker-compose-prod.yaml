@@ -1,0 +1,17 @@
+services:
+  dashboard:
+    image: ghcr.io/yamanadamnor/automedia-dashboard:main
+    container_name: acs-dashboard
+    env_file: ".env"
+    environment:
+      # Environment variables for next-auth
+      - DB_FILE_NAME=./config/dashboard.db
+      - AUTH_SECRET=${AUTH_SECRET}
+      - AUTH_URL=${AUTH_URL}
+      - AUTH_CLIENT_ID=${AUTH_CLIENT_ID}
+      - AUTH_CLIENT_SECRET=${AUTH_CLIENT_SECRET}
+      - AUTH_ISSUER=${AUTH_ISSUER}
+    volumes:
+      - ./acs-config:/app/config
+    ports:
+      - "3344:3344"

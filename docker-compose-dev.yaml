@@ -5,5 +5,7 @@ services:
     build:
       context: ./
       dockerfile: Dockerfile
+    volumes:
+      - ./acs-config:/app/config
     ports:
       - "3344:3344"
