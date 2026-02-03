@@ -2,6 +2,16 @@ import { db } from ".";
 import { setting } from "./schema";
 
 export async function seed() {
+	console.log("Database seed started");
+	console.log("Checking if database needs to be seeded");
+
+	const existingSettings = await db.select().from(setting);
+
+	if (existingSettings.length === 0) {
+		console.log("Database already seeded, skipping");
+		process.exit(1);
+	}
+
 	const insertSettings = {
 		ENABLE_SONARR: false,
 		SONARR_URL: "",
@@ -18,8 +28,6 @@ export async function seed() {
 		key: entry[0],
 		value: String(entry[1]),
 	}));
-
-	console.log("Database seed started");
 
 	try {
 		await db.insert(setting).values(insertValues).onConflictDoNothing({
