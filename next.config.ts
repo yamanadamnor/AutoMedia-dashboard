@@ -9,6 +9,7 @@ const nextConfig: NextConfig = {
 			"./drizzle.config.ts",
 			"./node_modules/drizzle-orm/**/*",
 			"./node_modules/drizzle-kit/**/*",
+			"./node_modules/dotenv/**/*",
 		],
 	},
 	images: {
